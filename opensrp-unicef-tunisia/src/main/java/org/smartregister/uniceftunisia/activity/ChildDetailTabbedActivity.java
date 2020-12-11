@@ -200,7 +200,7 @@ public class ChildDetailTabbedActivity extends BaseChildDetailTabbedActivity {
 
     @Override
     protected void navigateToRegisterActivity() {
-        Intent intent = new Intent(getApplicationContext(), ChildRegisterActivity.class);
+        Intent intent = new Intent(this, ChildRegisterActivity.class);
         intent.putExtra(AllConstants.INTENT_KEY.IS_REMOTE_LOGIN, false);
         startActivity(intent);
         finish();

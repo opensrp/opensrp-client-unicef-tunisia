@@ -1,6 +1,7 @@
 package org.smartregister.uniceftunisia.view;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.text.TextUtils;
@@ -22,7 +23,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.vijay.jsonwizard.constants.JsonFormConstants;
-import com.vijay.jsonwizard.domain.Form;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -34,6 +34,7 @@ import org.smartregister.child.ChildLibrary;
 import org.smartregister.child.util.ChildJsonFormUtils;
 import org.smartregister.child.util.Constants;
 import org.smartregister.child.util.Utils;
+import org.smartregister.client.utils.domain.Form;
 import org.smartregister.domain.FetchStatus;
 import org.smartregister.receiver.SyncStatusBroadcastReceiver;
 import org.smartregister.reporting.service.IndicatorGeneratorIntentService;
@@ -44,16 +45,12 @@ import org.smartregister.uniceftunisia.contract.NavigationContract;
 import org.smartregister.uniceftunisia.presenter.NavigationPresenter;
 import org.smartregister.uniceftunisia.reporting.register.ReportRegisterActivity;
 import org.smartregister.uniceftunisia.util.AppConstants;
-import org.smartregister.uniceftunisia.util.AppConstants.Languages;
-import org.smartregister.uniceftunisia.util.AppUtils;
 import org.smartregister.util.FormUtils;
 import org.smartregister.util.LangUtils;
 
 import java.lang.ref.WeakReference;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import timber.log.Timber;
@@ -75,6 +72,7 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
     private DrawerLayout drawer;
     private ImageButton cancelButton;
     private Spinner languageSpinner;
+    private static String[] langArray;
 
     public static NavigationMenu getInstance(@NonNull Activity activity) {
 
@@ -84,6 +82,8 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
             if (instance == null) {
                 instance = new NavigationMenu();
+                langArray = activity.getResources().getStringArray(R.array.languages);
+
             }
             instance.init(activity);
             SyncStatusBroadcastReceiver.getInstance().addSyncStatusListener(instance);
@@ -92,12 +92,6 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
             return null;
         }
 
-    }
-
-    public static void closeDrawer() {
-        if (instance != null && instance.getDrawer() != null) {
-            instance.getDrawer().closeDrawer(GravityCompat.START);
-        }
     }
 
     private void init(Activity activity) {
@@ -190,8 +184,8 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
 
     private void syncApp(final Activity parentActivity) {
         syncMenuItem.setOnClickListener(v -> {
-            Intent intent = new Intent(parentActivity.getApplicationContext(), IndicatorGeneratorIntentService.class);
-            parentActivity.getApplicationContext().startService(intent);
+            Intent intent = new Intent(parentActivity, IndicatorGeneratorIntentService.class);
+            parentActivity.startService(intent);
             mPresenter.sync(parentActivity);
             Timber.i("IndicatorGeneratorIntentService start service called");
         });
@@ -250,7 +244,7 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
 
     @Override
     public void logout(Activity activity) {
-        Toast.makeText(activity.getApplicationContext(), activity.getResources().getText(R.string.action_log_out),
+        Toast.makeText(activity, activity.getResources().getText(R.string.action_log_out),
                 Toast.LENGTH_SHORT).show();
         UnicefTunisiaApplication.getInstance().logoutCurrentUser();
     }
@@ -258,7 +252,7 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
     private void startFormActivity(Activity activity) {
         try {
             JSONObject formJson = new FormUtils(activity).getFormJson(AppConstants.JsonForm.OUT_OF_CATCHMENT_SERVICE);
-            ChildJsonFormUtils.addAvailableVaccines(ChildLibrary.getInstance().context().applicationContext(), formJson);
+            ChildJsonFormUtils.addAvailableVaccines(activity, formJson);
 
             Form form = new Form();
             form.setWizard(false);
@@ -314,62 +308,65 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
     }
 
     private void attachLanguageSpinner(final Activity activity) {
-        String[] languages = {Languages.ENGLISH, Languages.FRENCH, Languages.ARABIC};
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(activity, R.layout.app_spinner_item, languages);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        List<String> languageArrayList = Arrays.asList(languages);
-        String language = getLanguage(AppUtils.getLanguage());
+        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(activityWeakReference.get(), R.array.languages, R.layout.app_spinner_item);
 
-        languageSpinner.setAdapter(arrayAdapter);
-        languageSpinner.setSelection(languageArrayList.indexOf(language));
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        languageSpinner.setAdapter(adapter);
+        languageSpinner.setOnItemSelectedListener(null);
+        String langPref = LangUtils.getLanguage(activity);
+        for (int i = 0; i < langArray.length; i++) {
+            if (langPref != null && langArray[i].toLowerCase().startsWith(langPref)) {
+                languageSpinner.setSelection(i);
+                break;
+            } else {
+                languageSpinner.setSelection(0);
+            }
+        }
+
         languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            int count = 0;
+
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                String language = (String) arrayAdapter.getItem(position);
-                String locale;
-                switch (language) {
-                    case Languages.ENGLISH:
-                        locale = "en";
-                        break;
-                    case Languages.FRENCH:
-                        locale = "fr";
-                        break;
-                    case Languages.ARABIC:
-                        locale = "ar";
-                        break;
-                    default:
-                        locale = "en";
-                        Timber.i("No language selected");
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (count >= 1) {
+                    String lang = adapter.getItem(i).toString().toLowerCase();
+                    Locale LOCALE;
+                    switch (lang) {
+                        case "français":
+                            LOCALE = Locale.FRENCH;
+                            break;
+                        case "عربى":
+                            LOCALE = ARABIC_LOCALE;
+                            languageSpinner.setSelection(i);
+                            break;
+                        case "english":
+                        default:
+                            LOCALE = Locale.ENGLISH;
+                            break;
+                    }
+
+                    // save language
+                    LangUtils.saveLanguage(activity.getApplicationContext(), LOCALE.getLanguage());
+
+                    // refresh activity
+                    refresh(activity);
                 }
-                refreshActivity(locale, activity);
+                count++;
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                //Do Nothing
+
             }
         });
     }
 
-    public String getLanguage(String locale) {
-        switch (locale) {
-            case "fr":
-                return Languages.FRENCH;
-            case "ar":
-                return Languages.ARABIC;
-            default:
-                return Languages.ENGLISH;
-        }
-    }
+    private void refresh(Context activity){
 
-    private void refreshActivity(String localeName, Activity activity) {
-        String currentLanguage = AppUtils.getLanguage();
-        if (!localeName.equals(currentLanguage)) {
-            LangUtils.saveLanguage(activity, localeName);
-            Intent intent = activity.getIntent();
-            activity.finish();
-            activity.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
-        }
+        Intent intent = new Intent(activity, activity.getClass());
+        activity.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+
     }
 
     public void openDrawer() {

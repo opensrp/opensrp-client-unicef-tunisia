@@ -159,7 +159,6 @@
                 android:lines="1"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-
                 android:textColor="@color/login_text_color"
                 android:textColorHint="@color/login_hint_color"
                 android:textCursorDrawable="@null"
