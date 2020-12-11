@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context=".reporting.monthly.MonthlyReportsActivity">
+    tools:context=".reporting.annual.AnnualReportActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
