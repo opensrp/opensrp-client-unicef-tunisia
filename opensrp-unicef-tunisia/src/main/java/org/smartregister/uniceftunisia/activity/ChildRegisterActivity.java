@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.vision.barcode.Barcode;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
-import com.vijay.jsonwizard.domain.Form;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
@@ -16,6 +15,7 @@ import org.smartregister.child.activity.BaseChildRegisterActivity;
 import org.smartregister.child.util.ChildJsonFormUtils;
 import org.smartregister.child.util.Constants;
 import org.smartregister.child.util.Utils;
+import org.smartregister.client.utils.domain.Form;
 import org.smartregister.uniceftunisia.R;
 import org.smartregister.uniceftunisia.fragment.AdvancedSearchFragment;
 import org.smartregister.uniceftunisia.fragment.ChildRegisterFragment;
