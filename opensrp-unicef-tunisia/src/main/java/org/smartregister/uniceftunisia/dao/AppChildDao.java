@@ -1,6 +1,9 @@
 package org.smartregister.uniceftunisia.dao;
 
+import androidx.annotation.VisibleForTesting;
+
 import org.smartregister.child.dao.ChildDao;
+import org.smartregister.repository.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,5 +73,10 @@ public class AppChildDao extends ChildDao {
             return false;
 
         return result.get(0) > 0;
+    }
+
+    @VisibleForTesting
+    public static void updateRepository(Repository repository){
+        setRepository(repository);
     }
 }
