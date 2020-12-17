@@ -95,9 +95,10 @@ class AnnualReportRepository : BaseRepository() {
             CoverageTargetType.ONE_TWO_YEAR_TARGET -> VaccineTarget.yearOneAndTwo
         }
 
+        val coverageTarget = ReportsDao.getCoverageTarget(year)
         val target = when (coverageTargetType) {
-            CoverageTargetType.UNDER_ONE_TARGET -> ReportsDao.getCoverageTarget(year).findTarget(CoverageTargetType.UNDER_ONE_TARGET)
-            CoverageTargetType.ONE_TWO_YEAR_TARGET -> ReportsDao.getCoverageTarget(year).findTarget(CoverageTargetType.ONE_TWO_YEAR_TARGET)
+            CoverageTargetType.UNDER_ONE_TARGET -> coverageTarget.findTarget(CoverageTargetType.UNDER_ONE_TARGET)
+            CoverageTargetType.ONE_TWO_YEAR_TARGET -> coverageTarget.findTarget(CoverageTargetType.ONE_TWO_YEAR_TARGET)
         }
         return getVaccineCoverages(vaccineSet, vaccineCountsMap, target, year)
     }

@@ -1,4 +1,4 @@
-package org.smartregister.uniceftunisia.processor;
+package org.smartregister.uniceftunisia.reporting.common;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -8,7 +8,6 @@ import org.junit.rules.ExpectedException;
 import org.smartregister.reporting.domain.CompositeIndicatorTally;
 import org.smartregister.reporting.domain.IndicatorTally;
 import org.smartregister.reporting.exception.MultiResultProcessorException;
-import org.smartregister.uniceftunisia.reporting.common.ReportIndicatorsProcessor;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,26 +19,26 @@ import static org.junit.Assert.assertFalse;
 /**
  * Created by Ephraim Kigamba - nek.eam@gmail.com on 05-03-2020.
  */
-public class TripleResultProcessorTest {
+public class ReportIndicatorsProcessorTest {
 
-    private ReportIndicatorsProcessor tripleResultProcessor;
+    private ReportIndicatorsProcessor indicatorsProcessor;
 
     @Rule
     public ExpectedException thrownException = ExpectedException.none();
 
     @Before
     public void setUp() {
-        tripleResultProcessor = new ReportIndicatorsProcessor();
+        indicatorsProcessor = new ReportIndicatorsProcessor();
     }
 
     @Test
     public void canProcessShouldReturnFalse() {
-        assertFalse(tripleResultProcessor.canProcess(2, new String[]{"gender", "count"}));
+        assertFalse(indicatorsProcessor.canProcess(2, new String[]{"gender", "count"}));
     }
 
     @Test
     public void canProcessShouldReturnTrue() {
-        Assert.assertTrue(tripleResultProcessor.canProcess(3,  new String[]{"gender", "vaccine", "count"}));
+        Assert.assertTrue(indicatorsProcessor.canProcess(3,  new String[]{"gender", "vaccine", "count"}));
     }
 
     @Test
@@ -54,7 +53,7 @@ public class TripleResultProcessorTest {
         expectedIndicators.add(indicatorCode + "_male_OPV");
         compositeIndicatorTally.setExpectedIndicators(expectedIndicators);
 
-        List<IndicatorTally> indicatorTallies = tripleResultProcessor.processMultiResultTally(compositeIndicatorTally);
+        List<IndicatorTally> indicatorTallies = indicatorsProcessor.processMultiResultTally(compositeIndicatorTally);
         assertEquals(3, indicatorTallies.size());
         assertFalse(indicatorTallies.get(0) instanceof CompositeIndicatorTally);
         assertEquals(12, indicatorTallies.get(0).getCount());
@@ -72,6 +71,6 @@ public class TripleResultProcessorTest {
         String indicatorCode = "CH_IM_UNDER2";
         CompositeIndicatorTally compositeIndicatorTally = new CompositeIndicatorTally(3L, "[[\"gender\",\"vaccine\",\"count(*)\"],[\"male\",\"BCG\",\"12\"],[\"female\",\"BCG\",\"9\"],[\"female\",\"OPV\",\"4\"]]", indicatorCode, new Date());
 
-        tripleResultProcessor.processMultiResultTally(compositeIndicatorTally);
+        indicatorsProcessor.processMultiResultTally(compositeIndicatorTally);
     }
 }
