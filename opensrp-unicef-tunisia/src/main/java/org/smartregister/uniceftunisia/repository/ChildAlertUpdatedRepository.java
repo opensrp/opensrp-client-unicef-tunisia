@@ -47,11 +47,4 @@ public class ChildAlertUpdatedRepository extends BaseRepository {
         return rows != -1;
     }
 
-    public boolean deleteAll() {
-        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-        int rows = sqLiteDatabase.delete(AppConstants.TABLE_NAME.CHILD_UPDATED_ALERTS
-                , null
-                , null);
-        return rows > 0;
-    }
 }

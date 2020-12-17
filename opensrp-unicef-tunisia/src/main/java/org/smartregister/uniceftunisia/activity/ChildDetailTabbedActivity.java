@@ -300,4 +300,9 @@ public class ChildDetailTabbedActivity extends BaseChildDetailTabbedActivity {
             VaccineUtils.refreshImmunizationSchedules(childDetails.getCaseId());
         }
     }
+
+    @Override
+    public String constructChildName() {
+        return super.constructChildName();
+    }
 }
