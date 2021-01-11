@@ -5,11 +5,6 @@ public class AppConstants {
     public interface Locale {
         String ARABIC_LOCALE = "ar";
     }
-    public interface Languages{
-        String ENGLISH = "English";
-        String FRENCH = "Français";
-        String ARABIC = "عربى";
-    }
 
     public static final class KEY {
         public static final String REACTION_VACCINE = "Reaction_Vaccine";
@@ -26,10 +21,7 @@ public class AppConstants {
         public static final String GENDER = "gender";
         public static final String INACTIVE = "inactive";
         public static final String LAST_INTERACTED_WITH = "last_interacted_with";
-        public static final String VALUE = "value";
-        public static final String STEPNAME = "stepName";
         public static final String TITLE = "title";
-        public static final String HIA_2_INDICATOR = "hia2_indicator";
         public static final String RELATIONALID = "relationalid";
         public static final String RELATIONAL_ID = "relational_id";
         public static final String ID_LOWER_CASE = "_id";
@@ -50,7 +42,6 @@ public class AppConstants {
         public static final String DOB_UNKNOWN = "dob_unknown";
         public static final String DATE_BIRTH = "Date_Birth";
         public static final String BIRTH_WEIGHT = "Birth_Weight";
-        public static final String CARD_ID = "card_id";
         public static final String MOTHER_PHONE_NUMBER = "mother_phone_number";
         public static final String MOTHER_SECOND_PHONE_NUMBER = "mother_second_phone_number";
         public static final String FATHER_PHONE_NUMBER = "father_phone_number";
@@ -64,10 +55,7 @@ public class AppConstants {
         public static final String OPTIONS_TEXT = "options.text";
         public static final String SITE_CHARACTERISTICS = "site_characteristics";
         public static final String REGISTRATION_DATE = "client_reg_date";
-        public static final String FIELDS = "fields";
         public static final String KEY = "key";
-        public static final String IS_VACCINE_GROUP = "is_vaccine_group";
-        public static final String OPTIONS = "options";
         public static final String MOTHER_NATIONALITY = "mother_nationality";
         public static final String FIRST_BIRTH = "first_birth";
         public static final String RUBELLA_SEROLOGY = "rubella_serology";
@@ -96,14 +84,6 @@ public class AppConstants {
         public static final String REGISTRATION_LOCATION_NAME = "registration_location_name";
     }
 
-    public static final class DrawerMenu {
-        public static final String ALL_FAMILIES = "All Families";
-        public static final String ALL_CLIENTS = "All Clients";
-        public static final String ANC_CLIENTS = "ANC Clients";
-        public static final String CHILD_CLIENTS = "Child Clients";
-        public static final String ANC = "ANC";
-    }
-
     public static final class FormTitleUtil {
         public static final String UPDATE_CHILD_FORM = "Update Child Registration";
     }
@@ -118,7 +98,6 @@ public class AppConstants {
         public static final String CHILD_REGISTRATION = "Birth Registration";
         public static final String UPDATE_CHILD_REGISTRATION = "Update Birth Registration";
         public static final String OUT_OF_CATCHMENT = "Out of Area Service";
-        public static final String MONTHLY_REPORT = "monthly_report";
         public static final String CARD_STATUS_UPDATE = "card_status_update";
     }
 
@@ -160,9 +139,7 @@ public class AppConstants {
     }
 
     public interface RegisterType {
-        String ANC = "anc";
         String CHILD = "child";
-        String OPD = "opd";
     }
 
     public interface Pref {
