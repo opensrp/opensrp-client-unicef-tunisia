@@ -129,6 +129,8 @@ public class UnicefTunisiaRepository extends Repository {
                     PlanDefinitionRepository.createTable(db);
                     PlanDefinitionSearchRepository.createTable(db);
                     break;
+                case 14:
+                    upgradeToVersion14(db);
                 default:
                     break;
             }
@@ -338,5 +340,10 @@ public class UnicefTunisiaRepository extends Repository {
             int savedVersion = Integer.parseInt(savedAppVersion);
             return (BuildConfig.VERSION_CODE > savedVersion);
         }
+    }
+
+    private void upgradeToVersion14(SQLiteDatabase db) {
+        db.execSQL(VaccineRepository.UPDATE_TABLE_ADD_IS_VOIDED_COL);
+        db.execSQL(VaccineRepository.UPDATE_TABLE_ADD_IS_VOIDED_COL_INDEX);
     }
 }

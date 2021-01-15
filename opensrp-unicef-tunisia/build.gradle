@@ -102,7 +102,7 @@ android {
             buildConfigField "int", "OPENMRS_UNIQUE_ID_BATCH_SIZE", '100'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_SOURCE", '11'
             buildConfigField "int", "VACCINE_SYNC_TIME", '0'
-            buildConfigField "int", "DATABASE_VERSION", '13'
+            buildConfigField "int", "DATABASE_VERSION", '14'
             buildConfigField "long", "MAX_SERVER_TIME_DIFFERENCE", "1800000l"
             buildConfigField "boolean", "TIME_CHECK", "true"
             buildConfigField "int", "DATA_SYNC_DURATION_MINUTES", '15'
@@ -127,7 +127,7 @@ android {
             buildConfigField "int", "OPENMRS_UNIQUE_ID_BATCH_SIZE", '100'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_SOURCE", '12'
             buildConfigField "int", "VACCINE_SYNC_TIME", '0'
-            buildConfigField "int", "DATABASE_VERSION", '13'
+            buildConfigField "int", "DATABASE_VERSION", '14'
             buildConfigField "long", "MAX_SERVER_TIME_DIFFERENCE", "1800000l"
             buildConfigField "boolean", "TIME_CHECK", "true"
             buildConfigField "int", "DATA_SYNC_DURATION_MINUTES", '15'
@@ -158,7 +158,7 @@ android {
             buildConfigField "int", "OPENMRS_UNIQUE_ID_BATCH_SIZE", '100'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_SOURCE", '13'
             buildConfigField "int", "VACCINE_SYNC_TIME", '0'
-            buildConfigField "int", "DATABASE_VERSION", '13'
+            buildConfigField "int", "DATABASE_VERSION", '14'
             buildConfigField "long", "MAX_SERVER_TIME_DIFFERENCE", "1800000l"
             buildConfigField "boolean", "TIME_CHECK", "true"
             buildConfigField "int", "DATA_SYNC_DURATION_MINUTES", '15'
@@ -233,7 +233,7 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
 
 //    implementation(project(':opensrp-child')) {
-    implementation('org.smartregister:opensrp-client-child:0.6.5-SNAPSHOT@aar') {
+    implementation('org.smartregister:opensrp-client-child:0.6.5-ALPHA2-SNAPSHOT@aar') {
         transitive = true
         exclude group: 'id.zelory', module: 'compressor'
         exclude group: 'org.smartregister', module: 'opensrp-client-growth-monitoring'
