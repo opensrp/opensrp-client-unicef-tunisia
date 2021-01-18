@@ -107,4 +107,7 @@
     <string name="first_birth">Première naissance de la mère</string>
     <string name="rubella_serology">La mère a subi un test de sérologie de la rubéole</string>
     <string name="serology_results">Résultat du test sérologique</string>
-    </resources>
+    <string name="maximum_extra_vaccines_reached">Vous ne pouvez enregistrer qu\'un maximum de 10 vaccins</string>
+    <string name="sms_recipient">Destinataire du rappel SMS des vaccins</string>
+
+</resources>
