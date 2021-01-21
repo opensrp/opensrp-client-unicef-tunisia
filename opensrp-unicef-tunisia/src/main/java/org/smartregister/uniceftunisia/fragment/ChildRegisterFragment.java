@@ -1,5 +1,6 @@
 package org.smartregister.uniceftunisia.fragment;
 
+import android.annotation.SuppressLint;
 import android.view.View;
 
 import org.smartregister.child.domain.RegisterClickables;
@@ -36,6 +37,7 @@ public class ChildRegisterFragment extends BaseChildRegisterFragment {
         return presenter().getDefaultSortQuery();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onViewClicked(View view) {
         super.onViewClicked(view);
@@ -45,6 +47,8 @@ public class ChildRegisterFragment extends BaseChildRegisterFragment {
                     Constants.RECORD_ACTION.GROWTH.equals(view.getTag(R.id.record_action)));
             registerClickables.setRecordAll(
                     Constants.RECORD_ACTION.VACCINATION.equals(view.getTag(R.id.record_action)));
+            registerClickables.setNextAppointmentDate(view.getTag(R.id.next_appointment_date) != null ? String
+                    .valueOf(view.getTag(R.id.next_appointment_date)) : "");
         }
 
         CommonPersonObjectClient client = null;
@@ -101,5 +105,11 @@ public class ChildRegisterFragment extends BaseChildRegisterFragment {
     @Override
     public void onClick(View view) {
         onViewClicked(view);
+    }
+
+    @Override
+    public void setupSearchView(View view) {
+        super.setupSearchView(view);
+        searchView.setHint(getContext().getString(R.string.search_hint));
     }
 }

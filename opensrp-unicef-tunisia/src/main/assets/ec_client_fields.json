@@ -109,6 +109,21 @@
           }
         },
         {
+          "column_name": "national_id",
+          "type": "Event",
+          "json_mapping": {
+            "field": "obs.fieldCode",
+            "concept": "163084AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          }
+        },
+        {
+          "column_name": "national_id",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.national_id"
+          }
+        },
+        {
           "column_name": "home_address",
           "type": "Event",
           "json_mapping": {
@@ -161,8 +176,7 @@
           "column_name": "mother_guardian_number",
           "type": "Client",
           "json_mapping": {
-            "field": "Client",
-            "concept": "attributes.mother_guardian_number"
+            "field": "attributes.mother_guardian_number"
           }
         },
         {
@@ -227,6 +241,20 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.mother_rubella"
+          }
+        },
+        {
+          "column_name": "sms_recipient",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sms_recipient"
+          }
+        },
+        {
+          "column_name": "sms_language",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.sms_language"
           }
         },
         {
@@ -324,6 +352,41 @@
           "type": "Client",
           "json_mapping": {
             "field": "attributes.sms_recipient"
+          }
+        },
+        {
+          "column_name": "include_father_details",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.include_father_details"
+          }
+        },
+        {
+          "column_name": "event_date",
+          "type": "Event",
+          "json_mapping": {
+            "field": "eventDate"
+          }
+        },
+        {
+          "column_name": "date_removed",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.dateRemoved"
+          }
+        },
+        {
+          "column_name": "card_status",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.card_status"
+          }
+        },
+        {
+          "column_name": "card_status_date",
+          "type": "Client",
+          "json_mapping": {
+            "field": "attributes.card_status_date"
           }
         }
       ]

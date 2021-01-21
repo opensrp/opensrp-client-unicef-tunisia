@@ -1,28 +1,33 @@
 package org.smartregister.uniceftunisia.util;
 
 import android.content.ContentValues;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
+
 import androidx.annotation.NonNull;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.smartregister.child.presenter.BaseChildDetailsPresenter.CardStatus;
 import org.smartregister.child.util.Constants;
 import org.smartregister.child.util.Utils;
+import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.commonregistry.AllCommonsRepository;
 import org.smartregister.domain.Client;
 import org.smartregister.domain.db.EventClient;
 import org.smartregister.location.helper.LocationHelper;
+import org.smartregister.sync.helper.ECSyncHelper;
 import org.smartregister.uniceftunisia.BuildConfig;
 import org.smartregister.uniceftunisia.application.UnicefTunisiaApplication;
+import org.smartregister.uniceftunisia.dao.AppChildDao;
+import org.smartregister.util.JsonFormUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Locale;
+import java.util.Collections;
+import java.util.Date;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import timber.log.Timber;
@@ -32,8 +37,6 @@ public class AppUtils extends Utils {
     public static final ArrayList<String> ALLOWED_LEVELS;
     public static final String FACILITY = "Facility";
     public static final String DEFAULT_LOCATION_LEVEL = "Health Facility";
-    public static final String LANGUAGE = "language";
-    private static final String PREFERENCES_FILE = "lang_prefs";
 
     static {
         ALLOWED_LEVELS = new ArrayList<>();
@@ -41,51 +44,31 @@ public class AppUtils extends Utils {
         ALLOWED_LEVELS.add(FACILITY);
     }
 
-    public static String getLanguage(Context ctx) {
-        SharedPreferences sharedPref = ctx.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
-        return sharedPref.getString(LANGUAGE, "en");
+    public static String getLanguage() {
+        return AppUtils.getAllSharedPreferences().fetchLanguagePreference();
     }
 
-    public static Context setAppLocale(Context context, String language) {
-        Context newContext = context;
-        Locale locale = new Locale(language);
-        Locale.setDefault(locale);
-
-        Resources res = newContext.getResources();
-        Configuration config = new Configuration(res.getConfiguration());
-        config.setLocale(locale);
-        newContext = newContext.createConfigurationContext(config);
-        return newContext;
-    }
-
-    public static boolean updateChildDeath(@NonNull EventClient eventClient) {
+    public static void updateChildDeath(@NonNull EventClient eventClient) {
         Client client = eventClient.getClient();
         ContentValues values = new ContentValues();
 
         if (client.getDeathdate() == null) {
             Timber.e(new Exception(), "Death event for %s cannot be processed because deathdate is NULL : %s"
                     , client.getFirstName() + " " + client.getLastName(), new Gson().toJson(eventClient));
-            return false;
+            return;
         }
 
-        values.put(Constants.KEY.DOD, Utils.convertDateFormat(client.getDeathdate()));
+        values.put(Constants.KEY.IS_CLOSED, 1);
         values.put(Constants.KEY.DATE_REMOVED, Utils.convertDateFormat(client.getDeathdate().toDate(), Utils.DB_DF));
-        String tableName = Utils.metadata().childRegister.tableName;
+        updateChildTables(client, values, AppConstants.TABLE_NAME.CHILD_DETAILS);
+        updateChildTables(client, values, AppConstants.TABLE_NAME.ALL_CLIENTS);
+    }
+
+    private static void updateChildTables(Client client, ContentValues values, String tableName) {
         AllCommonsRepository allCommonsRepository = UnicefTunisiaApplication.getInstance().context().allCommonsRepositoryobjects(tableName);
         if (allCommonsRepository != null) {
             allCommonsRepository.update(tableName, values, client.getBaseEntityId());
             allCommonsRepository.updateSearch(client.getBaseEntityId());
-        }
-
-        return true;
-    }
-
-    @NonNull
-    public static Locale getLocale(Context context) {
-        if (context == null) {
-            return Locale.getDefault();
-        } else {
-            return context.getResources().getConfiguration().locale;
         }
     }
 
@@ -110,16 +93,6 @@ public class AppUtils extends Utils {
     }
 
 
-    public static void startReportJob(Context context) {
-        String reportJobExecutionTime = UnicefTunisiaApplication.getInstance().context().allSharedPreferences().getPreference("report_job_execution_time");
-        if (StringUtils.isBlank(reportJobExecutionTime) || timeBetweenLastExecutionAndNow(30, reportJobExecutionTime)) {
-            UnicefTunisiaApplication.getInstance().context().allSharedPreferences().savePreference("report_job_execution_time", String.valueOf(System.currentTimeMillis()));
-            Toast.makeText(context, "Reporting Job Has Started, It will take some time", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(context, "Reporting Job Has Already Been Started, Try again in 30 mins", Toast.LENGTH_LONG).show();
-        }
-    }
-
     public static boolean timeBetweenLastExecutionAndNow(int i, String reportJobExecutionTime) {
         try {
             long executionTime = Long.parseLong(reportJobExecutionTime);
@@ -132,18 +105,35 @@ public class AppUtils extends Utils {
         }
     }
 
-    public static boolean getSyncStatus() {
-        String synComplete = UnicefTunisiaApplication.getInstance().context().allSharedPreferences().getPreference("syncComplete");
-        boolean isSyncComplete = false;
-        if (StringUtils.isBlank(synComplete)) {
-            UnicefTunisiaApplication.getInstance().context().allSharedPreferences().savePreference("syncComplete", String.valueOf(false));
-        } else {
-            isSyncComplete = Boolean.parseBoolean(synComplete);
-        }
-        return isSyncComplete;
-    }
-
     public static void updateSyncStatus(boolean isComplete) {
         UnicefTunisiaApplication.getInstance().context().allSharedPreferences().savePreference("syncComplete", String.valueOf(isComplete));
+    }
+
+    public static void createClientCardReceivedEvent(String baseEntityId, CardStatus cardStatus, String cardStatusDate) {
+        //We do not want to unnecessary events when card is not needed
+        if (cardStatus == CardStatus.does_not_need_card && !AppChildDao.clientNeedsCard(baseEntityId)) {
+            return;
+        }
+        try {
+            Event baseEvent = AppJsonFormUtils.createEvent(new JSONArray(), new JSONObject().put(JsonFormUtils.ENCOUNTER_LOCATION, ""),
+                    AppJsonFormUtils.formTag(getAllSharedPreferences()), "", AppConstants.EventType.CARD_STATUS_UPDATE, AppConstants.EventType.CARD_STATUS_UPDATE);
+
+            baseEvent.setFormSubmissionId(UUID.randomUUID().toString());
+            baseEvent.addDetails(AppConstants.KEY.CARD_STATUS, cardStatus.name());
+            baseEvent.addDetails(AppConstants.KEY.CARD_STATUS_DATE, cardStatusDate);
+            baseEvent.setBaseEntityId(baseEntityId);
+            AppJsonFormUtils.tagEventMetadata(baseEvent);
+
+            UnicefTunisiaApplication appInstance = UnicefTunisiaApplication.getInstance();
+            ECSyncHelper ecSyncHelper = appInstance.getEcSyncHelper();
+
+            ecSyncHelper.addEvent(baseEntityId, new JSONObject(AppJsonFormUtils.gson.toJson(baseEvent)));
+            appInstance.getClientProcessor().processClient(ecSyncHelper.getEvents(Collections.singletonList(baseEvent.getFormSubmissionId())));
+
+            Date lastSyncDate = new Date(getAllSharedPreferences().fetchLastUpdatedAtDate(0));
+            getAllSharedPreferences().saveLastUpdatedAtDate(lastSyncDate.getTime());
+        } catch (Exception e) {
+            Timber.e(e);
+        }
     }
 }

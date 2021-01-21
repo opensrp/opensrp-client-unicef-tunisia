@@ -1,25 +1,27 @@
 package org.smartregister.uniceftunisia.activity;
 
 import android.content.Intent;
-import androidx.fragment.app.Fragment;
 import android.view.MenuItem;
 
+import androidx.fragment.app.Fragment;
+
+import com.google.android.gms.vision.barcode.Barcode;
 import com.vijay.jsonwizard.constants.JsonFormConstants;
-import com.vijay.jsonwizard.domain.Form;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
+import org.smartregister.AllConstants;
 import org.smartregister.child.activity.BaseChildRegisterActivity;
-import org.smartregister.child.model.BaseChildRegisterModel;
 import org.smartregister.child.util.ChildJsonFormUtils;
 import org.smartregister.child.util.Constants;
 import org.smartregister.child.util.Utils;
+import org.smartregister.client.utils.domain.Form;
 import org.smartregister.uniceftunisia.R;
 import org.smartregister.uniceftunisia.fragment.AdvancedSearchFragment;
 import org.smartregister.uniceftunisia.fragment.ChildRegisterFragment;
+import org.smartregister.uniceftunisia.model.AppChildRegisterModel;
 import org.smartregister.uniceftunisia.presenter.AppChildRegisterPresenter;
 import org.smartregister.uniceftunisia.util.AppConstants;
-import org.smartregister.uniceftunisia.util.AppUtils;
 import org.smartregister.uniceftunisia.view.NavDrawerActivity;
 import org.smartregister.uniceftunisia.view.NavigationMenu;
 import org.smartregister.view.fragment.BaseRegisterFragment;
@@ -29,24 +31,22 @@ import java.lang.ref.WeakReference;
 public class ChildRegisterActivity extends BaseChildRegisterActivity implements NavDrawerActivity {
 
     private NavigationMenu navigationMenu;
-
-    @Override
-    protected void attachBaseContext(android.content.Context base) {
-        // get language from prefs
-        String lang = AppUtils.getLanguage(base.getApplicationContext());
-        super.attachBaseContext(AppUtils.setAppLocale(base, lang));
-    }
+    private Fragment[] fragments;
 
     @Override
     protected Fragment[] getOtherFragments() {
         ADVANCED_SEARCH_POSITION = 1;
-        Fragment[] fragments = new Fragment[1];
+        fragments = new Fragment[1];
         fragments[ADVANCED_SEARCH_POSITION - 1] = new WeakReference<>(new AdvancedSearchFragment()).get();
         return fragments;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == AllConstants.BARCODE.BARCODE_REQUEST_CODE && resultCode == RESULT_OK) {
+            Barcode barcode = data.getParcelableExtra(AllConstants.BARCODE.BARCODE_KEY);
+            ((AppChildRegisterPresenter) presenter).updateChildCardStatus(barcode.displayValue);
+        }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -62,7 +62,7 @@ public class ChildRegisterActivity extends BaseChildRegisterActivity implements 
 
     @Override
     protected void initializePresenter() {
-        presenter = new AppChildRegisterPresenter(this, new BaseChildRegisterModel());
+        presenter = new AppChildRegisterPresenter(this, new AppChildRegisterModel());
     }
 
     @Override
@@ -74,10 +74,6 @@ public class ChildRegisterActivity extends BaseChildRegisterActivity implements 
     @Override
     protected void onResumption() {
         super.onResumption();
-        createDrawer();
-    }
-
-    private void createDrawer() {
         WeakReference<ChildRegisterActivity> weakReference = new WeakReference<>(this);
         navigationMenu = NavigationMenu.getInstance(weakReference.get());
     }
@@ -110,10 +106,19 @@ public class ChildRegisterActivity extends BaseChildRegisterActivity implements 
         Intent intent = new Intent(this, Utils.metadata().childFormActivity);
         intent.putExtra(Constants.INTENT_KEY.JSON, jsonForm.toString());
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
-        intent.putExtra(JsonFormConstants.PERFORM_FORM_TRANSLATION,  true);
+        intent.putExtra(JsonFormConstants.PERFORM_FORM_TRANSLATION, true);
         startActivityForResult(intent, ChildJsonFormUtils.REQUEST_CODE_GET_JSON);
     }
 
+    @Override
+    protected void updateSearchItems(String barcodeSearchTerm) {
+        advancedSearchFormData.put(AppConstants.KEY.ZEIR_ID, barcodeSearchTerm);
+        Fragment fragment = fragments[ADVANCED_SEARCH_POSITION - 1];
+        if (fragment instanceof AdvancedSearchFragment) {
+            AdvancedSearchFragment advancedSearchFragment = (AdvancedSearchFragment) fragment;
+            advancedSearchFragment.searchByOpenSRPId(barcodeSearchTerm);
+        }
+    }
 
     @Override
     public void finishActivity() {
@@ -128,6 +133,6 @@ public class ChildRegisterActivity extends BaseChildRegisterActivity implements 
         if (clients != null) {
             clients.setTitle(getString(R.string.header_children));
         }
-        bottomNavigationView.getMenu().removeItem(org.smartregister.R.id.action_library);
+        bottomNavigationView.getMenu().removeItem(R.id.action_library);
     }
 }

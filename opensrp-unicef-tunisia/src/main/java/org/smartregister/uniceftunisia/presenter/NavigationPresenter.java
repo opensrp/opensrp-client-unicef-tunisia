@@ -9,55 +9,45 @@ import org.smartregister.growthmonitoring.job.WeightIntentServiceJob;
 import org.smartregister.growthmonitoring.job.ZScoreRefreshIntentServiceJob;
 import org.smartregister.immunization.job.VaccineServiceJob;
 import org.smartregister.job.ImageUploadServiceJob;
+import org.smartregister.job.SyncAllLocationsServiceJob;
 import org.smartregister.job.SyncServiceJob;
 import org.smartregister.job.SyncSettingsServiceJob;
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.uniceftunisia.contract.NavigationContract;
 import org.smartregister.uniceftunisia.interactor.NavigationInteractor;
 import org.smartregister.uniceftunisia.model.NavigationModel;
-import org.smartregister.uniceftunisia.util.AppConstants;
 
 import java.lang.ref.WeakReference;
-import java.util.HashMap;
 
 import timber.log.Timber;
 
 public class NavigationPresenter implements NavigationContract.Presenter {
 
-    private NavigationContract.Model mModel;
-    private NavigationContract.Interactor mInteractor;
-    private WeakReference<NavigationContract.View> mView;
+    private final NavigationContract.Model model;
+    private final NavigationContract.Interactor interactor;
+    private final WeakReference<NavigationContract.View> view;
 
-    private HashMap<String, String> tableMap = new HashMap<>();
 
     public NavigationPresenter(NavigationContract.View view) {
-        mView = new WeakReference<>(view);
-        mInteractor = NavigationInteractor.getInstance();
-        mModel = NavigationModel.getInstance();
-        initialize();
-    }
-
-    private void initialize() {
-        tableMap.put(AppConstants.DrawerMenu.CHILD_CLIENTS, AppConstants.RegisterType.CHILD);
-        tableMap.put(AppConstants.DrawerMenu.ANC_CLIENTS, AppConstants.RegisterType.ANC);
-        tableMap.put(AppConstants.DrawerMenu.ANC, AppConstants.RegisterType.ANC);
-        tableMap.put(AppConstants.DrawerMenu.ALL_CLIENTS, AppConstants.RegisterType.OPD);
+        this.view = new WeakReference<>(view);
+        interactor = NavigationInteractor.getInstance();
+        model = NavigationModel.getInstance();
     }
 
     @Override
     public NavigationContract.View getNavigationView() {
-        return mView.get();
+        return view.get();
     }
 
     @Override
     public void refreshLastSync() {
         // get last sync date
-        getNavigationView().refreshLastSync(mInteractor.sync());
+        getNavigationView().refreshLastSync(interactor.sync());
     }
 
     @Override
     public void displayCurrentUser() {
-        getNavigationView().refreshCurrentUser(mModel.getCurrentUser());
+        getNavigationView().refreshCurrentUser(model.getCurrentUser());
     }
 
     @Override
@@ -69,13 +59,14 @@ public class NavigationPresenter implements NavigationContract.Presenter {
         WeightIntentServiceJob.scheduleJobImmediately(WeightIntentServiceJob.TAG);
         HeightIntentServiceJob.scheduleJobImmediately(HeightIntentServiceJob.TAG);
         VaccineServiceJob.scheduleJobImmediately(VaccineServiceJob.TAG);
+        SyncAllLocationsServiceJob.scheduleJobImmediately(SyncAllLocationsServiceJob.TAG);
     }
 
     @Override
     public String getLoggedInUserInitials() {
 
         try {
-            AllSharedPreferences allSharedPreferences = Context.getInstance().allSharedPreferences();
+            AllSharedPreferences allSharedPreferences = getAllSharedPreferences();
             String preferredName = allSharedPreferences.getANMPreferredName(allSharedPreferences.fetchRegisteredANM());
             if (!TextUtils.isEmpty(preferredName)) {
                 String[] initialsArray = preferredName.split(" ");
@@ -89,10 +80,15 @@ public class NavigationPresenter implements NavigationContract.Presenter {
                 return initials.toUpperCase();
             }
 
-        } catch (StringIndexOutOfBoundsException  exception) {
+        } catch (StringIndexOutOfBoundsException exception) {
             Timber.e(exception, "Error fetching initials");
         }
 
         return null;
+    }
+
+
+    public AllSharedPreferences getAllSharedPreferences() {
+        return Context.getInstance().allSharedPreferences();
     }
 }

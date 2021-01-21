@@ -2,13 +2,13 @@ package org.smartregister.uniceftunisia.util;
 
 public class AppConstants {
 
-    public static final String REACTION_VACCINE = "Reaction_Vaccine";
-
-    public interface LOCALE {
+    public interface Locale {
         String ARABIC_LOCALE = "ar";
     }
 
     public static final class KEY {
+        public static final String REACTION_VACCINE = "Reaction_Vaccine";
+        public static final String MAX_SELECTABLE = "maxSelectable";
         public static final String CHILD = "child";
         public static final String MOTHER_FIRST_NAME = "mother_first_name";
         public static final String FATHER_FIRST_NAME = "father_first_name";
@@ -21,10 +21,7 @@ public class AppConstants {
         public static final String GENDER = "gender";
         public static final String INACTIVE = "inactive";
         public static final String LAST_INTERACTED_WITH = "last_interacted_with";
-        public static final String VALUE = "value";
-        public static final String STEPNAME = "stepName";
         public static final String TITLE = "title";
-        public static final String HIA_2_INDICATOR = "hia2_indicator";
         public static final String RELATIONALID = "relationalid";
         public static final String RELATIONAL_ID = "relational_id";
         public static final String ID_LOWER_CASE = "_id";
@@ -45,7 +42,6 @@ public class AppConstants {
         public static final String DOB_UNKNOWN = "dob_unknown";
         public static final String DATE_BIRTH = "Date_Birth";
         public static final String BIRTH_WEIGHT = "Birth_Weight";
-        public static final String CARD_ID = "card_id";
         public static final String MOTHER_PHONE_NUMBER = "mother_phone_number";
         public static final String MOTHER_SECOND_PHONE_NUMBER = "mother_second_phone_number";
         public static final String FATHER_PHONE_NUMBER = "father_phone_number";
@@ -59,17 +55,14 @@ public class AppConstants {
         public static final String OPTIONS_TEXT = "options.text";
         public static final String SITE_CHARACTERISTICS = "site_characteristics";
         public static final String REGISTRATION_DATE = "client_reg_date";
-        public static final String FIELDS = "fields";
         public static final String KEY = "key";
-        public static final String IS_VACCINE_GROUP = "is_vaccine_group";
-        public static final String OPTIONS = "options";
         public static final String MOTHER_NATIONALITY = "mother_nationality";
-        public static final String FIRST_BIRTH= "first_birth";
-        public static final String RUBELLA_SEROLOGY= "rubella_serology";
-        public static final String SEROLOGY_RESULTS= "serology_results";
-        public static final String MOTHER_RUBELLA= "mother_rubella";
+        public static final String FIRST_BIRTH = "first_birth";
+        public static final String RUBELLA_SEROLOGY = "rubella_serology";
+        public static final String SEROLOGY_RESULTS = "serology_results";
+        public static final String MOTHER_RUBELLA = "mother_rubella";
         public static final String FATHER_NATIONALITY = "father_nationality";
-        public static final String FATHER_RELATIONAL_ID= "father_relational_id";
+        public static final String FATHER_RELATIONAL_ID = "father_relational_id";
         public static final String MOTHER_NATIONALITY_OTHER = "mother_nationality_other";
         public static final String FATHER_NATIONALITY_OTHER = "father_nationality_other";
         public static final String MOTHER_GUARDIAN_NUMBER = "mother_guardian_number";
@@ -78,19 +71,17 @@ public class AppConstants {
         public static final String PROTECTED_AT_BIRTH = "protected_at_birth";
         public static final String SHOW_BCG_SCAR = "show_bcg_scar";
         public static final String SHOW_BCG2_REMINDER = "show_bcg2_reminder";
-        public static final String BIRTH_REGISTRATION_NUMBER  = "birth_registration_number";
-        public static final String ID  = "id";
+        public static final String BIRTH_REGISTRATION_NUMBER = "birth_registration_number";
+        public static final String ID = "id";
         public static final String CHILD_REG = "child_reg";
         public static final String GA_AT_BIRTH = "ga_at_birth";
         public static final String PLACE_OF_BIRTH = "place_of_birth";
-    }
-
-    public static final class DrawerMenu {
-        public static final String ALL_FAMILIES = "All Families";
-        public static final String ALL_CLIENTS = "All Clients";
-        public static final String ANC_CLIENTS = "ANC Clients";
-        public static final String CHILD_CLIENTS = "Child Clients";
-        public static final String ANC = "ANC";
+        public static final String SMS_RECIPIENT = "sms_recipient";
+        public static final String OBJECT_ID = "object_id";
+        public static final String CARD_STATUS = "card_status";
+        public static final String CARD_STATUS_DATE = "card_status_date";
+        public static final String REGISTRATION_LOCATION_ID = "registration_location_id";
+        public static final String REGISTRATION_LOCATION_NAME = "registration_location_name";
     }
 
     public static final class FormTitleUtil {
@@ -107,6 +98,7 @@ public class AppConstants {
         public static final String CHILD_REGISTRATION = "Birth Registration";
         public static final String UPDATE_CHILD_REGISTRATION = "Update Birth Registration";
         public static final String OUT_OF_CATCHMENT = "Out of Area Service";
+        public static final String CARD_STATUS_UPDATE = "card_status_update";
     }
 
     public interface JsonForm {
@@ -147,17 +139,7 @@ public class AppConstants {
     }
 
     public interface RegisterType {
-        String ANC = "anc";
         String CHILD = "child";
-        String OPD = "opd";
-    }
-
-    public interface MultiResultProcessor {
-        String GROUPING_SEPARATOR = "_";
-    }
-
-    public interface IntentKey {
-        String REPORT_GROUPING = "report-grouping";
     }
 
     public interface Pref {
@@ -166,7 +148,7 @@ public class AppConstants {
     }
 
     public interface File {
-        String INDICATOR_CONFIG_FILE = "config/indicator-definitions.yml";
+        String INDICATOR_CONFIG_FILE = "configs/reporting/indicator-definitions.yml";
     }
 
     public interface ConditionalVaccines {

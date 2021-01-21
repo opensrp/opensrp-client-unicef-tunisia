@@ -15,6 +15,7 @@ import org.smartregister.child.ChildLibrary;
 import org.smartregister.child.util.ChildJsonFormUtils;
 import org.smartregister.child.util.Constants;
 import org.smartregister.child.util.Utils;
+import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.domain.form.FormLocation;
 import org.smartregister.location.helper.LocationHelper;
 import org.smartregister.util.AssetHandler;
@@ -22,6 +23,7 @@ import org.smartregister.util.FormUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import timber.log.Timber;
@@ -105,8 +107,8 @@ public class AppJsonFormUtils extends ChildJsonFormUtils {
             } else if (jsonObject.getString(ChildJsonFormUtils.KEY).equalsIgnoreCase(AppConstants.KEY.SECOND_PHONE_NUMBER)) {
                 String secondPhone = Utils.getValue(childDetails, "mother_second_phone_number", true);
                 jsonObject.put(ChildJsonFormUtils.VALUE, secondPhone);
-            } else if (jsonObject.getString(ChildJsonFormUtils.KEY).equalsIgnoreCase("Sex")) {
-                jsonObject.put(ChildJsonFormUtils.VALUE, childDetails.get(ChildJsonFormUtils.GENDER));
+            } else if (jsonObject.getString(ChildJsonFormUtils.KEY).equalsIgnoreCase("Sex") && childDetails.containsKey(ChildJsonFormUtils.GENDER)) {
+                jsonObject.put(ChildJsonFormUtils.VALUE, childDetails.get(ChildJsonFormUtils.GENDER).toLowerCase(Locale.getDefault()));
             } else if (jsonObject.getString(ChildJsonFormUtils.KEY).equalsIgnoreCase(AppConstants.KEY.BIRTH_WEIGHT)) {
                 jsonObject.put(ChildJsonFormUtils.VALUE, childDetails.get(AppConstants.KEY.BIRTH_WEIGHT.toLowerCase()));
             } else {
@@ -170,11 +172,15 @@ public class AppJsonFormUtils extends ChildJsonFormUtils {
 
         //Update father details if it exists or create a new one
         if (form.has(Constants.KEY.FATHER) && childDetails.containsKey(AppConstants.KEY.FATHER_RELATIONAL_ID)
-                && childDetails.get(AppConstants.KEY.FATHER_RELATIONAL_ID) != null){
+                && childDetails.get(AppConstants.KEY.FATHER_RELATIONAL_ID) != null) {
             form.getJSONObject(Constants.KEY.FATHER).put(ENCOUNTER_TYPE, Constants.EventType.UPDATE_FATHER_DETAILS);
         }
-        if (form.has(Constants.KEY.MOTHER)){
+        if (form.has(Constants.KEY.MOTHER)) {
             form.getJSONObject(Constants.KEY.MOTHER).put(ENCOUNTER_TYPE, Constants.EventType.UPDATE_MOTHER_DETAILS);
         }
+    }
+
+    public static void tagEventMetadata(Event event) {
+        tagSyncMetadata(event);
     }
 }
