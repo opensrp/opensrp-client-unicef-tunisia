@@ -49,7 +49,7 @@
     <string name="indicator">Indicaor</string>
     <string name="value">Valeur</string>
 
-    <string name="str_page_info">Page (0) de (1)</string>
+    <string name="str_page_info">Page {0} de {1}</string>
     <string name="dismiss_lookup">Confirmer</string>
     <string name="fill_form_error_msg">Veuillez entrer au moins un service avant d\'enregistrer</string>
     <string name="close">Fermer</string>
@@ -107,4 +107,7 @@
     <string name="first_birth">Première naissance de la mère</string>
     <string name="rubella_serology">La mère a subi un test de sérologie de la rubéole</string>
     <string name="serology_results">Résultat du test sérologique</string>
-    </resources>
+    <string name="maximum_extra_vaccines_reached">Vous ne pouvez enregistrer qu\'un maximum de 10 vaccins</string>
+    <string name="sms_recipient">Destinataire du rappel SMS des vaccins</string>
+
+</resources>
