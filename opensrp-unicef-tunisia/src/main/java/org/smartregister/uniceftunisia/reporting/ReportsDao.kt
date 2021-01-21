@@ -9,7 +9,10 @@ import org.smartregister.uniceftunisia.reporting.ReportsDao.SqlQueries.DISTINCT_
 import org.smartregister.uniceftunisia.reporting.annual.coverage.domain.CoverageTarget
 import org.smartregister.uniceftunisia.reporting.annual.coverage.domain.CoverageTargetType
 import org.smartregister.uniceftunisia.reporting.annual.coverage.domain.VaccineCount
+import org.smartregister.uniceftunisia.reporting.common.DATES
+import org.smartregister.uniceftunisia.reporting.common.NAME
 import org.smartregister.uniceftunisia.reporting.common.ReportingUtils.dateFormatter
+import org.smartregister.uniceftunisia.reporting.common.VACCINE_COUNT
 import org.smartregister.uniceftunisia.reporting.monthly.domain.MonthlyTally
 import java.util.*
 import org.smartregister.uniceftunisia.reporting.annual.coverage.repository.VaccineCoverageTargetRepository.ColumnNames as CoverageTableColumns
@@ -111,7 +114,7 @@ object ReportsDao : AbstractDao() {
      * This method return a list of distinct months from the daily indicators
      */
     fun getDistinctReportMonths(): List<String> {
-        val dataMap = DataMap { cursor: Cursor? -> getCursorValue(cursor, "dates") }
+        val dataMap = DataMap { cursor: Cursor? -> getCursorValue(cursor, DATES) }
         return readData(DISTINCT_REPORT_MONTHS_SQL, dataMap).toList().filterNotNull()
     }
 
@@ -206,8 +209,8 @@ object ReportsDao : AbstractDao() {
         val result = readData(SqlQueries.targetVaccineCountsSql(year)) { cursor: Cursor? ->
             if (cursor != null && cursor.count > 0) {
                 VaccineCount(
-                        name = getCursorValue(cursor, "name")!!,
-                        count = getCursorIntValue(cursor, "vaccine_count") ?: 0,
+                        name = getCursorValue(cursor, NAME)!!,
+                        count = getCursorIntValue(cursor, VACCINE_COUNT) ?: 0,
                 )
             } else null
 

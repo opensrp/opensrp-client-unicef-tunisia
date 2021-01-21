@@ -27,6 +27,7 @@ class IndicatorPositionRepository private constructor() : BaseRepository() {
     private object Constants {
         const val TABLE_NAME = "indicator_position"
         const val INDICATOR_POSITION_PREF = "indicator_positions_pref"
+        const val INDICATOR_POSITIONS_JSON_FILE =  "configs/reporting/indicator-positions.json"
     }
 
     object ColumnNames {
@@ -59,8 +60,7 @@ class IndicatorPositionRepository private constructor() : BaseRepository() {
                 delete("sqlite_sequence", "name = ?", arrayOf(Constants.TABLE_NAME))
             }
         }
-        val indicatorIndicesJson = Utils.readAssetContents(application.applicationContext,
-                "configs/reporting/indicator-positions.json")
+        val indicatorIndicesJson = Utils.readAssetContents(application.applicationContext, Constants.INDICATOR_POSITIONS_JSON_FILE)
         val indicatorIndices = Gson().fromJson<List<IndicatorPosition>>(indicatorIndicesJson,
                 object : TypeToken<List<IndicatorPosition>>() {}.type)
         CoroutineScope(Dispatchers.IO).launch {

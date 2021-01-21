@@ -48,6 +48,9 @@ const val VACCINE_COVERAGES = "vaccine_coverages"
 const val YEAR_MONTH = "year_month"
 const val SHOW_DATA = "show_data"
 const val VACCINE_COVERAGE_TARGET = "vaccine_coverage_target"
+const val DATES = "dates"
+const val NAME = "name"
+const val VACCINE_COUNT = "vaccine_count"
 
 /**
  * Utility method for creating ViewModel Factory

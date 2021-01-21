@@ -4,6 +4,7 @@ import android.app.Activity
 import io.mockk.justRun
 import io.mockk.mockkClass
 import io.mockk.unmockkAll
+import io.mockk.verify
 import org.junit.After
 import org.junit.Assert.assertNotNull
 import org.junit.Before
@@ -29,12 +30,14 @@ class ReportRegisterPresenterTest {
     fun `Should start monthly report`() {
         justRun { (view as Activity).startActivity(any()) }
         reportRegisterPresenter.startReport(ReportGroup.MONTHLY_REPORTS)
+        verify {(view as Activity).startActivity(any())   }
     }
 
     @Test
     fun `Should start annual coverage report`() {
         justRun { (view as Activity).startActivity(any()) }
         reportRegisterPresenter.startReport(ReportGroup.ANNUAL_COVERAGE_REPORTS)
+        verify {(view as Activity).startActivity(any())   }
     }
 
     @Test

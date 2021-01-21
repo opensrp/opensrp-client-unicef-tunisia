@@ -18,6 +18,7 @@ import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.immunization.domain.VaccineSchedule;
 import org.smartregister.immunization.job.VaccineSchedulesUpdateJob;
 import org.smartregister.uniceftunisia.application.UnicefTunisiaApplication;
+import org.smartregister.uniceftunisia.util.AppConstants;
 import org.smartregister.uniceftunisia.util.VaccineUtils;
 
 import java.util.Calendar;
@@ -124,11 +125,11 @@ public class ChildImmunizationActivity extends BaseChildImmunizationActivity {
                 calendar.set(Calendar.HOUR_OF_DAY, 1);
                 long hoursSince1AM = (System.currentTimeMillis() - calendar.getTimeInMillis()) / TimeUnit.HOURS.toMillis(1);
                 if (VaccineSchedulesUpdateJob.isLastTimeRunLongerThan(hoursSince1AM) && !UnicefTunisiaApplication.getInstance().alertUpdatedRepository().findOne(childDetails.entityId())) {
-                    String dobString = Utils.getValue(childDetails.getColumnmaps(), "dob", false);
+                    String dobString = Utils.getValue(childDetails.getColumnmaps(), AppConstants.KEY.DOB, false);
                     DateTime dateTime = Utils.dobStringToDateTime(dobString);
                     if (dateTime != null) {
                         VaccineUtils.refreshImmunizationSchedules(childDetails.getCaseId());
-                        VaccineSchedule.updateOfflineAlerts(childDetails.entityId(), dateTime, "child");
+                        VaccineSchedule.updateOfflineAlerts(childDetails.entityId(), dateTime, AppConstants.KEY.CHILD);
                     }
                     UnicefTunisiaApplication.getInstance().alertUpdatedRepository().saveOrUpdate(childDetails.entityId());
                 }

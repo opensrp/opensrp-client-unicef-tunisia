@@ -17,11 +17,11 @@ import org.smartregister.uniceftunisia.BaseActivityUnitTest;
 public class ChildRegisterActivityTest extends BaseActivityUnitTest {
 
     private ChildRegisterActivity childRegisterActivity;
+
     private ActivityController<ChildRegisterActivity> controller;
 
     @Before
     public void setUp(){
-        MockitoAnnotations.initMocks(this);
 
         controller = Robolectric.buildActivity(ChildRegisterActivity.class).create().start();
         childRegisterActivity = controller.get();

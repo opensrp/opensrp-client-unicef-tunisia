@@ -22,15 +22,11 @@ import static org.robolectric.Shadows.shadowOf;
 public class ChildDetailTabbedActivityTest extends BaseActivityUnitTest {
 
     private ChildDetailTabbedActivity  childDetailTabbedActivity;
-    private ActivityController<ChildDetailTabbedActivity> controller;
 
+    private ActivityController<ChildDetailTabbedActivity> controller;
 
     @Before
     public void setUp(){
-        MockitoAnnotations.initMocks(this);
-
-        shadowOf(Looper.getMainLooper()).idle();
-
         controller = Robolectric.buildActivity(ChildDetailTabbedActivity.class);
         childDetailTabbedActivity = controller.get();
     }
