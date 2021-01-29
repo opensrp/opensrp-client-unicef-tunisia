@@ -48,6 +48,10 @@ class ReportIndicatorsActivity : MultiLanguageActivity() {
                 navController.navigate(R.id.reportIndicatorsSummaryFragment)
                 saveFormButton.visibility = View.GONE
                 verticalDivider.visibility = View.GONE
+            } else {
+                navController.navigate(R.id.reportIndicatorsFormFragment)
+                saveFormButton.visibility = View.VISIBLE
+                verticalDivider.visibility = View.VISIBLE
             }
         }
 
