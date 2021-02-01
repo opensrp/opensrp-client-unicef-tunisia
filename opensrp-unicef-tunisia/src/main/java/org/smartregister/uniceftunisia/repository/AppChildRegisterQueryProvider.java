@@ -45,6 +45,7 @@ import static org.smartregister.uniceftunisia.util.AppConstants.KEY.SECOND_PHONE
 import static org.smartregister.uniceftunisia.util.AppConstants.KEY.SEROLOGY_RESULTS;
 import static org.smartregister.uniceftunisia.util.AppConstants.KEY.SHOW_BCG2_REMINDER;
 import static org.smartregister.uniceftunisia.util.AppConstants.KEY.SHOW_BCG_SCAR;
+import static org.smartregister.uniceftunisia.util.AppConstants.KEY.SMS_LANGUAGE;
 import static org.smartregister.uniceftunisia.util.AppConstants.KEY.SMS_RECIPIENT;
 import static org.smartregister.uniceftunisia.util.AppConstants.KEY.VILLAGE;
 import static org.smartregister.uniceftunisia.util.AppConstants.KEY.ZEIR_ID;
@@ -89,6 +90,7 @@ public class AppChildRegisterQueryProvider extends RegisterQueryProvider {
                 getMotherDetailsColumn(PROTECTED_AT_BIRTH),
                 getMotherDetailsColumn(MOTHER_TDV_DOSES),
                 getMotherDetailsColumn(FIRST_BIRTH),
+                getMotherDetailsColumn(SMS_LANGUAGE),
                 getMotherDetailsColumn(RUBELLA_SEROLOGY),
                 getMotherDetailsColumn(SEROLOGY_RESULTS),
                 getMotherDetailsColumn(MOTHER_RUBELLA),
