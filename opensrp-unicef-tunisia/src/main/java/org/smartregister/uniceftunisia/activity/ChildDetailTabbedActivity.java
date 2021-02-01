@@ -51,7 +51,6 @@ import static org.smartregister.clientandeventmodel.DateUtil.getDateFromString;
  */
 public class ChildDetailTabbedActivity extends BaseChildDetailTabbedActivity {
     private final static List<String> nonEditableFields = Arrays.asList("Sex", "zeir_id", "mother_rubella", "protected_at_birth");
-    private List<Map.Entry<String, String>> extraChildVaccines;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,8 +158,7 @@ public class ChildDetailTabbedActivity extends BaseChildDetailTabbedActivity {
             case R.id.report_adverse_event:
                 return launchAdverseEventForm();
             case R.id.record_dynamic_vaccines:
-                extraChildVaccines = getExtraChildVaccines();
-                if (extraChildVaccines.size() < 10) {
+                if (getExtraChildVaccines().size() < 10) {
                     launchDynamicVaccinesForm(AppConstants.JsonForm.DYNAMIC_VACCINES, Constants.KEY.PRIVATE_SECTOR_VACCINE);
                 } else {
                     Utils.showToast(this, getString(R.string.maximum_extra_vaccines_reached));
@@ -187,7 +185,7 @@ public class ChildDetailTabbedActivity extends BaseChildDetailTabbedActivity {
 
             //Limit the size of multi select widget field size to the number of extra vaccines
             JSONObject multiSelectField = ChildJsonFormUtils.getFieldJSONObject(jsonArray, multiSelectFieldName);
-            multiSelectField.put(AppConstants.KEY.MAX_SELECTABLE, 10 - extraChildVaccines.size());
+            multiSelectField.put(AppConstants.KEY.MAX_SELECTABLE, 10 - getExtraChildVaccines().size());
 
             form.put(Constants.KEY.DYNAMIC_FIELD, multiSelectFieldName);
             form.put(Constants.KEY.ENTITY_ID, childDetails.entityId());
