@@ -248,6 +248,7 @@ public class UnicefTunisiaApplication extends DrishtiApplication implements Time
 
         SyncStatusBroadcastReceiver.init(this);
         LocationHelper.init(new ArrayList<>(Arrays.asList(BuildConfig.LOCATION_LEVELS)), BuildConfig.DEFAULT_LOCATION);
+        LocationHelper.getInstance().generateDefaultLocationHierarchy(Arrays.asList(BuildConfig.LOCATION_LEVELS));
         jsonSpecHelper = new JsonSpecHelper(this);
 
         //init Job Manager

@@ -19,7 +19,7 @@ import org.smartregister.job.SyncServiceJob;
 import org.smartregister.job.SyncSettingsServiceJob;
 import org.smartregister.job.ValidateSyncDataServiceJob;
 import org.smartregister.reporting.job.RecurringIndicatorGeneratingJob;
-import org.smartregister.sync.intent.SyncIntentService;
+import org.smartregister.uniceftunisia.service.intent.AppSyncIntentService;
 import org.smartregister.uniceftunisia.service.intent.ArchiveChildrenAgedAboveFiveIntentService;
 
 import timber.log.Timber;
@@ -30,7 +30,7 @@ public class AppJobCreator implements JobCreator {
     public Job create(@NonNull String tag) {
         switch (tag) {
             case SyncServiceJob.TAG:
-                return new SyncServiceJob(SyncIntentService.class);
+                return new SyncServiceJob(AppSyncIntentService.class);
             case ExtendedSyncServiceJob.TAG:
                 return new ExtendedSyncServiceJob();
             case PullUniqueIdsServiceJob.TAG:

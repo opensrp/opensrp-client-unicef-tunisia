@@ -1,13 +1,11 @@
 package org.smartregister.uniceftunisia.activity;
 
 import android.app.Activity;
-import android.os.Looper;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
 import org.robolectric.android.controller.ActivityController;
 import org.robolectric.util.ReflectionHelpers;
@@ -16,8 +14,6 @@ import org.smartregister.uniceftunisia.BaseActivityUnitTest;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.robolectric.Shadows.shadowOf;
 
 public class ChildDetailTabbedActivityTest extends BaseActivityUnitTest {
 

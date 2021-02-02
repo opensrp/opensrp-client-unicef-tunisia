@@ -10,7 +10,6 @@ import org.smartregister.reporting.repository.DailyIndicatorCountRepository
 import org.smartregister.uniceftunisia.reporting.ReportingTestDataProvider.getSentMonthlyTallies
 import org.smartregister.uniceftunisia.reporting.ReportsDao
 import org.smartregister.uniceftunisia.reporting.common.ReportingUtils
-import org.smartregister.uniceftunisia.reporting.monthly.domain.MonthlyTally
 import java.util.*
 
 class MonthlyReportsRepositoryTest {
