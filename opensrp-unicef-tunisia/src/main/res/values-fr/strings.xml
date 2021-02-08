@@ -46,7 +46,7 @@
     <string name="please_wait_message">S\'il vous plaît, attendez</string>
     <string name="reports">Rapports</string>
 
-    <string name="str_page_info">Page (0) de (1)</string>
+    <string name="str_page_info">Page {0} de {1}</string>
     <string name="dismiss_lookup">Confirmer</string>
     <string name="fill_form_error_msg">Veuillez entrer au moins un service avant d\'enregistrer</string>
     <string name="close">Fermer</string>
@@ -177,6 +177,172 @@
     <string name="vials_used_mr">Nombre de flacons MR utilisés</string>
     <string name="vials_used_dtp">Nombre de flacons DTP utilisés</string>
     <string name="vials_used_rubella">Nombre de flacons de rubéole utilisés</string>
+    <string name="vials_used_dt15">Nombre de flacons de dT utilisés pour les personnes de 15–49 ans</string>
+
+    <string name="doses_per_vial_hepb">Nombre de doses d\'hépatite B par flacon</string>
+    <string name="doses_per_vial_bcg">Nombre de doses de BCG par flacon</string>
+    <string name="doses_per_vial_opv">Nombre de doses de VPO par flacon</string>
+    <string name="doses_per_vial_penta">Nombre de doses de Penta par flacon</string>
+    <string name="doses_per_vial_ipv">Nombre de doses de VPI par flacon</string>
+    <string name="doses_per_vial_pcv">Nombre de doses de PCV par flacon</string>
+    <string name="doses_per_vial_mr">Nombre de doses MR par flacon</string>
+    <string name="doses_per_vial_dtp">Nombre de doses de DTC par flacon</string>
+    <string name="doses_per_vial_rubella">Nombre de doses de rubéole par flacon</string>
+    <string name="doses_per_vial_dt15">Nombre de doses de dT par flacon</string>
+
+    <string name="total_doses_hepb">Nombre total de doses possibles d\'hépatite B</string>
+    <string name="total_doses_bcg">Nombre total de doses de BCG possibles</string>
+    <string name="total_doses_opv">Nombre total de doses de VPO possibles</string>
+    <string name="total_doses_penta">Nombre total de doses de Penta possibles</string>
+    <string name="total_doses_ipv">Nombre total de doses de VPI possibles</string>
+    <string name="total_doses_pcv">Nombre total de doses de PCV possibles</string>
+    <string name="total_doses_mr">Nombre total de doses RM possibles</string>
+    <string name="total_doses_dtp">Nombre total de doses de DTC possibles</string>
+    <string name="total_doses_rubella">Nombre total de doses possibles de rubéole</string>
+    <string name="total_doses_dt15">Nombre total de doses de dT possibles</string>
+
+    <string name="use_rate_hepb">Taux d\'utilisation de l\'hépatite B (%)</string>
+    <string name="use_rate_bcg">Taux d\'utilisation du BCG (%)</string>
+    <string name="use_rate_opv">Taux d\'utilisation du VPO (%)</string>
+    <string name="use_rate_penta">Taux d\'utilisation de Penta (%)</string>
+    <string name="use_rate_ipv">Taux d\'utilisation du VPI (%)</string>
+    <string name="use_rate_pcv">Taux d\'utilisation du PCV (%)</string>
+    <string name="use_rate_mr">Taux d\'utilisation RM (%)</string>
+    <string name="use_rate_dtp">Taux d\'utilisation du ]DTP (%)</string>
+    <string name="use_rate_rubella">Taux d\'utilisation de la rubéole (%)</string>
+    <string name="use_rate_dt15">Taux d\'utilisation du dT (%)</string>
+
+    <!-- Children protected against Tetanus at Birth:  at the point of receiving Penta 1 -->
+    <string name="pab_mother_dt">Enfants protégés à la naissance par dT uniquement</string>
+    <string name="pab_assisted_delivery">Enfants protégés à la naissance par accouchement assisté uniquement</string>
+    <string name="pab_dt_and_assisted_delivery">Enfants protégés à la naissance par dT et accouchement assisté</string>
+    <string name="pab_total">Nombre total d\'enfants protégés à la naissance</string>
+
+    <!--Rubella Vaccination for woman giving birth for the first time -->
+    <string name="total_child_births">Nombre total de naissances d\'enfants</string>
+    <string name="number_first_birth">Nombre de femmes primapara (accouchant pour la première fois) dans l\'établissement ce mois-ci</string>
+    <string name="percentage_first_birth">% de naissances de primapara (femme qui accouche pour la première fois)</string>
+    <string name="number_rubella_serology">Nombre de femmes primapara (accouchant pour la première fois) qui ont subi un test sérologique dans l\'établissement ce mois-ci</string>
+    <string name="percentage_number_rubella_serology">% de mères primapara qui ont effectué un test sérologique de la rubéole</string>
+    <string name="negative_serology_results">Nombre de femmes primapara (accouchant pour la première fois) qui ont subi un test sérologique qui a obtenu un résultat négatif dans l\'établissement ce mois-ci</string>
+    <string name="percentage_serology_results">% des mères qui ont passé le test sérologique de la rubéole ont eu un résultat négatif</string>
+    <string name="women_vaccinated_rubella">Nombre de femmes vaccinées contre la rubéole</string>
+
+    <!--Children with an adequate number of growth measurements-->
+    <string name="right_measures_6months">Enfants avec les bonnes mesures à 6 mois</string>
+    <string name="percentage_right_measures_6months">% d\'enfants avec de bonnes mesures à 6 mois</string>
+    <string name="right_measures_12months">Enfants avec les bonnes mesures à 12 mois</string>
+    <string name="percentage_right_measures_12months">% d\'enfants avec de bonnes mesures à 12 mois</string>
+    <string name="right_measures_18months">Enfants avec les bonnes mesures à 18 mois</string>
+    <string name="percentage_right_measures_18months">% d\'enfants avec de bonnes mesures à 18 mois</string>
+
+    <!--Children with at least 1 previous episode of undernutrition-->
+    <string name="malnutrition_episode_6months">Enfants ayant au moins 1 épisode de dénutrition antérieur à 6 mois</string>
+    <string name="percentage_malnutrition_episode_6months">% d\'enfants sous-nutrition à 6 mois</string>
+    <string name="malnutrition_episode_12months">Enfants ayant au moins 1 épisode de dénutrition antérieur à 12 mois</string>
+    <string name="percentage_malnutrition_episode_12months">% d\'enfants sous-nutrition à 12 mois</string>
+    <string name="malnutrition_episode_18months">Enfants ayant au moins 1 épisode de dénutrition antérieur à 18 mois</string>
+    <string name="percentage_malnutrition_episode_18months">% d\'enfants sous-nutrition à 18 mois</string>
+
+    <!-- Children diagnosed as malnourished according to the weighing of the day-->
+    <string name="mid_mal_grp_children_6mnths">-1 et -2 Zscore à 6 mois</string>
+    <string name="percentage_mid_mal_6mnths">(%) -1 et -2 Zscore à 6 mois</string>
+    <string name="mid_mal_grp_children_12mnths">-1 et -2 Zscore à 12 mois</string>
+    <string name="percentage_mid_mal_12mnths">(%) -1 et -2 Zscore à 12 mois</string>
+    <string name="mid_mal_grp_children_18mnths">-1 et -2 Zscore à 18 mois</string>
+    <string name="percentage_mid_mal_18mnths">(%) -1 et -2 Zscore à 18 mois</string>
+
+    <string name="mod_mal_grp_children_6mnths">Entre -2 et -3 score Z à 6 mois</string>
+    <string name="percentage_mod_mal_6mnths">(%) entre -2 et -3 Z-score Z à 6 mois</string>
+    <string name="mod_mal_grp_children_12mnths">Entre -2 et -3 Zscore à 12 mois</string>
+    <string name="percentage_mod_mal_12mnths">(%) entre -2 et -3 score Z à 12 mois</string>
+    <string name="mod_mal_grp_children_18mnths">Entre -2 et -3 score Z à 18 mois</string>
+    <string name="percentage_mod_mal_18mnths">(%) entre -2 et -3 score Z à 18 mois</string>
+
+    <string name="sev_mal_grp_children_6mnths">Sous -3 Z-score à 6 mois</string>
+    <string name="percentage_sev_mal_6mnths">% en dessous de -3 Z-score à 6 mois</string>
+    <string name="sev_mal_grp_children_12mnths">Moins de -3 Z-score à 12 mois</string>
+    <string name="percentage_sev_mal_12mnths">% -3 Z-score à 12 mois</string>
+    <string name="sev_mal_grp_children_18mnths">Sous -3 Z-score à 18 mois</string>
+    <string name="percentage_sev_mal_18mnths">% en dessous de -3 Z-score à 18 mois</string>
+
+    <string name="obese_grp_children_6mnths">Plus de +2 Z-score à 6 mois</string>
+    <string name="percentage_obese_grp_6mnths">% supérieur au score Z +2 à 6 mois</string>
+    <string name="obese_grp_children_12mnths">Plus de +2 Z-score à 12 mois</string>
+    <string name="percentage_obese_grp_12mnths">% supérieur au score Z +2 à 12 mois</string>
+    <string name="obese_grp_children_18mnths">Plus de +2 Z-score à 18 mois</string>
+    <string name="percentage_obese_grp_18mnths">% supérieur au score Z +2 à 18 mois</string>
+
+    <!--End of report indicators-->
+
+    <!-- Months -->
+    <string name="january">janvier</string>
+    <string name="february">février</string>
+    <string name="march">Mars</string>
+    <string name="april">Avril</string>
+    <string name="may">Mai</string>
+    <string name="june">Juin</string>
+    <string name="july">Juillet</string>
+    <string name="august">Aout</string>
+    <string name="september">Septembre</string>
+    <string name="october">Octobre</string>
+    <string name="november">Novembre</string>
+    <string name="december">Decembre</string>
+
+    <!--Overridden vaccines -->
+    <string name="hep_b_0">HEP B 0</string>
+    <string name="ipv_1">VPI 1</string>
+    <string name="ipv_2">VPI 2</string>
+    <string name="dtp_4">DTP 4</string>
+
+    <!-- Report grouping titles -->
+    <string name="report_group_header_vaccination_activity">Activité de vaccination à différents âges</string>
+    <string name="report_group_header_vaccine_utilization">Rapport d\'utilisation des vaccins</string>
+    <string name="report_group_header_tetanus_protected">Enfants protégés contre le tétanos à la naissance: au moment de recevoir Penta 1</string>
+    <string name="report_group_header_rubella_vaccine">Vaccination contre la rubéole pour la femme qui accouche pour la première fois</string>
+    <string name="report_group_header_adequate_growth_measurement">Enfants avec un nombre adéquat de mesures de croissance</string>
+    <string name="report_group_header_previous_under_nutrition">Enfants ayant au moins 1 épisode de dénutrition antérieur</string>
+    <string name="report_group_header_diagnosed_malnourished">Enfants diagnostiqués sous-alimentés selon la pesée du jour</string>
+
+    <!-- Strings used for reporting -->
+    <string name="title_activity_report_tallies">Signaler une activité de calcul</string>
+    <string name="report_indicators_summary">Résumé des indicateurs du rapport</string>
+    <string name="report_indicators_form">Formulaire d\'indicateurs de rapport</string>
+    <string name="annual_report_fragment">Fragment de couverture annuelle</string>
+    <string name="month_year_draft">%1$s Brouillon</string>
+    <string name="error_saving_draft_reports">Une erreur s\'est produite lors de l\'enregistrement des brouillons. Réessayez plus tard</string>
+    <string name="error_sending_draft_reports">Une erreur s\'est produite lors de l\'envoi du rapport. Réessayez plus tard</string>
+    <string name="started_on">Démarré %1$s</string>
+    <string name="monthly_draft_saved">Rapport provisoire mensuel enregistré</string>
+    <string name="monthly_draft_submitted">Rapport mensuel envoyé</string>
+    <string name="confirm_send_draft_reports">Confirmer l\'envoi du rapport provisoire</string>
+    <string name="sent_report_details">Envoyer%1$s par %2$s</string>
+    <string name="monthly_draft_reports">Rapports brouillons (%1$d)</string>
+    <string name="monthly_sent_reports">Rapports envoyés</string>
+    <string name="monthly_sent_reports_with_year">Rapports envoyés %1$s</string>
+    <string name="coverage_reports">Rapports de couverture</string>
+    <string name="year">Année</string>
+    <string name="error_enter_valid_number">S\'il vous plait, entrez un nombre valide</string>
     <string name="indicator">Indicaor</string>
     <string name="value">Valeur</string>
-    </resources>
+    <string name="loading_monthly_reports_message">Génération de rapports mensuels. S\'il vous plaît, attendez…</string>
+    <string name="loading_monthly_reports_title">Chargement des rapports</string>
+    <string name="annual_coverage_report">Rapport de couverture annuel</string>
+    <string name="under_one_target">Cible inférieure à: %1$s</string>
+    <string name="one_two_years_target">Objectif 1 à 2 ans: %1$s</string>
+    <string name="year_label">Année</string>
+    <string name="vaccinated">Vacciné</string>
+    <string name="coverage">Couverture</string>
+    <string name="current_report_year">%1$s (en cours)</string>
+    <string name="error_no_target">Erreur: aucune cible</string>
+    <string name="not_defined">Non défini</string>
+    <string name="set_under_one_target">Population cible inférieure à 1 an - %1$d</string>
+    <string name="set_one_two_year_target">Définir une population cible de 1 à 2 ans -  %1$d</string>
+    <string name="under_one_target_population">Moins de 1 population cible</string>
+    <string name="one_two_years_target_population">Population cible de 1 à 2 ans</string>
+    <string name="specify_target_error">Veuillez spécifier la population cible</string>
+    <string name="error_saving_target">Erreur lors de l\'enregistrement de la population cible</string>
+
+    <!-- Card support strings -->
+    <string name="opensrp_id">Numéro IDV</string>
+</resources>
