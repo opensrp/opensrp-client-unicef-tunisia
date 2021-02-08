@@ -149,7 +149,7 @@ fun String.convertToNamedMonth(hasHyphen: Boolean = false): String {
  * Return a formatted string identifier
  */
 fun String.getResourceId(context: Context): Int = try {
-    context.resources.getIdentifier(this.replace(" ", "_").replace("/", ""), "string", context.packageName)
+    context.resources.getIdentifier(this.toLowerCase(Locale.ENGLISH).replace(" ", "_").replace("/", ""), "string", context.packageName)
 } catch (exception: Resources.NotFoundException) {
     Timber.e("String Resource for $this is not found. Specify it on strings.xml file.$exception")
     0
@@ -182,8 +182,12 @@ fun Context.showToast(resourceId: Int, duration: Int = Toast.LENGTH_LONG) =
  * Show progress dialog
  */
 
-fun Context.showProgressDialog(show: Boolean = true, title: String =
-        this.getString(R.string.please_wait_title), message: String = this.getString(R.string.loading)):
+fun Context.showProgressDialog(
+        show: Boolean = true,
+        title: String =
+                this.getString(R.string.please_wait_title),
+        message: String = this.getString(R.string.loading),
+):
         AlertDialog {
 
     val parentLayout = LayoutInflater.from(this).inflate(R.layout.progress_dialog_layout, null, false).apply {
