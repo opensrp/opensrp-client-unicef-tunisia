@@ -141,7 +141,7 @@ public class AppClientProcessorForJava extends ClientProcessorForJava {
                         processBCGScarEvent(eventClient);
                         break;
                     case MoveToMyCatchmentUtils.MOVE_TO_CATCHMENT_EVENT:
-                        eventsToRemove.add(event);
+                        //Do nothing
                         break;
                     case Constants.EventType.ARCHIVE_CHILD_RECORD:
                     case Constants.EventType.DEATH:
