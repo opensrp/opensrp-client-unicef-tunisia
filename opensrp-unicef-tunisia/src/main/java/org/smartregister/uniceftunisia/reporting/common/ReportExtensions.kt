@@ -21,6 +21,8 @@ import org.json.JSONObject
 import org.smartregister.AllConstants
 import org.smartregister.domain.Event
 import org.smartregister.domain.Obs
+import org.smartregister.path.reporting.monthly.domain.MonthlyTally
+import org.smartregister.path.reporting.monthly.domain.Tally
 import org.smartregister.uniceftunisia.R
 import org.smartregister.uniceftunisia.reporting.ReportsDao
 import org.smartregister.uniceftunisia.reporting.annual.coverage.domain.AnnualVaccineReport
@@ -29,7 +31,6 @@ import org.smartregister.uniceftunisia.reporting.annual.coverage.domain.Coverage
 import org.smartregister.uniceftunisia.reporting.annual.coverage.repository.AnnualReportRepository
 import org.smartregister.uniceftunisia.reporting.annual.coverage.repository.VaccineCoverageTargetRepository
 import org.smartregister.uniceftunisia.reporting.monthly.MonthlyReportsRepository
-import org.smartregister.uniceftunisia.reporting.monthly.domain.MonthlyTally
 import org.smartregister.uniceftunisia.util.AppJsonFormUtils
 import timber.log.Timber
 import java.math.BigDecimal
@@ -41,6 +42,7 @@ import org.smartregister.uniceftunisia.reporting.annual.coverage.repository.Vacc
 /**
  * String constants
  */
+const val DAILY_TALLIES = "daily_tallies"
 const val MONTHLY_TALLIES = "monthly_tallies"
 const val MONTHLY_REPORT = "monthly_report"
 const val ANNUAL_VACCINE_REPORT = "annual_vaccine_report"
@@ -51,6 +53,7 @@ const val VACCINE_COVERAGE_TARGET = "vaccine_coverage_target"
 const val DATES = "dates"
 const val NAME = "name"
 const val VACCINE_COUNT = "vaccine_count"
+const val DAY = "day"
 
 /**
  * Utility method for creating ViewModel Factory
@@ -222,7 +225,7 @@ fun View.showSnackBar(resourceId: Int, duration: Int = Snackbar.LENGTH_LONG) =
  * This method creates pair of indicator against its position then sorts them. The indicator positions
  * are defined in "configs/reporting/indicator-positions.json" file
  */
-suspend fun List<MonthlyTally>.sortIndicators(): List<MonthlyTally> {
+suspend fun <T : Tally> List<T>.sortIndicators(): List<T> {
     return withContext(Dispatchers.IO) {
         this@sortIndicators.map { Pair(ReportsDao.getIndicatorPosition(it.indicator), it) }
                 .filter { talliesPair -> talliesPair.first != -1.0 }

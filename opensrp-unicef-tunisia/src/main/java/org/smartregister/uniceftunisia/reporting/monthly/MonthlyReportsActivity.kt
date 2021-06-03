@@ -62,6 +62,7 @@ class MonthlyReportsActivity : MultiLanguageActivity() {
             fetchDraftedMonths()
             fetchUnDraftedMonths()
             fetchAllSentReportMonths()
+            fetchAllDailyTalliesDays()
         }
     }
 }

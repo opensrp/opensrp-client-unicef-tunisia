@@ -4,6 +4,8 @@ import android.database.sqlite.SQLiteDatabase
 import androidx.core.content.contentValuesOf
 import androidx.sqlite.db.transaction
 import org.jetbrains.annotations.TestOnly
+import org.smartregister.path.reporting.monthly.domain.DailyTally
+import org.smartregister.path.reporting.monthly.domain.MonthlyTally
 import org.smartregister.reporting.ReportingLibrary
 import org.smartregister.reporting.domain.IndicatorTally
 import org.smartregister.reporting.repository.DailyIndicatorCountRepository
@@ -21,7 +23,6 @@ import org.smartregister.uniceftunisia.reporting.monthly.MonthlyReportsRepositor
 import org.smartregister.uniceftunisia.reporting.monthly.MonthlyReportsRepository.ColumnNames.PROVIDER_ID
 import org.smartregister.uniceftunisia.reporting.monthly.MonthlyReportsRepository.ColumnNames.UPDATED_AT
 import org.smartregister.uniceftunisia.reporting.monthly.MonthlyReportsRepository.ColumnNames.VALUE
-import org.smartregister.uniceftunisia.reporting.monthly.domain.MonthlyTally
 import java.util.*
 import net.sqlcipher.database.SQLiteDatabase as SQLiteCipherDatabase
 
@@ -58,6 +59,10 @@ class MonthlyReportsRepository private constructor() : BaseRepository() {
         const val INDICATOR_GROUPING = "indicator_grouping"
         const val CREATED_AT = "created_at"
         const val UPDATED_AT = "updated_at"
+        // Daily Tally
+        const val INDICATOR_VALUE = "indicator_value"
+        const val INDICATOR_IS_VALUE_SET = "indicator_is_value_set"
+        const val DAY = "day"
     }
 
     private object TableQueries {
@@ -185,6 +190,16 @@ class MonthlyReportsRepository private constructor() : BaseRepository() {
      */
     fun fetchSentReportTalliesByMonth(yearMonth: String) =
             ReportsDao.getReportsByMonth(yearMonth = yearMonth, drafted = false)
+
+    /**
+     * Fetch all daily for the [day]
+     */
+    fun fetchDailyTalliesByDay(day: String) =
+            ReportsDao.getReportsByDay(day)
+
+    fun fetchAllDailyReports(): Map<String, List<DailyTally>>? {
+        return ReportsDao.getAllDailyTallies().groupBy { dateFormatter("MMMM yyyy").format(it.day) }
+    }
 
     companion object {
         @Volatile

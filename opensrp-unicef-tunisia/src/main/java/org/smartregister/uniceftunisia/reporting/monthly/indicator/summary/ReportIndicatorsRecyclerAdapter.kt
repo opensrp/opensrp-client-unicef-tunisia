@@ -12,14 +12,15 @@ import kotlinx.android.synthetic.main.report_indicators_expansion_panel_item.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.smartregister.path.reporting.monthly.domain.MonthlyTally
+import org.smartregister.path.reporting.monthly.domain.Tally
 import org.smartregister.uniceftunisia.R
 import org.smartregister.uniceftunisia.reporting.common.getResourceId
 import org.smartregister.uniceftunisia.reporting.common.sortIndicators
-import org.smartregister.uniceftunisia.reporting.monthly.domain.MonthlyTally
 
 class ReportIndicatorsRecyclerAdapter : RecyclerView.Adapter<ReportIndicatorsRecyclerAdapter.SentReportsRecyclerHolder>() {
 
-    var reportIndicators: List<Pair<String, List<MonthlyTally>>> = arrayListOf()
+    var reportIndicators: List<Pair<String, List<*>>> = arrayListOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -36,8 +37,9 @@ class ReportIndicatorsRecyclerAdapter : RecyclerView.Adapter<ReportIndicatorsRec
         return SentReportsRecyclerHolder(view)
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun onBindViewHolder(holderSentReports: SentReportsRecyclerHolder, position: Int) {
-        holderSentReports.bindViews(reportIndicators[position])
+        holderSentReports.bindViews(reportIndicators[position] as Pair<String, List<Tally>>)
         expansionsCollection.add(holderSentReports.reportIndicatorsExpansionLayout)
     }
 
@@ -45,7 +47,7 @@ class ReportIndicatorsRecyclerAdapter : RecyclerView.Adapter<ReportIndicatorsRec
 
     inner class SentReportsRecyclerHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-        fun bindViews(monthlyTallies: Pair<String, List<MonthlyTally>>) {
+        fun bindViews(monthlyTallies: Pair<String, List<Tally>>) {
             CoroutineScope(Dispatchers.Main).launch {
                 val (reportGroup, tallies) = monthlyTallies
 
@@ -57,18 +59,18 @@ class ReportIndicatorsRecyclerAdapter : RecyclerView.Adapter<ReportIndicatorsRec
 
                 //Set display tallies
                 val topLabel = listOf(
-                        MonthlyTally(
-                                grouping = reportGroup,
-                                indicator = "indicator",
-                                value = containerView.context.getString(R.string.value)
-                        )
+                    MonthlyTally(
+                        grouping = reportGroup,
+                        indicator = "indicator",
+                        value = containerView.context.getString(R.string.value)
+                    )
                 )
                 reportIndicatorsContainer.removeAllViews()
 
                 val sortedIndicators = tallies.sortIndicators()
                 topLabel.plus(sortedIndicators).forEach {
                     val view = LayoutInflater.from(containerView.context).inflate(R.layout.report_indicator_summary_list_item,
-                            reportIndicatorsContainer, false).apply {
+                        reportIndicatorsContainer, false).apply {
                         tag = it
                         indicatorTextView.text = context.getString(it.indicator.getResourceId(context))
                         valueTextView.text = it.value

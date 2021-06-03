@@ -348,7 +348,8 @@
     <string name="one_two_years_target_population"> 1–2 year target population</string>
     <string name="specify_target_error">Please specify  population target</string>
     <string name="error_saving_target">Error saving population target</string>
-
+    <string name="loading_daily_reports_message">Generating daily reports. Please wait…</string>
+    <string name="daily_tallies_with_day">Daily Tallies &gt; %1s</string>
     <!-- Card support strings -->
     <string name="opensrp_id">IDV NUMBER</string>
 </resources>

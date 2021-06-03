@@ -11,10 +11,11 @@ import androidx.navigation.fragment.NavHostFragment
 import com.vijay.jsonwizard.activities.MultiLanguageActivity
 import kotlinx.android.synthetic.main.activity_report_indicators.*
 import kotlinx.coroutines.launch
+import org.smartregister.path.reporting.monthly.domain.DailyTally
+import org.smartregister.path.reporting.monthly.domain.MonthlyTally
 import org.smartregister.uniceftunisia.R
 import org.smartregister.uniceftunisia.reporting.common.*
 import org.smartregister.uniceftunisia.reporting.monthly.MonthlyReportsActivity
-import org.smartregister.uniceftunisia.reporting.monthly.domain.MonthlyTally
 import org.smartregister.util.LangUtils
 
 class ReportIndicatorsActivity : MultiLanguageActivity() {
@@ -42,33 +43,55 @@ class ReportIndicatorsActivity : MultiLanguageActivity() {
         navController = navHostFragment.navController
 
         with(intent) {
-            val serializableExtra = getSerializableExtra(MONTHLY_TALLIES)
+            var serializableExtra = getSerializableExtra(MONTHLY_TALLIES)
+            serializableExtra?.let {
+                getStringExtra(YEAR_MONTH)?.let {
+                    reportIndicatorsViewModel.yearMonth.value = it
+                    translatedYearMonth = it.convertToNamedMonth(hasHyphen = true).translateString(this@ReportIndicatorsActivity)
+                }
 
-            getStringExtra(YEAR_MONTH)?.let {
-                reportIndicatorsViewModel.yearMonth.value = it
-                translatedYearMonth = it.convertToNamedMonth(hasHyphen = true).translateString(this@ReportIndicatorsActivity)
-            }
+                if (serializableExtra is Map<*, *>)
+                    reportIndicatorsViewModel.monthlyTalliesMap.value = (serializableExtra as Map<String, MonthlyTally>).toMutableMap()
 
-            if (serializableExtra is Map<*, *>)
-                reportIndicatorsViewModel.monthlyTalliesMap.value = (serializableExtra as Map<String, MonthlyTally>).toMutableMap()
+                //Navigate to ReportIndicatorsSummaryFragment when show data is true
+                if (getBooleanExtra(SHOW_DATA, false)) {
+                    navController.navigate(R.id.reportIndicatorsSummaryFragment)
+                    saveFormButton.visibility = View.GONE
+                    verticalDivider.visibility = View.GONE
+                } else {
+                    navController.navigate(R.id.reportIndicatorsFormFragment)
+                    saveFormButton.visibility = View.VISIBLE
+                    verticalDivider.visibility = View.VISIBLE
+                }
 
-            //Navigate to ReportIndicatorsSummaryFragment when show data is true
-            if (getBooleanExtra(SHOW_DATA, false)) {
-                navController.navigate(R.id.reportIndicatorsSummaryFragment)
-                saveFormButton.visibility = View.GONE
-                verticalDivider.visibility = View.GONE
-            } else {
-                navController.navigate(R.id.reportIndicatorsFormFragment)
-                saveFormButton.visibility = View.VISIBLE
-                verticalDivider.visibility = View.VISIBLE
+                yearMonthTextView.text = if (intent.getBooleanExtra(SHOW_DATA, false))
+                    getString(R.string.monthly_sent_reports_with_year, translatedYearMonth) else
+                    getString(R.string.month_year_draft, translatedYearMonth)
+
+                backButton.setOnClickListener { navigateToMonthlyReports(1) }
+            } ?: run {
+                serializableExtra = getSerializableExtra(DAILY_TALLIES)
+
+                getStringExtra(DAY)?.let {
+                    reportIndicatorsViewModel.day.value = it
+
+                }
+
+                if (serializableExtra is Map<*, *>)
+                    reportIndicatorsViewModel.dailyTalliesMap.value = (serializableExtra as Map<String, DailyTally>).toMutableMap()
+
+                yearMonthTextView.text = getString(R.string.daily_tallies_with_day, getStringExtra(DAY))
+
+                //Navigate to ReportIndicatorsSummaryFragment when show data is true
+                if (getBooleanExtra(SHOW_DATA, false)) {
+                    navController.navigate(R.id.reportIndicatorsDailySummaryFragment)
+                    saveFormButton.visibility = View.GONE
+                    verticalDivider.visibility = View.GONE
+                }
+
+                backButton.setOnClickListener { navigateToMonthlyReports(0) }
             }
         }
-
-        yearMonthTextView.text = if (intent.getBooleanExtra(SHOW_DATA, false))
-            getString(R.string.monthly_sent_reports_with_year, translatedYearMonth) else
-            getString(R.string.month_year_draft, translatedYearMonth)
-
-        backButton.setOnClickListener { navigateToMonthlyReports(1) }
 
         saveFormButton.setOnClickListener { submitMonthlyDraft() }
     }

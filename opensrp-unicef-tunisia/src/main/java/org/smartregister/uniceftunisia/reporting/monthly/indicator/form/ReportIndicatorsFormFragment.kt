@@ -29,6 +29,7 @@ import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import org.smartregister.path.reporting.monthly.domain.MonthlyTally
 import org.smartregister.uniceftunisia.R
 import org.smartregister.uniceftunisia.application.UnicefTunisiaApplication
 import org.smartregister.uniceftunisia.reporting.ReportingRulesEngine
@@ -36,7 +37,6 @@ import org.smartregister.uniceftunisia.reporting.common.*
 import org.smartregister.uniceftunisia.reporting.common.ReportingUtils.dateFormatter
 import org.smartregister.uniceftunisia.reporting.monthly.MonthlyReportsActivity
 import org.smartregister.uniceftunisia.reporting.monthly.MonthlyReportsRepository
-import org.smartregister.uniceftunisia.reporting.monthly.domain.MonthlyTally
 import org.smartregister.uniceftunisia.reporting.monthly.draft.ConfirmSendDraftDialog
 import org.smartregister.uniceftunisia.reporting.monthly.indicator.ReportIndicatorsViewModel
 import org.smartregister.uniceftunisia.util.AppJsonFormUtils
@@ -52,13 +52,14 @@ import java.util.*
 class ReportIndicatorsFormFragment : Fragment(), View.OnClickListener {
 
     private lateinit var progressDialog: AlertDialog
+    private lateinit var reportIndicatorsLayout : LinearLayout
 
     private val reportIndicatorsViewModel by activityViewModels<ReportIndicatorsViewModel>
     { ReportingUtils.createFor(ReportIndicatorsViewModel()) }
 
     private lateinit var confirmSendDraftDialog: ConfirmSendDraftDialog
 
-    private lateinit var reportingRulesEngine: ReportingRulesEngine
+    private lateinit var reportingRulesEngine: ReportingRulesEngine<MonthlyTally>
 
     private val extendedIndicatorTallies by lazy {
         getExtendedIndicatorTallies().associateBy { it.indicator }.toMutableMap()
@@ -67,19 +68,20 @@ class ReportIndicatorsFormFragment : Fragment(), View.OnClickListener {
     private fun getExtendedIndicatorTallies(): List<MonthlyTally> {
         val typeToken = object : TypeToken<List<MonthlyTally>>() {}.type
         val assetFileInputStream = Utils.readAssetContents(requireContext(),
-                "configs/reporting/extended-indicators.json")
+            "configs/reporting/extended-indicators.json")
         return Gson().fromJson(assetFileInputStream, typeToken)
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View = inflater.inflate(R.layout.fragment_report_indicators_form, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        reportIndicatorsLayout = view.findViewById(R.id.reportIndicatorsLayout)
         progressDialog = requireContext().showProgressDialog(
-                show = true,
-                title = getString(R.string.loading_monthly_reports_title),
-                message = getString(R.string.loading_monthly_reports_message))
+            show = true,
+            title = getString(R.string.loading_monthly_reports_title),
+            message = getString(R.string.loading_monthly_reports_message))
         reportIndicatorsViewModel.monthlyTalliesMap.value?.let { monthlyTallies ->
             extendedIndicatorTallies.forEach { tallyEntry ->
                 tallyEntry.apply {
@@ -89,17 +91,17 @@ class ReportIndicatorsFormFragment : Fragment(), View.OnClickListener {
                 }
                 includeExtendedTallies(monthlyTallies, tallyEntry)
             }
-            reportingRulesEngine = ReportingRulesEngine(monthlyTallies = monthlyTallies, context = requireContext())
+            reportingRulesEngine = ReportingRulesEngine(tallies = monthlyTallies, context = requireContext())
             loadIndicatorsForm(monthlyTallies)
-        }
+        } ?: progressDialog.dismiss()
 
         //Setup UI
         confirmSendDraftDialog = ConfirmSendDraftDialog().apply {
             onClickListener = this@ReportIndicatorsFormFragment
             arguments = bundleOf(Pair(ConfirmSendDraftDialog.Constants.MONTH,
-                    reportIndicatorsViewModel.yearMonth.value
-                            ?.convertToNamedMonth(hasHyphen = true)
-                            ?.translateString(view.context)))
+                reportIndicatorsViewModel.yearMonth.value
+                    ?.convertToNamedMonth(hasHyphen = true)
+                    ?.translateString(view.context)))
         }
     }
 
@@ -107,16 +109,17 @@ class ReportIndicatorsFormFragment : Fragment(), View.OnClickListener {
         if (!monthlyTallies.containsKey(tallyEntry.key)) {
             monthlyTallies[tallyEntry.key] = tallyEntry.value
         } else if (monthlyTallies.containsKey(tallyEntry.key)
-                && monthlyTallies[tallyEntry.key]?.dependentCalculations?.isEmpty()!!
-                && !tallyEntry.value.dependentCalculations.isNullOrEmpty()) {
+            && monthlyTallies[tallyEntry.key]?.dependentCalculations?.isEmpty()!!
+            && !tallyEntry.value.dependentCalculations.isNullOrEmpty()) {
             monthlyTallies[tallyEntry.key]?.dependentCalculations = tallyEntry.value.dependentCalculations
         }
     }
 
     private fun loadIndicatorsForm(monthlyTallies: Map<String, MonthlyTally>) {
-        val groupedTallies = monthlyTallies.values.groupBy { it.grouping }
-
         lifecycleScope.launch(Dispatchers.Main) {
+            val sortedIndicators = monthlyTallies.values.toList().sortIndicators()
+            val groupedTallies = sortedIndicators.groupBy { it.grouping }
+
             groupedTallies.forEach { tallyEntry ->
 
                 //Create report group header
@@ -137,9 +140,9 @@ class ReportIndicatorsFormFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    private suspend fun createIndicatorInputFields(tallyEntry: Map.Entry<String, List<MonthlyTally>>) {
-        val sortedIndicators = tallyEntry.value.sortIndicators()
-        sortedIndicators.forEach {
+    private fun createIndicatorInputFields(tallyEntry: Map.Entry<String, List<MonthlyTally>>) {
+//        val sortedIndicators = tallyEntry.value.sortIndicators()
+        tallyEntry.value.forEach {
             reportIndicatorsLayout.addView(TextInputLayout(requireContext()).apply { addView(createEditText(it)) })
         }
     }
@@ -154,10 +157,10 @@ class ReportIndicatorsFormFragment : Fragment(), View.OnClickListener {
         setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
         addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence?, start: Int, count: Int, after: Int) =
-                    Unit
+                Unit
 
             override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) =
-                    Unit
+                Unit
 
             override fun afterTextChanged(editable: Editable?) {
                 when {
@@ -195,21 +198,21 @@ class ReportIndicatorsFormFragment : Fragment(), View.OnClickListener {
 
     private fun createConfirmButton() {
         reportIndicatorsLayout.addView(
-                Button(requireContext()).apply {
-                    val linearLayoutParams = LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                    linearLayoutParams.bottomMargin = 16
-                    linearLayoutParams.topMargin = 24
+            Button(requireContext()).apply {
+                val linearLayoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                linearLayoutParams.bottomMargin = 16
+                linearLayoutParams.topMargin = 24
 
-                    layoutParams = linearLayoutParams
-                    background = ContextCompat.getDrawable(requireContext(), R.drawable.report_btn_bg)
-                    text = getString(R.string.confirm_button_label)
-                    setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-                    setOnClickListener {
-                        confirmSendDraftDialog.show(requireActivity().supportFragmentManager,
-                                ConfirmSendDraftDialog::class.simpleName)
-                    }
-                })
+                layoutParams = linearLayoutParams
+                background = ContextCompat.getDrawable(requireContext(), R.drawable.report_btn_bg)
+                text = getString(R.string.confirm_button_label)
+                setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                setOnClickListener {
+                    confirmSendDraftDialog.show(requireActivity().supportFragmentManager,
+                        ConfirmSendDraftDialog::class.simpleName)
+                }
+            })
     }
 
     private fun updateCalculatedField(calculationField: String, calculatedValue: String) {
@@ -241,7 +244,7 @@ class ReportIndicatorsFormFragment : Fragment(), View.OnClickListener {
             withContext(lifecycleScope.coroutineContext + Dispatchers.IO) {
 
                 val baseEvent = AppJsonFormUtils.createEvent(JSONArray(), JSONObject().put(JsonFormUtils.ENCOUNTER_LOCATION, ""),
-                        AppJsonFormUtils.formTag(allSharedPreferences), "", MONTHLY_REPORT, MONTHLY_REPORT)
+                    AppJsonFormUtils.formTag(allSharedPreferences), "", MONTHLY_REPORT, MONTHLY_REPORT)
 
                 with(baseEvent) {
                     val monthlyTalliesMap = reportIndicatorsViewModel.monthlyTalliesMap.value

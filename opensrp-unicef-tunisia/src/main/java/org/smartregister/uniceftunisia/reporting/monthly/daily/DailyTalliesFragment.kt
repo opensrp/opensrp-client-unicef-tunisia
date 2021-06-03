@@ -1,4 +1,4 @@
-package org.smartregister.uniceftunisia.reporting.monthly.sent
+package org.smartregister.path.reporting.monthly.daily
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,61 +10,64 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_monthly_sent_reports.*
-import org.smartregister.path.reporting.monthly.domain.MonthlyTally
+import kotlinx.android.synthetic.main.fragment_hia2_daily_tallies_report.*
+import org.smartregister.path.reporting.monthly.domain.DailyTally
 import org.smartregister.uniceftunisia.R
-import org.smartregister.uniceftunisia.reporting.common.MONTHLY_TALLIES
+import org.smartregister.uniceftunisia.reporting.common.DAILY_TALLIES
+import org.smartregister.uniceftunisia.reporting.common.DAY
 import org.smartregister.uniceftunisia.reporting.common.ReportingUtils
-import org.smartregister.uniceftunisia.reporting.common.ReportingUtils.dateFormatter
 import org.smartregister.uniceftunisia.reporting.common.SHOW_DATA
-import org.smartregister.uniceftunisia.reporting.common.YEAR_MONTH
 import org.smartregister.uniceftunisia.reporting.monthly.MonthlyReportsViewModel
 import org.smartregister.uniceftunisia.reporting.monthly.indicator.ReportIndicatorsActivity
 import java.io.Serializable
 
-class SentReportsFragment : Fragment(), View.OnClickListener {
+class DailyTalliesFragment : Fragment(), View.OnClickListener {
 
-    private val sentReportsRecyclerAdapter = SentReportsRecyclerAdapter(this)
+    private val dailyTalliesRecyclerAdapter = DailyTalliesRecyclerAdapter(this)
 
     private val monthlyReportsViewModel by activityViewModels<MonthlyReportsViewModel>
     { ReportingUtils.createFor(MonthlyReportsViewModel()) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.fragment_monthly_sent_reports, container, false)
+            inflater.inflate(R.layout.fragment_hia2_daily_tallies_report, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        sentReportsRecyclerView.apply {
-            adapter = sentReportsRecyclerAdapter
+        dailyTalliesRecyclerView.apply {
+            adapter = dailyTalliesRecyclerAdapter
             layoutManager = LinearLayoutManager(context)
             setBackgroundColor(ContextCompat.getColor(context, R.color.white))
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
 
         monthlyReportsViewModel.run {
-            sentReportMonths.observe(viewLifecycleOwner, {
-                sentReportsRecyclerAdapter.apply {
-                    if (it.isNotEmpty()) sentReports = it.toList()
+            dailyReportDays.observe(viewLifecycleOwner, {
+                dailyTalliesRecyclerAdapter.apply {
+                    if (it.isNotEmpty()) dailyTallies = it.toList()
                 }
             })
-            sentReportTallies.observe(viewLifecycleOwner, {
-                val (yearMonth, monthlyTallies) = it
+            dailyTallies.observe(viewLifecycleOwner, {
+                val (_, dailyTallies) = it
                 startActivity(Intent(requireActivity(), ReportIndicatorsActivity::class.java).apply {
                     putExtras(Bundle().apply {
-                        putExtra(MONTHLY_TALLIES, monthlyTallies.associateBy { monthlyTally -> monthlyTally.indicator } as Serializable)
-                        putExtra(YEAR_MONTH, yearMonth)
+                        putExtra(DAILY_TALLIES, dailyTallies.associateBy { monthlyTally -> monthlyTally.indicator } as Serializable)
+                        putExtra(DAY, ReportingUtils.dateFormatter("dd MMMM yy").format(dailyTallies[0].day))
                         putExtra(SHOW_DATA, true)
                     })
                 })
                 requireActivity().finish()
+
             })
         }
+
     }
 
     override fun onClick(view: View) {
-        if (view.tag is MonthlyTally) {
-            val monthlyTally = view.tag as MonthlyTally
-            monthlyReportsViewModel.fetchSentReportTalliesByMonth(dateFormatter().format(monthlyTally.month))
+        if (view.tag is DailyTally) {
+            val dailyTally = view.tag as DailyTally
+            monthlyReportsViewModel.fetchDailyTalliesByDay(ReportingUtils.dateFormatter("yyyy-MM-dd").format(dailyTally.day))
         }
     }
+
 }
