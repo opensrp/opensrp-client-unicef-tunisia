@@ -350,6 +350,9 @@
     <string name="error_saving_target">Error saving population target</string>
     <string name="loading_daily_reports_message">Generating daily reports. Please wait…</string>
     <string name="daily_tallies_with_day">Daily Tallies &gt; %1s</string>
+    <string name="generating_daily_tallies_started">Generating daily tallies started</string>
+    <string name="generating_daily_tallies_in_progress">Generating daily tallies in-progress</string>
+    <string name="generating_daily_tallies_completed">Generating daily tallies completed</string>
     <!-- Card support strings -->
     <string name="opensrp_id">IDV NUMBER</string>
 </resources>

@@ -184,8 +184,6 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
 
     private void syncApp(final Activity parentActivity) {
         syncMenuItem.setOnClickListener(v -> {
-            Intent intent = new Intent(parentActivity, IndicatorGeneratorIntentService.class);
-            parentActivity.startService(intent);
             mPresenter.sync(parentActivity);
             Timber.i("IndicatorGeneratorIntentService start service called");
         });
