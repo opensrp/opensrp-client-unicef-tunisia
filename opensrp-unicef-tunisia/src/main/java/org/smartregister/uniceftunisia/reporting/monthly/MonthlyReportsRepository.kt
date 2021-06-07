@@ -23,6 +23,7 @@ import org.smartregister.uniceftunisia.reporting.monthly.MonthlyReportsRepositor
 import org.smartregister.uniceftunisia.reporting.monthly.MonthlyReportsRepository.ColumnNames.PROVIDER_ID
 import org.smartregister.uniceftunisia.reporting.monthly.MonthlyReportsRepository.ColumnNames.UPDATED_AT
 import org.smartregister.uniceftunisia.reporting.monthly.MonthlyReportsRepository.ColumnNames.VALUE
+import org.smartregister.uniceftunisia.reporting.monthly.MonthlyReportsRepository.Constants.MONTH_FORMAT
 import java.util.*
 import net.sqlcipher.database.SQLiteDatabase as SQLiteCipherDatabase
 
@@ -35,17 +36,18 @@ import net.sqlcipher.database.SQLiteDatabase as SQLiteCipherDatabase
 class MonthlyReportsRepository private constructor() : BaseRepository() {
 
     private var supportedReportGroups = setOf(
-            "report_group_header_vaccination_activity",
-            "report_group_header_vaccine_utilization",
-            "report_group_header_tetanus_protected",
-            "report_group_header_rubella_vaccine",
-            "report_group_header_adequate_growth_measurement",
-            "report_group_header_previous_under_nutrition",
-            "report_group_header_diagnosed_malnourished"
+        "report_group_header_vaccination_activity",
+        "report_group_header_vaccine_utilization",
+        "report_group_header_tetanus_protected",
+        "report_group_header_rubella_vaccine",
+        "report_group_header_adequate_growth_measurement",
+        "report_group_header_previous_under_nutrition",
+        "report_group_header_diagnosed_malnourished"
     )
 
     object Constants {
         const val TABLE_NAME = "monthly_tallies"
+        const val MONTH_FORMAT = "MMMM yyyy"
     }
 
     object ColumnNames {
@@ -59,6 +61,7 @@ class MonthlyReportsRepository private constructor() : BaseRepository() {
         const val INDICATOR_GROUPING = "indicator_grouping"
         const val CREATED_AT = "created_at"
         const val UPDATED_AT = "updated_at"
+
         // Daily Tally
         const val INDICATOR_VALUE = "indicator_value"
         const val INDICATOR_IS_VALUE_SET = "indicator_is_value_set"
@@ -82,17 +85,17 @@ class MonthlyReportsRepository private constructor() : BaseRepository() {
             );
         """
         const val CREATE_PROVIDER_ID_INDEX_SQL =
-                "CREATE INDEX monthly_tallies_provider_id_index ON monthly_tallies (provider_id COLLATE NOCASE);"
+            "CREATE INDEX monthly_tallies_provider_id_index ON monthly_tallies (provider_id COLLATE NOCASE);"
         const val CREATE_DATE_SENT_INDEX_SQL =
-                "CREATE INDEX monthly_tallies_date_sent_index ON monthly_tallies(date_sent);"
+            "CREATE INDEX monthly_tallies_date_sent_index ON monthly_tallies(date_sent);"
         const val CREATE_INDICATOR_CODE_INDEX_SQL =
-                "CREATE INDEX monthly_tallies_indicator_code_index ON monthly_tallies (indicator_code COLLATE NOCASE);"
+            "CREATE INDEX monthly_tallies_indicator_code_index ON monthly_tallies (indicator_code COLLATE NOCASE);"
         const val CREATE_MONTH_INDEX_SQL =
-                "CREATE INDEX monthly_tallies_month_index ON monthly_tallies(month);"
+            "CREATE INDEX monthly_tallies_month_index ON monthly_tallies(month);"
         const val CREATE_INDICATOR_GROUPING_INDEX_SQL =
-                "CREATE INDEX monthly_tallies_indicator_grouping_index ON monthly_tallies(indicator_grouping);"
+            "CREATE INDEX monthly_tallies_indicator_grouping_index ON monthly_tallies(indicator_grouping);"
         const val CREATE_INDICATOR_CODE_MONTH_INDEX_SQL =
-                "CREATE UNIQUE INDEX monthly_tallies_indicator_code_month_index ON monthly_tallies (indicator_code, month);"
+            "CREATE UNIQUE INDEX monthly_tallies_indicator_code_month_index ON monthly_tallies (indicator_code, month);"
     }
 
     fun createTable(database: SQLiteCipherDatabase) {
@@ -108,10 +111,16 @@ class MonthlyReportsRepository private constructor() : BaseRepository() {
     }
 
     fun fetchUnDraftedMonths() = ReportsDao.getDistinctReportMonths()
-            .subtract(fetchDraftedMonths().map { it.first.convertToNamedMonth(true) })
-            .subtract(ReportsDao.getSentReportMonths().map { it.first.convertToNamedMonth(true) })
-            .toList()
-            .sortedByDescending { dateFormatter("MMMM yyyy").parse(it) }
+        .subtract(fetchDraftedMonths().map { it.first.convertToNamedMonth(true) })
+        .subtract(ReportsDao.getSentReportMonths().map { it.first.convertToNamedMonth(true) })
+        .toList()
+        .filterNot { date: String ->
+            date.equals(
+                dateFormatter(MONTH_FORMAT).format(Date()),
+                ignoreCase = true
+            )
+        }
+        .sortedByDescending { dateFormatter(MONTH_FORMAT).parse(it) }
 
     fun fetchDraftedMonths() = ReportsDao.getDraftedMonths()
 
@@ -121,15 +130,17 @@ class MonthlyReportsRepository private constructor() : BaseRepository() {
 
         val allTallies = arrayListOf<MonthlyTally>()
         supportedReportGroups.forEach { reportHeader ->
-            val monthTallies = getDailyIndicatorCountRepository().findTalliesInMonth(dateFormatter()
-                    .parse(yearMonth)!!, reportHeader)
+            val monthTallies = getDailyIndicatorCountRepository().findTalliesInMonth(
+                dateFormatter()
+                    .parse(yearMonth)!!, reportHeader
+            )
             allTallies.addAll(processMonthlyTallies(monthTallies))
         }
         return allTallies
     }
 
     fun getDailyIndicatorCountRepository(): DailyIndicatorCountRepository =
-            ReportingLibrary.getInstance().dailyIndicatorCountRepository()
+        ReportingLibrary.getInstance().dailyIndicatorCountRepository()
 
     private fun processMonthlyTallies(talliesInMonth: MutableMap<String, MutableList<IndicatorTally>>): ArrayList<MonthlyTally> {
         val monthlyTallies = arrayListOf<MonthlyTally>()
@@ -143,35 +154,51 @@ class MonthlyReportsRepository private constructor() : BaseRepository() {
     private fun computeMonthlyTally(dailyTallies: List<IndicatorTally>): MonthlyTally? {
         return if (dailyTallies.isNotEmpty()) {
             MonthlyTally(
-                    indicator = dailyTallies[0].indicatorCode,
-                    value = dailyTallies.map { it.floatCount.toInt() }.reduce { sum, element -> sum + element }.toString(),
-                    providerId = getProviderId(),
-                    updatedAt = Calendar.getInstance().time,
-                    grouping = dailyTallies[0].grouping
+                indicator = dailyTallies[0].indicatorCode,
+                value = dailyTallies.map { it.floatCount.toInt() }
+                    .reduce { sum, element -> sum + element }.toString(),
+                providerId = getProviderId(),
+                updatedAt = Calendar.getInstance().time,
+                grouping = dailyTallies[0].grouping
             )
         } else null
     }
 
     fun getProviderId(): String = UnicefTunisiaApplication.getInstance().context()
-            .allSharedPreferences().fetchRegisteredANM()
+        .allSharedPreferences().fetchRegisteredANM()
 
-    fun saveMonthlyDraft(monthlyTallies: Map<String, MonthlyTally>?, yearMonth: String?, sync: Boolean): Boolean {
+    fun saveMonthlyDraft(
+        monthlyTallies: Map<String, MonthlyTally>?,
+        yearMonth: String?,
+        sync: Boolean
+    ): Boolean {
         if (!monthlyTallies.isNullOrEmpty() && !yearMonth.isNullOrBlank()) {
             monthlyTallies.values.forEach { tally ->
                 writableDatabase.transaction(exclusive = true) {
                     val currentTime = Calendar.getInstance().timeInMillis
                     val contentValues = contentValuesOf(
-                            Pair(INDICATOR_CODE, tally.indicator),
-                            Pair(INDICATOR_GROUPING, tally.grouping),
-                            Pair(VALUE, tally.value),
-                            Pair(CREATED_AT, if (sync && tally.createdAt != null) tally.createdAt!!.time else currentTime),
-                            Pair(UPDATED_AT, if (sync && tally.updatedAt != null) tally.updatedAt!!.time else currentTime),
-                            Pair(PROVIDER_ID, tally.providerId),
-                            Pair(ENTERED_MANUALLY, if (tally.enteredManually) 1 else 0),
-                            Pair(MONTH, yearMonth),
-                            Pair(DATE_SENT, if (sync) currentTime else null)
+                        Pair(INDICATOR_CODE, tally.indicator),
+                        Pair(INDICATOR_GROUPING, tally.grouping),
+                        Pair(VALUE, tally.value),
+                        Pair(
+                            CREATED_AT,
+                            if (sync && tally.createdAt != null) tally.createdAt!!.time else currentTime
+                        ),
+                        Pair(
+                            UPDATED_AT,
+                            if (sync && tally.updatedAt != null) tally.updatedAt!!.time else currentTime
+                        ),
+                        Pair(PROVIDER_ID, tally.providerId),
+                        Pair(ENTERED_MANUALLY, if (tally.enteredManually) 1 else 0),
+                        Pair(MONTH, yearMonth),
+                        Pair(DATE_SENT, if (sync) currentTime else null)
                     )
-                    writableDatabase.insertWithOnConflict(Constants.TABLE_NAME, null, contentValues, SQLiteDatabase.CONFLICT_REPLACE)
+                    writableDatabase.insertWithOnConflict(
+                        Constants.TABLE_NAME,
+                        null,
+                        contentValues,
+                        SQLiteDatabase.CONFLICT_REPLACE
+                    )
                 }
             }
             return true
@@ -183,19 +210,19 @@ class MonthlyReportsRepository private constructor() : BaseRepository() {
      * Fetch all sent report months reports and group them by Year
      */
     fun fetchSentReportMonths(): Map<String, List<MonthlyTally>> =
-            ReportsDao.getAllSentReportMonths().groupBy { dateFormatter("yyyy").format(it.month) }
+        ReportsDao.getAllSentReportMonths().groupBy { dateFormatter("yyyy").format(it.month) }
 
     /**
      * Fetch all sent report tallies for the [yearMonth]
      */
     fun fetchSentReportTalliesByMonth(yearMonth: String) =
-            ReportsDao.getReportsByMonth(yearMonth = yearMonth, drafted = false)
+        ReportsDao.getReportsByMonth(yearMonth = yearMonth, drafted = false)
 
     /**
      * Fetch all daily for the [day]
      */
     fun fetchDailyTalliesByDay(day: String) =
-            ReportsDao.getReportsByDay(day)
+        ReportsDao.getReportsByDay(day)
 
     fun fetchAllDailyReports(): Map<String, List<DailyTally>>? {
         return ReportsDao.getAllDailyTallies().groupBy { dateFormatter("MMMM yyyy").format(it.day) }
