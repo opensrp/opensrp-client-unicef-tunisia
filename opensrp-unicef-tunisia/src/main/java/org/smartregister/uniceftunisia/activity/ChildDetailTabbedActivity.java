@@ -303,4 +303,25 @@ public class ChildDetailTabbedActivity extends BaseChildDetailTabbedActivity {
     public String constructChildName() {
         return super.constructChildName();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        try {
+            if (data != null) {
+                String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
+                Timber.d(jsonString);
+                if (jsonString != null) {
+                    JSONObject form = new JSONObject(jsonString);
+                    String encounterType = form.getString(ChildJsonFormUtils.ENCOUNTER_TYPE);
+                    if (encounterType.equalsIgnoreCase(Constants.EventType.UPDATE_BITRH_REGISTRATION)) {
+                        String jsonForm = AppUtils.validateSpinnerValue(jsonString);
+                        data.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonForm);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }
