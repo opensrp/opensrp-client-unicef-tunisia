@@ -5,19 +5,19 @@ indicators:
     description: "Grouped query for number of children aged 0-59months who received particular vaccines"
     indicatorQuery: "SELECT vaccines.name,
                             CASE
-                                WHEN round(julianday('now') - julianday(ec_client.dob)) <= 1 THEN '0_24hrs'
-                                WHEN round(julianday('now') - julianday(ec_client.dob)) >= 2 AND
-                                     round(julianday('now') - julianday(ec_client.dob)) <= 59 THEN '2_59days'
-                                WHEN round(julianday('now') - julianday(ec_client.dob)) >= (2 * 30.436875) AND
-                                     round(julianday('now') - julianday(ec_client.dob)) <= (6 * 30.436875) THEN '2_6mnths'
-                                WHEN round(julianday('now') - julianday(ec_client.dob)) >= (7 * 30.436875) AND
-                                     round(julianday('now') - julianday(ec_client.dob)) <= (11 * 30.436875) THEN '7_11mnths'
-                                WHEN round(julianday('now') - julianday(ec_client.dob)) >= (12 * 30.436875) AND
-                                     round(julianday('now') - julianday(ec_client.dob)) <= (17 * 30.436875) THEN '12_17mnths'
-                                WHEN round(julianday('now') - julianday(ec_client.dob)) >= (18 * 30.436875) AND
-                                     round(julianday('now') - julianday(ec_client.dob)) <= (23 * 30.436875) THEN '18_23mnths'
-                                WHEN round(julianday('now') - julianday(ec_client.dob)) >= (24 * 30.436875) AND
-                                     round(julianday('now') - julianday(ec_client.dob)) <= (59 * 30.436875) THEN '24_59mnths'
+                                WHEN round(julianday('%s') - julianday(ec_client.dob)) <= 1 THEN '0_24hrs'
+                                WHEN round(julianday('%s') - julianday(ec_client.dob)) >= 2 AND
+                                     round(julianday('%s') - julianday(ec_client.dob)) <= 59 THEN '2_59days'
+                                WHEN round(julianday('%s') - julianday(ec_client.dob)) >= (2 * 30.436875) AND
+                                     round(julianday('%s') - julianday(ec_client.dob)) <= (6 * 30.436875) THEN '2_6mnths'
+                                WHEN round(julianday('%s') - julianday(ec_client.dob)) >= (7 * 30.436875) AND
+                                     round(julianday('%s') - julianday(ec_client.dob)) <= (11 * 30.436875) THEN '7_11mnths'
+                                WHEN round(julianday('%s') - julianday(ec_client.dob)) >= (12 * 30.436875) AND
+                                     round(julianday('%s') - julianday(ec_client.dob)) <= (17 * 30.436875) THEN '12_17mnths'
+                                WHEN round(julianday('%s') - julianday(ec_client.dob)) >= (18 * 30.436875) AND
+                                     round(julianday('%s') - julianday(ec_client.dob)) <= (23 * 30.436875) THEN '18_23mnths'
+                                WHEN round(julianday('%s') - julianday(ec_client.dob)) >= (24 * 30.436875) AND
+                                     round(julianday('%s') - julianday(ec_client.dob)) <= (59 * 30.436875) THEN '24_59mnths'
                                 ELSE 'Null'
                                 END age,
                             count(*)
@@ -55,16 +55,16 @@ indicators:
     description: "Grouped query for number of children aged 0-59months who received ipv_1, pcv_1 and penta_1 vaccines"
     indicatorQuery: "SELECT 'penta1'                                                                                         as penta1,
                             CASE
-                                WHEN round(julianday('now') - julianday(ec_client.dob)) >= (2 * 30.436875) AND
-                                     round(julianday('now') - julianday(ec_client.dob)) <= (6 * 30.436875) THEN '2_6mnths'
-                                WHEN round(julianday('now') - julianday(ec_client.dob)) >= (7 * 30.436875) AND
-                                     round(julianday('now') - julianday(ec_client.dob)) <= (11 * 30.436875) THEN '7_11mnths'
-                                WHEN round(julianday('now') - julianday(ec_client.dob)) >= (12 * 30.436875) AND
-                                     round(julianday('now') - julianday(ec_client.dob)) <= (17 * 30.436875) THEN '12_17mnths'
-                                WHEN round(julianday('now') - julianday(ec_client.dob)) >= (18 * 30.436875) AND
-                                     round(julianday('now') - julianday(ec_client.dob)) <= (23 * 30.436875) THEN '18_23mnths'
-                                WHEN round(julianday('now') - julianday(ec_client.dob)) >= (24 * 30.436875) AND
-                                     round(julianday('now') - julianday(ec_client.dob)) <= (59 * 30.436875) THEN '24_59mnths'
+                                WHEN round(julianday('%s') - julianday(ec_client.dob)) >= (2 * 30.436875) AND
+                                     round(julianday('%s') - julianday(ec_client.dob)) <= (6 * 30.436875) THEN '2_6mnths'
+                                WHEN round(julianday('%s') - julianday(ec_client.dob)) >= (7 * 30.436875) AND
+                                     round(julianday('%s') - julianday(ec_client.dob)) <= (11 * 30.436875) THEN '7_11mnths'
+                                WHEN round(julianday('%s') - julianday(ec_client.dob)) >= (12 * 30.436875) AND
+                                     round(julianday('%s') - julianday(ec_client.dob)) <= (17 * 30.436875) THEN '12_17mnths'
+                                WHEN round(julianday('%s') - julianday(ec_client.dob)) >= (18 * 30.436875) AND
+                                     round(julianday('%s') - julianday(ec_client.dob)) <= (23 * 30.436875) THEN '18_23mnths'
+                                WHEN round(julianday('%s') - julianday(ec_client.dob)) >= (24 * 30.436875) AND
+                                     round(julianday('%s') - julianday(ec_client.dob)) <= (59 * 30.436875) THEN '24_59mnths'
                                 ELSE 'Null'
                                 END                                                                                             age,
                             (SELECT count(base_entity_id)
@@ -92,16 +92,16 @@ indicators:
     description: "Grouped query for number of children aged 0-59months who received ipv_2 and penta_2 vaccines"
     indicatorQuery: "SELECT 'penta2'                                                                                         as penta2,
                             CASE
-                                WHEN round(julianday('now') - julianday(ec_client.dob)) >= (2 * 30.436875) AND
-                                     round(julianday('now') - julianday(ec_client.dob)) <= (6 * 30.436875) THEN '2_6mnths'
-                                WHEN round(julianday('now') - julianday(ec_client.dob)) >= (7 * 30.436875) AND
-                                     round(julianday('now') - julianday(ec_client.dob)) <= (11 * 30.436875) THEN '7_11mnths'
-                                WHEN round(julianday('now') - julianday(ec_client.dob)) >= (12 * 30.436875) AND
-                                     round(julianday('now') - julianday(ec_client.dob)) <= (17 * 30.436875) THEN '12_17mnths'
-                                WHEN round(julianday('now') - julianday(ec_client.dob)) >= (18 * 30.436875) AND
-                                     round(julianday('now') - julianday(ec_client.dob)) <= (23 * 30.436875) THEN '18_23mnths'
-                                WHEN round(julianday('now') - julianday(ec_client.dob)) >= (24 * 30.436875) AND
-                                     round(julianday('now') - julianday(ec_client.dob)) <= (59 * 30.436875) THEN '24_59mnths'
+                                WHEN round(julianday('%s') - julianday(ec_client.dob)) >= (2 * 30.436875) AND
+                                     round(julianday('%s') - julianday(ec_client.dob)) <= (6 * 30.436875) THEN '2_6mnths'
+                                WHEN round(julianday('%s') - julianday(ec_client.dob)) >= (7 * 30.436875) AND
+                                     round(julianday('%s') - julianday(ec_client.dob)) <= (11 * 30.436875) THEN '7_11mnths'
+                                WHEN round(julianday('%s') - julianday(ec_client.dob)) >= (12 * 30.436875) AND
+                                     round(julianday('%s') - julianday(ec_client.dob)) <= (17 * 30.436875) THEN '12_17mnths'
+                                WHEN round(julianday('%s') - julianday(ec_client.dob)) >= (18 * 30.436875) AND
+                                     round(julianday('%s') - julianday(ec_client.dob)) <= (23 * 30.436875) THEN '18_23mnths'
+                                WHEN round(julianday('%s') - julianday(ec_client.dob)) >= (24 * 30.436875) AND
+                                     round(julianday('%s') - julianday(ec_client.dob)) <= (59 * 30.436875) THEN '24_59mnths'
                                 ELSE 'Null'
                                 END                                                                                             age,
                             (SELECT count(base_entity_id)
@@ -129,16 +129,16 @@ indicators:
     description: "Grouped query for number of children aged 0-59months who received ipv_1 and penta_3 vaccines"
     indicatorQuery: "SELECT 'penta3'                                                                                         as penta3,
                             CASE
-                                WHEN round(julianday('now') - julianday(ec_client.dob)) >= (2 * 30.436875) AND
-                                     round(julianday('now') - julianday(ec_client.dob)) <= (6 * 30.436875) THEN '2_6mnths'
-                                WHEN round(julianday('now') - julianday(ec_client.dob)) >= (7 * 30.436875) AND
-                                     round(julianday('now') - julianday(ec_client.dob)) <= (11 * 30.436875) THEN '7_11mnths'
-                                WHEN round(julianday('now') - julianday(ec_client.dob)) >= (12 * 30.436875) AND
-                                     round(julianday('now') - julianday(ec_client.dob)) <= (17 * 30.436875) THEN '12_17mnths'
-                                WHEN round(julianday('now') - julianday(ec_client.dob)) >= (18 * 30.436875) AND
-                                     round(julianday('now') - julianday(ec_client.dob)) <= (23 * 30.436875) THEN '18_23mnths'
-                                WHEN round(julianday('now') - julianday(ec_client.dob)) >= (24 * 30.436875) AND
-                                     round(julianday('now') - julianday(ec_client.dob)) <= (59 * 30.436875) THEN '24_59mnths'
+                                WHEN round(julianday('%s') - julianday(ec_client.dob)) >= (2 * 30.436875) AND
+                                     round(julianday('%s') - julianday(ec_client.dob)) <= (6 * 30.436875) THEN '2_6mnths'
+                                WHEN round(julianday('%s') - julianday(ec_client.dob)) >= (7 * 30.436875) AND
+                                     round(julianday('%s') - julianday(ec_client.dob)) <= (11 * 30.436875) THEN '7_11mnths'
+                                WHEN round(julianday('%s') - julianday(ec_client.dob)) >= (12 * 30.436875) AND
+                                     round(julianday('%s') - julianday(ec_client.dob)) <= (17 * 30.436875) THEN '12_17mnths'
+                                WHEN round(julianday('%s') - julianday(ec_client.dob)) >= (18 * 30.436875) AND
+                                     round(julianday('%s') - julianday(ec_client.dob)) <= (23 * 30.436875) THEN '18_23mnths'
+                                WHEN round(julianday('%s') - julianday(ec_client.dob)) >= (24 * 30.436875) AND
+                                     round(julianday('%s') - julianday(ec_client.dob)) <= (59 * 30.436875) THEN '24_59mnths'
                                 ELSE 'Null'
                                 END                                                                                             age,
                             (SELECT count(base_entity_id)
@@ -436,7 +436,7 @@ indicators:
                                FROM weights
                                WHERE weights.base_entity_id = ec_child_details.base_entity_id
                            ) >= 4
-                       AND strftime('%Y%m', date(ec_client.dob, '+6 month')) - strftime('%Y%m', date('now')) = 0
+                       AND strftime('%Y%m', date(ec_client.dob, '+6 month')) - strftime('%Y%m', date('%s')) = 0
                        AND strftime('%Y-%m-%d', '%s') = strftime('%Y-%m-%d', ec_child_details.event_date)"
 
   - key: "right_measures_12months"
@@ -451,7 +451,7 @@ indicators:
                                FROM weights
                                WHERE weights.base_entity_id = ec_child_details.base_entity_id
                            ) >= 5
-                       AND strftime('%Y%m', date(ec_client.dob, '+12 month')) - strftime('%Y%m', date('now')) = 0
+                       AND strftime('%Y%m', date(ec_client.dob, '+12 month')) - strftime('%Y%m', date('%s')) = 0
                        AND strftime('%Y-%m-%d', '%s') = strftime('%Y-%m-%d', ec_child_details.event_date)"
 
   - key: "right_measures_18months"
@@ -466,7 +466,7 @@ indicators:
                                FROM weights
                                WHERE weights.base_entity_id = ec_child_details.base_entity_id
                            ) >= 6
-                       AND strftime('%Y%m', date(ec_client.dob, '+18 month')) - strftime('%Y%m', date('now')) = 0
+                       AND strftime('%Y%m', date(ec_client.dob, '+18 month')) - strftime('%Y%m', date('%s')) = 0
                        AND strftime('%Y-%m-%d', '%s') = strftime('%Y-%m-%d', ec_child_details.event_date)"
 
   - key: "measures_grp"
@@ -475,9 +475,9 @@ indicators:
     description: "Count children who are 6, 12 and 18 months respectively"
     indicatorQuery: "SELECT 'children' as children,
                             CASE
-                                WHEN strftime('%Y%m', date(ec_client.dob, '+6 month')) - strftime('%Y%m', date('now')) = 0 THEN '6mnths'
-                                WHEN strftime('%Y%m', date(ec_client.dob, '+12 month')) - strftime('%Y%m', date('now')) = 0 THEN '12mnths'
-                                WHEN strftime('%Y%m', date(ec_client.dob, '+18 month')) - strftime('%Y%m', date('now')) = 0 THEN '18mnths'
+                                WHEN strftime('%Y%m', date(ec_client.dob, '+6 month')) - strftime('%Y%m', date('%s')) = 0 THEN '6mnths'
+                                WHEN strftime('%Y%m', date(ec_client.dob, '+12 month')) - strftime('%Y%m', date('%s')) = 0 THEN '12mnths'
+                                WHEN strftime('%Y%m', date(ec_client.dob, '+18 month')) - strftime('%Y%m', date('%s')) = 0 THEN '18mnths'
                                 ELSE 'Null'
                                 END       age,
                             count(*)
@@ -504,7 +504,7 @@ indicators:
                                WHERE weights.base_entity_id = ec_child_details.base_entity_id
                                  AND weights.z_score <= -2
                            ) >= 1
-                       AND strftime('%Y%m', date(ec_client.dob, '+6 month')) - strftime('%Y%m', date('now')) = 0
+                       AND strftime('%Y%m', date(ec_client.dob, '+6 month')) - strftime('%Y%m', date('%s')) = 0
                        AND strftime('%Y-%m-%d', '%s') = strftime('%Y-%m-%d', ec_child_details.event_date)"
 
   - key: "malnutrition_episode_12months"
@@ -520,7 +520,7 @@ indicators:
                                WHERE weights.base_entity_id = ec_child_details.base_entity_id
                                  AND weights.z_score <= -2
                            ) >= 1
-                       AND strftime('%Y%m', date(ec_client.dob, '+12 month')) - strftime('%Y%m', date('now')) = 0
+                       AND strftime('%Y%m', date(ec_client.dob, '+12 month')) - strftime('%Y%m', date('%s')) = 0
                        AND strftime('%Y-%m-%d', '%s') = strftime('%Y-%m-%d', ec_child_details.event_date)"
 
   - key: "malnutrition_episode_18months"
@@ -536,7 +536,7 @@ indicators:
                                WHERE weights.base_entity_id = ec_child_details.base_entity_id
                                  AND weights.z_score <= -2
                            ) >= 1
-                       AND strftime('%Y%m', date(ec_client.dob, '+18 month')) - strftime('%Y%m', date('now')) = 0
+                       AND strftime('%Y%m', date(ec_client.dob, '+18 month')) - strftime('%Y%m', date('%s')) = 0
                        AND strftime('%Y-%m-%d', '%s') = strftime('%Y-%m-%d', ec_child_details.event_date)"
 
   - key: "malnutrition_episode_percent_grp"
@@ -545,9 +545,9 @@ indicators:
     description: "Count children who are 6, 12 and 18 months respectively"
     indicatorQuery: "SELECT 'children' as children,
                             CASE
-                                WHEN strftime('%Y%m', date(ec_client.dob, '+6 month')) - strftime('%Y%m', date('now')) = 0 THEN '6mnths'
-                                WHEN strftime('%Y%m', date(ec_client.dob, '+12 month')) - strftime('%Y%m', date('now')) = 0 THEN '12mnths'
-                                WHEN strftime('%Y%m', date(ec_client.dob, '+18 month')) - strftime('%Y%m', date('now')) = 0 THEN '18mnths'
+                                WHEN strftime('%Y%m', date(ec_client.dob, '+6 month')) - strftime('%Y%m', date('%s')) = 0 THEN '6mnths'
+                                WHEN strftime('%Y%m', date(ec_client.dob, '+12 month')) - strftime('%Y%m', date('%s')) = 0 THEN '12mnths'
+                                WHEN strftime('%Y%m', date(ec_client.dob, '+18 month')) - strftime('%Y%m', date('%s')) = 0 THEN '18mnths'
                                 ELSE 'Null'
                                 END       age,
                             count(*)
@@ -571,9 +571,9 @@ indicators:
     description: "number of children with mild malnutrition at 6,12 and 18 months"
     indicatorQuery: "SELECT 'children' as children,
                             CASE
-                                WHEN strftime('%Y%m', date(ec_client.dob, '+6 month')) - strftime('%Y%m', date('now')) = 0 THEN '6mnths'
-                                WHEN strftime('%Y%m', date(ec_client.dob, '+12 month')) - strftime('%Y%m', date('now')) = 0 THEN '12mnths'
-                                WHEN strftime('%Y%m', date(ec_client.dob, '+18 month')) - strftime('%Y%m', date('now')) = 0 THEN '18mnths'
+                                WHEN strftime('%Y%m', date(ec_client.dob, '+6 month')) - strftime('%Y%m', date('%s')) = 0 THEN '6mnths'
+                                WHEN strftime('%Y%m', date(ec_client.dob, '+12 month')) - strftime('%Y%m', date('%s')) = 0 THEN '12mnths'
+                                WHEN strftime('%Y%m', date(ec_client.dob, '+18 month')) - strftime('%Y%m', date('%s')) = 0 THEN '18mnths'
                                 ELSE 'Null'
                                 END       age,
                             (
@@ -599,9 +599,9 @@ indicators:
     description: "number of children with moderate malnutrition at 6,12 and 18 months"
     indicatorQuery: "SELECT 'children' as children,
                               CASE
-                                  WHEN strftime('%Y%m', date(ec_client.dob, '+6 month')) - strftime('%Y%m', date('now')) = 0 THEN '6mnths'
-                                  WHEN strftime('%Y%m', date(ec_client.dob, '+12 month')) - strftime('%Y%m', date('now')) = 0 THEN '12mnths'
-                                  WHEN strftime('%Y%m', date(ec_client.dob, '+18 month')) - strftime('%Y%m', date('now')) = 0 THEN '18mnths'
+                                  WHEN strftime('%Y%m', date(ec_client.dob, '+6 month')) - strftime('%Y%m', date('%s')) = 0 THEN '6mnths'
+                                  WHEN strftime('%Y%m', date(ec_client.dob, '+12 month')) - strftime('%Y%m', date('%s')) = 0 THEN '12mnths'
+                                  WHEN strftime('%Y%m', date(ec_client.dob, '+18 month')) - strftime('%Y%m', date('%s')) = 0 THEN '18mnths'
                                   ELSE 'Null'
                                   END       age,
                               (
@@ -627,9 +627,9 @@ indicators:
     description: "number of children with severe malnutrition at 6,12 and 18 months"
     indicatorQuery: "SELECT 'children' as children,
                                 CASE
-                                    WHEN strftime('%Y%m', date(ec_client.dob, '+6 month')) - strftime('%Y%m', date('now')) = 0 THEN '6mnths'
-                                    WHEN strftime('%Y%m', date(ec_client.dob, '+12 month')) - strftime('%Y%m', date('now')) = 0 THEN '12mnths'
-                                    WHEN strftime('%Y%m', date(ec_client.dob, '+18 month')) - strftime('%Y%m', date('now')) = 0 THEN '18mnths'
+                                    WHEN strftime('%Y%m', date(ec_client.dob, '+6 month')) - strftime('%Y%m', date('%s')) = 0 THEN '6mnths'
+                                    WHEN strftime('%Y%m', date(ec_client.dob, '+12 month')) - strftime('%Y%m', date('%s')) = 0 THEN '12mnths'
+                                    WHEN strftime('%Y%m', date(ec_client.dob, '+18 month')) - strftime('%Y%m', date('%s')) = 0 THEN '18mnths'
                                     ELSE 'Null'
                                     END       age,
                                 (
@@ -654,9 +654,9 @@ indicators:
     description: "number of children who are obese at 6,12 and 18 months"
     indicatorQuery: "SELECT 'children' as children,
                                 CASE
-                                    WHEN strftime('%Y%m', date(ec_client.dob, '+6 month')) - strftime('%Y%m', date('now')) = 0 THEN '6mnths'
-                                    WHEN strftime('%Y%m', date(ec_client.dob, '+12 month')) - strftime('%Y%m', date('now')) = 0 THEN '12mnths'
-                                    WHEN strftime('%Y%m', date(ec_client.dob, '+18 month')) - strftime('%Y%m', date('now')) = 0 THEN '18mnths'
+                                    WHEN strftime('%Y%m', date(ec_client.dob, '+6 month')) - strftime('%Y%m', date('%s')) = 0 THEN '6mnths'
+                                    WHEN strftime('%Y%m', date(ec_client.dob, '+12 month')) - strftime('%Y%m', date('%s')) = 0 THEN '12mnths'
+                                    WHEN strftime('%Y%m', date(ec_client.dob, '+18 month')) - strftime('%Y%m', date('%s')) = 0 THEN '18mnths'
                                     ELSE 'Null'
                                     END       age,
                                 (
@@ -681,9 +681,9 @@ indicators:
     description: "number of children with weight and height recorded at 6,12 and 18 months"
     indicatorQuery: "SELECT 'children' as children,
                               CASE
-                                  WHEN strftime('%Y%m', date(ec_client.dob, '+6 month')) - strftime('%Y%m', date('now')) = 0 THEN '6mnths'
-                                  WHEN strftime('%Y%m', date(ec_client.dob, '+12 month')) - strftime('%Y%m', date('now')) = 0 THEN '12mnths'
-                                  WHEN strftime('%Y%m', date(ec_client.dob, '+18 month')) - strftime('%Y%m', date('now')) = 0 THEN '18mnths'
+                                  WHEN strftime('%Y%m', date(ec_client.dob, '+6 month')) - strftime('%Y%m', date('%s')) = 0 THEN '6mnths'
+                                  WHEN strftime('%Y%m', date(ec_client.dob, '+12 month')) - strftime('%Y%m', date('%s')) = 0 THEN '12mnths'
+                                  WHEN strftime('%Y%m', date(ec_client.dob, '+18 month')) - strftime('%Y%m', date('%s')) = 0 THEN '18mnths'
                                   ELSE 'Null'
                                   END       age,
                               (
