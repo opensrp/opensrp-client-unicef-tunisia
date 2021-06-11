@@ -68,7 +68,7 @@ class ReportIndicatorsActivity : MultiLanguageActivity() {
                     getString(R.string.monthly_sent_reports_with_year, translatedYearMonth) else
                     getString(R.string.month_year_draft, translatedYearMonth)
 
-                backButton.setOnClickListener { navigateToMonthlyReports(1) }
+                backButton.setOnClickListener { navigateToMonthlyReports(2) }
             } ?: run {
                 serializableExtra = getSerializableExtra(DAILY_TALLIES)
 
@@ -108,7 +108,7 @@ class ReportIndicatorsActivity : MultiLanguageActivity() {
         }
     }
 
-    private fun navigateToMonthlyReports(selectTab: Int = 0) {
+    private fun navigateToMonthlyReports(selectTab: Int = 1) {
         startActivity(Intent(this@ReportIndicatorsActivity, MonthlyReportsActivity::class.java).apply {
             if (intent.getBooleanExtra(SHOW_DATA, false))
                 putExtra(MonthlyReportsActivity.Constants.SELECT_TAB, selectTab)

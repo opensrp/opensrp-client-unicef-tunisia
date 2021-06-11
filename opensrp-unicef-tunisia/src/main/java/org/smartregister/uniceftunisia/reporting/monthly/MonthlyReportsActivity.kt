@@ -37,7 +37,7 @@ class MonthlyReportsActivity : MultiLanguageActivity() {
 
         monthlyReportsViewModel.apply {
             draftedMonths.observe(this@MonthlyReportsActivity, {
-                reportFragmentTabLayout.getTabAt(0)?.text =
+                reportFragmentTabLayout.getTabAt(1)?.text =
                     getString(R.string.monthly_draft_reports, it.size)
             })
         }
