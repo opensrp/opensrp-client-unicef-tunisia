@@ -49,7 +49,7 @@ class MonthlyReportsActivity : MultiLanguageActivity() {
         }
         containerViewPager.apply {
             adapter = reportsPagerAdapter
-            currentItem = intent.getIntExtra(Constants.SELECT_TAB, 0)
+            currentItem = intent.getIntExtra(Constants.SELECT_TAB, 1)
             addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
                 override fun onPageScrolled(
                     position: Int,
