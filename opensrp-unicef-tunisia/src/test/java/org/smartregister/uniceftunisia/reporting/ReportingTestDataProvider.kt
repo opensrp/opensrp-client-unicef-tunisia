@@ -1,7 +1,7 @@
 package org.smartregister.uniceftunisia.reporting
 
+import org.smartregister.path.reporting.monthly.domain.MonthlyTally
 import org.smartregister.uniceftunisia.reporting.common.ReportingUtils
-import org.smartregister.uniceftunisia.reporting.monthly.domain.MonthlyTally
 import java.util.*
 
 object ReportingTestDataProvider {
