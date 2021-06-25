@@ -47,8 +47,8 @@ android {
         applicationId "org.smartregister.uniceftunisia"
         minSdkVersion androidMinSdkVersion
         targetSdkVersion androidTargetSdkVersion
-        versionCode 2
-        versionName "0.1.8"
+        versionCode 3
+        versionName "0.1.9"
         multiDexEnabled true
         buildConfigField "long", "MAX_SERVER_TIME_DIFFERENCE", "1800000l"
         buildConfigField "boolean", "TIME_CHECK", "false"
