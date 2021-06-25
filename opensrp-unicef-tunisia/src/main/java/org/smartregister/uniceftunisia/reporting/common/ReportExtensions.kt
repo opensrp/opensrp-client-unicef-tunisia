@@ -115,7 +115,7 @@ object ReportingUtils {
                         VaccineCoverageColumn.TARGET_TYPE,
                         VaccineCoverageColumn.YEAR
                 ))
-        if (eventObsMap.size == 3 && containsRequiredObs) {
+        if (eventObsMap.size >= 3 && containsRequiredObs) {
             with(eventObsMap) {
                 val targetType = CoverageTargetType.valueOf(getValue(VaccineCoverageColumn.TARGET_TYPE).value.toString())
                 val target = getValue(VaccineCoverageColumn.TARGET).value.toString().toInt()
