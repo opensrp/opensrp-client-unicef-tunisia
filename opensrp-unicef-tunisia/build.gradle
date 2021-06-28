@@ -19,6 +19,7 @@ apply plugin: 'com.github.kt3k.coveralls'
 apply plugin: 'org.smartregister.gradle.jarjar'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.google.firebase.firebase-perf' // Apply the Performance Monitoring plugin
 
