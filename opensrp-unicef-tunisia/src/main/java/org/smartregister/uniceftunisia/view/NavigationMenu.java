@@ -37,7 +37,6 @@ import org.smartregister.child.util.Utils;
 import org.smartregister.client.utils.domain.Form;
 import org.smartregister.domain.FetchStatus;
 import org.smartregister.receiver.SyncStatusBroadcastReceiver;
-import org.smartregister.reporting.service.IndicatorGeneratorIntentService;
 import org.smartregister.uniceftunisia.R;
 import org.smartregister.uniceftunisia.activity.ChildRegisterActivity;
 import org.smartregister.uniceftunisia.application.UnicefTunisiaApplication;

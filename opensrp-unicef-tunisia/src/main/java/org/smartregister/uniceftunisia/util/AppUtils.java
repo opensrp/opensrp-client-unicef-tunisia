@@ -1,5 +1,11 @@
 package org.smartregister.uniceftunisia.util;
 
+import static com.vijay.jsonwizard.constants.JsonFormConstants.FIELDS;
+import static com.vijay.jsonwizard.constants.JsonFormConstants.HINT;
+import static com.vijay.jsonwizard.constants.JsonFormConstants.STEP1;
+import static com.vijay.jsonwizard.constants.JsonFormConstants.TYPE;
+import static com.vijay.jsonwizard.constants.JsonFormConstants.VALUE;
+
 import android.content.ContentValues;
 
 import androidx.annotation.NonNull;
@@ -33,12 +39,6 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import timber.log.Timber;
-
-import static com.vijay.jsonwizard.constants.JsonFormConstants.FIELDS;
-import static com.vijay.jsonwizard.constants.JsonFormConstants.HINT;
-import static com.vijay.jsonwizard.constants.JsonFormConstants.STEP1;
-import static com.vijay.jsonwizard.constants.JsonFormConstants.TYPE;
-import static com.vijay.jsonwizard.constants.JsonFormConstants.VALUE;
 
 public class AppUtils extends Utils {
 

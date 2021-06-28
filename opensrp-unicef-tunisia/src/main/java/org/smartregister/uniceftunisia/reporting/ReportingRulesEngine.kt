@@ -6,7 +6,6 @@ import org.jeasy.rules.api.Rules
 import org.jeasy.rules.core.DefaultRulesEngine
 import org.jeasy.rules.mvel.MVELRuleFactory
 import org.jeasy.rules.support.YamlRuleDefinitionReader
-import org.smartregister.path.reporting.monthly.domain.MonthlyTally
 import org.smartregister.path.reporting.monthly.domain.Tally
 import org.smartregister.uniceftunisia.reporting.common.toWholeNumber
 import org.smartregister.util.Utils

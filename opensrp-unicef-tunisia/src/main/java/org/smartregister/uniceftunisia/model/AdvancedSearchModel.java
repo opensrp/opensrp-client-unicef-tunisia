@@ -1,19 +1,5 @@
 package org.smartregister.uniceftunisia.model;
 
-import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
-import org.smartregister.child.cursor.AdvancedMatrixCursor;
-import org.smartregister.child.model.BaseChildAdvancedSearchModel;
-import org.smartregister.child.model.ChildMotherDetailModel;
-import org.smartregister.child.util.Constants;
-import org.smartregister.child.util.DBConstants;
-import org.smartregister.domain.Response;
-import org.smartregister.uniceftunisia.util.AppConstants;
-
-import java.util.List;
-import java.util.Map;
-
 import static org.smartregister.child.util.Constants.KEY.FATHER_RELATIONAL_ID;
 import static org.smartregister.child.util.Constants.KEY.RELATIONALID;
 import static org.smartregister.uniceftunisia.util.AppConstants.KEY.DOB;
@@ -27,6 +13,20 @@ import static org.smartregister.uniceftunisia.util.AppConstants.KEY.RELATIONAL_I
 import static org.smartregister.uniceftunisia.util.AppConstants.KEY.ZEIR_ID;
 import static org.smartregister.uniceftunisia.util.TableUtil.getAllClientColumn;
 import static org.smartregister.uniceftunisia.util.TableUtil.getChildDetailsColumn;
+
+import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.smartregister.child.cursor.AdvancedMatrixCursor;
+import org.smartregister.child.model.BaseChildAdvancedSearchModel;
+import org.smartregister.child.model.ChildMotherDetailModel;
+import org.smartregister.child.util.Constants;
+import org.smartregister.child.util.DBConstants;
+import org.smartregister.domain.Response;
+import org.smartregister.uniceftunisia.util.AppConstants;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ndegwamartin on 2019-05-27.

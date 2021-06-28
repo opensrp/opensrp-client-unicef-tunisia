@@ -67,7 +67,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
 public class UnicefTunisiaApplication extends DrishtiApplication implements TimeChangedBroadcastReceiver.OnTimeChangedListener {

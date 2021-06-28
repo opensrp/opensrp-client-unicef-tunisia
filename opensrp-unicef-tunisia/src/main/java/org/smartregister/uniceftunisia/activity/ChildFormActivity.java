@@ -1,5 +1,17 @@
 package org.smartregister.uniceftunisia.activity;
 
+import static org.smartregister.uniceftunisia.fragment.AppChildFormFragment.getFormFragment;
+import static org.smartregister.uniceftunisia.util.AppConstants.KEY.FIRST_NAME;
+import static org.smartregister.uniceftunisia.util.AppConstants.KEY.LAST_NAME;
+import static org.smartregister.uniceftunisia.util.AppConstants.KEY.MOTHER_GUARDIAN_NUMBER;
+import static org.smartregister.uniceftunisia.util.AppConstants.KEY.MOTHER_NATIONALITY;
+import static org.smartregister.uniceftunisia.util.AppConstants.KEY.MOTHER_NATIONALITY_OTHER;
+import static org.smartregister.uniceftunisia.util.AppConstants.KEY.MOTHER_RUBELLA;
+import static org.smartregister.uniceftunisia.util.AppConstants.KEY.MOTHER_TDV_DOSES;
+import static org.smartregister.uniceftunisia.util.AppConstants.KEY.PROTECTED_AT_BIRTH;
+import static org.smartregister.uniceftunisia.util.AppConstants.KEY.SECOND_PHONE_NUMBER;
+import static org.smartregister.uniceftunisia.util.TableUtil.getMotherDetailsColumn;
+
 import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.apache.commons.lang3.StringUtils;
@@ -15,18 +27,6 @@ import org.smartregister.uniceftunisia.fragment.AppChildFormFragment;
 import org.smartregister.uniceftunisia.util.AppConstants;
 
 import java.util.Map;
-
-import static org.smartregister.uniceftunisia.fragment.AppChildFormFragment.getFormFragment;
-import static org.smartregister.uniceftunisia.util.AppConstants.KEY.FIRST_NAME;
-import static org.smartregister.uniceftunisia.util.AppConstants.KEY.LAST_NAME;
-import static org.smartregister.uniceftunisia.util.AppConstants.KEY.MOTHER_GUARDIAN_NUMBER;
-import static org.smartregister.uniceftunisia.util.AppConstants.KEY.MOTHER_NATIONALITY;
-import static org.smartregister.uniceftunisia.util.AppConstants.KEY.MOTHER_NATIONALITY_OTHER;
-import static org.smartregister.uniceftunisia.util.AppConstants.KEY.MOTHER_RUBELLA;
-import static org.smartregister.uniceftunisia.util.AppConstants.KEY.MOTHER_TDV_DOSES;
-import static org.smartregister.uniceftunisia.util.AppConstants.KEY.PROTECTED_AT_BIRTH;
-import static org.smartregister.uniceftunisia.util.AppConstants.KEY.SECOND_PHONE_NUMBER;
-import static org.smartregister.uniceftunisia.util.TableUtil.getMotherDetailsColumn;
 
 public class ChildFormActivity extends BaseChildFormActivity {
     @Override

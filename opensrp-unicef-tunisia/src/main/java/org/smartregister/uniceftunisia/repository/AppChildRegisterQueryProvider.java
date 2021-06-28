@@ -1,10 +1,5 @@
 package org.smartregister.uniceftunisia.repository;
 
-import org.apache.commons.lang3.StringUtils;
-import org.smartregister.child.provider.RegisterQueryProvider;
-import org.smartregister.child.util.Constants;
-import org.smartregister.uniceftunisia.util.AppConstants;
-
 import static org.smartregister.uniceftunisia.util.AppConstants.KEY.BASE_ENTITY_ID;
 import static org.smartregister.uniceftunisia.util.AppConstants.KEY.BIRTH_REGISTRATION_NUMBER;
 import static org.smartregister.uniceftunisia.util.AppConstants.KEY.CARD_STATUS;
@@ -53,6 +48,11 @@ import static org.smartregister.uniceftunisia.util.TableUtil.getAllClientColumn;
 import static org.smartregister.uniceftunisia.util.TableUtil.getChildDetailsColumn;
 import static org.smartregister.uniceftunisia.util.TableUtil.getFatherDetailsColumn;
 import static org.smartregister.uniceftunisia.util.TableUtil.getMotherDetailsColumn;
+
+import org.apache.commons.lang3.StringUtils;
+import org.smartregister.child.provider.RegisterQueryProvider;
+import org.smartregister.child.util.Constants;
+import org.smartregister.uniceftunisia.util.AppConstants;
 
 public class AppChildRegisterQueryProvider extends RegisterQueryProvider {
 

@@ -1,5 +1,7 @@
 package org.smartregister.uniceftunisia.activity;
 
+import static org.smartregister.clientandeventmodel.DateUtil.getDateFromString;
+
 import android.annotation.SuppressLint;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -43,8 +45,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import timber.log.Timber;
-
-import static org.smartregister.clientandeventmodel.DateUtil.getDateFromString;
 
 /**
  * Created by ndegwamartin on 06/03/2019.
