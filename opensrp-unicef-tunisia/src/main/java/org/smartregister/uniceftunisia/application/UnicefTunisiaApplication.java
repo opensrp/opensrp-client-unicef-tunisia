@@ -15,6 +15,7 @@ import com.evernote.android.job.JobManager;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.TestOnly;
 import org.smartregister.Context;
 import org.smartregister.CoreLibrary;
 import org.smartregister.child.ChildLibrary;
@@ -487,6 +488,11 @@ public class UnicefTunisiaApplication extends DrishtiApplication implements Time
 
     public Activity getCurrentActivity(){
         return this.currentActivity;
+    }
+
+    @TestOnly
+    public void setCurrentActivity(Activity activity) {
+        this.currentActivity = activity;
     }
 }
 
