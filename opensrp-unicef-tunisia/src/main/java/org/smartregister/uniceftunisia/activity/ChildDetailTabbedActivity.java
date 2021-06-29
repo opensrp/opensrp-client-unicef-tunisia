@@ -1,5 +1,7 @@
 package org.smartregister.uniceftunisia.activity;
 
+import static org.smartregister.clientandeventmodel.DateUtil.getDateFromString;
+
 import android.annotation.SuppressLint;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -44,14 +46,11 @@ import java.util.Map;
 
 import timber.log.Timber;
 
-import static org.smartregister.clientandeventmodel.DateUtil.getDateFromString;
-
 /**
  * Created by ndegwamartin on 06/03/2019.
  */
 public class ChildDetailTabbedActivity extends BaseChildDetailTabbedActivity {
     private final static List<String> nonEditableFields = Arrays.asList("Sex", "zeir_id", "mother_rubella", "protected_at_birth");
-    private List<Map.Entry<String, String>> extraChildVaccines;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,8 +158,7 @@ public class ChildDetailTabbedActivity extends BaseChildDetailTabbedActivity {
             case R.id.report_adverse_event:
                 return launchAdverseEventForm();
             case R.id.record_dynamic_vaccines:
-                extraChildVaccines = getExtraChildVaccines();
-                if (extraChildVaccines.size() < 10) {
+                if (getExtraChildVaccines().size() < 10) {
                     launchDynamicVaccinesForm(AppConstants.JsonForm.DYNAMIC_VACCINES, Constants.KEY.PRIVATE_SECTOR_VACCINE);
                 } else {
                     Utils.showToast(this, getString(R.string.maximum_extra_vaccines_reached));
@@ -187,7 +185,7 @@ public class ChildDetailTabbedActivity extends BaseChildDetailTabbedActivity {
 
             //Limit the size of multi select widget field size to the number of extra vaccines
             JSONObject multiSelectField = ChildJsonFormUtils.getFieldJSONObject(jsonArray, multiSelectFieldName);
-            multiSelectField.put(AppConstants.KEY.MAX_SELECTABLE, 10 - extraChildVaccines.size());
+            multiSelectField.put(AppConstants.KEY.MAX_SELECTABLE, 10 - getExtraChildVaccines().size());
 
             form.put(Constants.KEY.DYNAMIC_FIELD, multiSelectFieldName);
             form.put(Constants.KEY.ENTITY_ID, childDetails.entityId());
@@ -304,5 +302,26 @@ public class ChildDetailTabbedActivity extends BaseChildDetailTabbedActivity {
     @Override
     public String constructChildName() {
         return super.constructChildName();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        try {
+            if (data != null) {
+                String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
+                Timber.d(jsonString);
+                if (jsonString != null) {
+                    JSONObject form = new JSONObject(jsonString);
+                    String encounterType = form.getString(ChildJsonFormUtils.ENCOUNTER_TYPE);
+                    if (encounterType.equalsIgnoreCase(Constants.EventType.UPDATE_BITRH_REGISTRATION)) {
+                        String jsonForm = AppUtils.validateSpinnerValue(jsonString);
+                        data.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonForm);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

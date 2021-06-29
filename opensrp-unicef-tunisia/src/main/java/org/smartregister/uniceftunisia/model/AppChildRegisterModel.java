@@ -1,5 +1,8 @@
 package org.smartregister.uniceftunisia.model;
 
+import static org.smartregister.uniceftunisia.util.AppConstants.KEY.REGISTRATION_LOCATION_ID;
+import static org.smartregister.uniceftunisia.util.AppConstants.KEY.REGISTRATION_LOCATION_NAME;
+
 import androidx.annotation.NonNull;
 
 import org.smartregister.child.domain.ChildEventClient;
@@ -14,9 +17,6 @@ import org.smartregister.uniceftunisia.util.AppConstants;
 
 import java.util.Calendar;
 import java.util.List;
-
-import static org.smartregister.uniceftunisia.util.AppConstants.KEY.REGISTRATION_LOCATION_ID;
-import static org.smartregister.uniceftunisia.util.AppConstants.KEY.REGISTRATION_LOCATION_NAME;
 
 public class AppChildRegisterModel extends BaseChildRegisterModel {
 

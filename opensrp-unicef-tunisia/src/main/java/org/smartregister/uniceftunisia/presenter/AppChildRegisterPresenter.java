@@ -1,10 +1,13 @@
 package org.smartregister.uniceftunisia.presenter;
 
+import static org.smartregister.uniceftunisia.util.AppConstants.KEY.CARD_STATUS;
+
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.AllConstants;
 import org.smartregister.child.contract.ChildRegisterContract;
+import org.smartregister.child.domain.UpdateRegisterParams;
 import org.smartregister.child.presenter.BaseChildDetailsPresenter.CardStatus;
 import org.smartregister.child.presenter.BaseChildRegisterPresenter;
 import org.smartregister.clientandeventmodel.DateUtil;
@@ -18,8 +21,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import timber.log.Timber;
-
-import static org.smartregister.uniceftunisia.util.AppConstants.KEY.CARD_STATUS;
 
 public class AppChildRegisterPresenter extends BaseChildRegisterPresenter {
     private final EventClientRepository eventClientRepository = UnicefTunisiaApplication.getInstance().eventClientRepository();
@@ -54,5 +55,11 @@ public class AppChildRegisterPresenter extends BaseChildRegisterPresenter {
                 AppUtils.createClientCardReceivedEvent(baseEntityId, CardStatus.does_not_need_card, cardStatusDate);
             }
         }
+    }
+
+    @Override
+    public void saveForm(String jsonString, UpdateRegisterParams updateRegisterParams) {
+        String form = AppUtils.validateSpinnerValue(jsonString);
+        super.saveForm(form, updateRegisterParams);
     }
 }

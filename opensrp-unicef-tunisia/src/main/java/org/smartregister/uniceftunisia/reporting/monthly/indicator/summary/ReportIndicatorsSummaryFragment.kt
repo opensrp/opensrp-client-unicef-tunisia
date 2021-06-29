@@ -12,11 +12,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_report_indicators_summary.*
+import org.smartregister.path.reporting.monthly.domain.MonthlyTally
 import org.smartregister.uniceftunisia.R
 import org.smartregister.uniceftunisia.reporting.common.ReportingUtils
 import org.smartregister.uniceftunisia.reporting.common.ReportingUtils.dateFormatter
 import org.smartregister.uniceftunisia.reporting.common.showProgressDialog
-import org.smartregister.uniceftunisia.reporting.monthly.domain.MonthlyTally
 import org.smartregister.uniceftunisia.reporting.monthly.indicator.ReportIndicatorsViewModel
 
 /**

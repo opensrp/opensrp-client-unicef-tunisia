@@ -52,7 +52,7 @@
     <string name="please_wait_message">Please wait</string>
     <string name="reports">Reports</string>
 
-    <string name="str_page_info">Page {0} of {1}</string>
+    <string name="str_page_info">Page %1$d of %2$d</string>
     <string name="dismiss_lookup">Confirm</string>
     <string name="fill_form_error_msg">Please register at least one service before saving</string>
     <string name="close">Close</string>
@@ -348,7 +348,11 @@
     <string name="one_two_years_target_population"> 1–2 year target population</string>
     <string name="specify_target_error">Please specify  population target</string>
     <string name="error_saving_target">Error saving population target</string>
-
+    <string name="loading_daily_reports_message">Generating daily reports. Please wait…</string>
+    <string name="daily_tallies_with_day">Daily Tallies &gt; %1s</string>
+    <string name="generating_daily_tallies_started">Generating daily tallies started</string>
+    <string name="generating_daily_tallies_in_progress">Generating daily tallies in-progress</string>
+    <string name="generating_daily_tallies_completed">Generating daily tallies completed</string>
     <!-- Card support strings -->
     <string name="opensrp_id">IDV NUMBER</string>
 </resources>

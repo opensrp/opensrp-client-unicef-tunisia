@@ -1,7 +1,6 @@
 package org.smartregister.uniceftunisia.interactor;
 
 import com.vijay.jsonwizard.constants.JsonFormConstants;
-import com.vijay.jsonwizard.interactors.JsonFormInteractor;
 
 import org.junit.Assert;
 import org.junit.Test;

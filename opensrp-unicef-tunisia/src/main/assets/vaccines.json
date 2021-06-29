@@ -23,7 +23,7 @@
             {
               "reference": "dob",
               "offset": "+0d",
-              "window": "+28d"
+              "window": "+30d"
             }
           ]
         }
@@ -47,7 +47,7 @@
             {
               "reference": "dob",
               "offset": "+0d",
-              "window": "+28d"
+              "window": "+30d"
             }
           ]
         }
@@ -57,7 +57,7 @@
   {
     "name": "2 months",
     "id": "2_months",
-    "days_after_birth_due": 56,
+    "days_after_birth_due": 60,
     "vaccines": [
       {
         "name": "IPV 1",
@@ -77,8 +77,8 @@
           "due": [
             {
               "reference": "dob",
-              "offset": "+2m",
-              "window": "+28d"
+              "offset": "+60d",
+              "window": "+30d"
             }
           ]
         }
@@ -101,8 +101,8 @@
           "due": [
             {
               "reference": "dob",
-              "offset": "+2m",
-              "window": "+28d"
+              "offset": "+60d",
+              "window": "+30d"
             }
           ]
         }
@@ -125,8 +125,8 @@
           "due": [
             {
               "reference": "dob",
-              "offset": "+2m",
-              "window": "+28d"
+              "offset": "+60d",
+              "window": "+30d"
             }
           ]
         }
@@ -136,7 +136,7 @@
   {
     "name": "3 months",
     "id": "3_months",
-    "days_after_birth_due": 84,
+    "days_after_birth_due": 90,
     "vaccines": [
       {
         "name": "IPV 2",
@@ -157,8 +157,8 @@
             {
               "reference": "prerequisite",
               "prerequisite": "IPV 1",
-              "offset": "+1m",
-              "window": "+28d"
+              "offset": "+30d",
+              "window": "+30d"
             }
           ]
         }
@@ -182,8 +182,8 @@
             {
               "reference": "prerequisite",
               "prerequisite": "PENTA 1",
-              "offset": "+1m",
-              "window": "+28d"
+              "offset": "+30d",
+              "window": "+30d"
             }
           ]
         }
@@ -193,7 +193,7 @@
   {
     "name": "4 months",
     "id": "4_months",
-    "days_after_birth_due": 112,
+    "days_after_birth_due": 120,
     "vaccines": [
       {
         "name": "PCV 2",
@@ -214,8 +214,8 @@
             {
               "reference": "prerequisite",
               "prerequisite": "PCV 1",
-              "offset": "+2m",
-              "window": "+28d"
+              "offset": "+60d",
+              "window": "+30d"
             }
           ]
         }
@@ -225,7 +225,7 @@
   {
     "name": "6 months",
     "id": "6_months",
-    "days_after_birth_due": 168,
+    "days_after_birth_due": 180,
     "vaccines": [
       {
         "name": "Penta 3",
@@ -246,8 +246,8 @@
             {
               "reference": "prerequisite",
               "prerequisite": "Penta 2",
-              "offset": "+3m",
-              "window": "+28d"
+              "offset": "+90d",
+              "window": "+30d"
             }
           ]
         }
@@ -270,8 +270,8 @@
           "due": [
             {
               "reference": "dob",
-              "offset": "+6m",
-              "window": "+28d"
+              "offset": "+180d",
+              "window": "+30d"
             }
           ]
         }
@@ -281,7 +281,7 @@
   {
     "name": "11 months",
     "id": "11_months",
-    "days_after_birth_due": 308,
+    "days_after_birth_due": 330,
     "vaccines": [
       {
         "name": "PCV 3",
@@ -302,8 +302,8 @@
             {
               "reference": "prerequisite",
               "prerequisite": "PCV 2",
-              "offset": "+7m",
-              "window": "+28d"
+              "offset": "+210d",
+              "window": "+30d"
             }
           ]
         }
@@ -313,7 +313,7 @@
   {
     "name": "12 months",
     "id": "12_months",
-    "days_after_birth_due": 336,
+    "days_after_birth_due": 360,
     "vaccines": [
       {
         "name": "MR 1",
@@ -333,8 +333,8 @@
           "due": [
             {
               "reference": "dob",
-              "offset": "+12m",
-              "window": "+28d"
+              "offset": "+360d",
+              "window": "+30d"
             }
           ]
         }
@@ -344,7 +344,7 @@
   {
     "name": "18 months",
     "id": "18_months",
-    "days_after_birth_due": 504,
+    "days_after_birth_due": 540,
     "vaccines": [
       {
         "name": "DTP 4",
@@ -364,8 +364,8 @@
           "due": [
             {
               "reference": "dob",
-              "offset": "+18m",
-              "window": "+28d"
+              "offset": "+540d",
+              "window": "+30d"
             }
           ]
         }
@@ -389,8 +389,8 @@
             {
               "reference": "prerequisite",
               "prerequisite": "OPV 1",
-              "offset": "+12m",
-              "window": "+28d"
+              "offset": "+360d",
+              "window": "+30d"
             }
           ]
         }
@@ -414,8 +414,8 @@
             {
               "reference": "prerequisite",
               "prerequisite": "MR 1",
-              "offset": "+6m",
-              "window": "+28d"
+              "offset": "+180d",
+              "window": "+30d"
             }
           ]
         }

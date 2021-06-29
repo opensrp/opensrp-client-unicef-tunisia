@@ -1,13 +1,21 @@
 package org.smartregister.uniceftunisia.util;
 
+import static com.vijay.jsonwizard.constants.JsonFormConstants.FIELDS;
+import static com.vijay.jsonwizard.constants.JsonFormConstants.HINT;
+import static com.vijay.jsonwizard.constants.JsonFormConstants.STEP1;
+import static com.vijay.jsonwizard.constants.JsonFormConstants.TYPE;
+import static com.vijay.jsonwizard.constants.JsonFormConstants.VALUE;
+
 import android.content.ContentValues;
 
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
+import com.vijay.jsonwizard.constants.JsonFormConstants;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.child.presenter.BaseChildDetailsPresenter.CardStatus;
 import org.smartregister.child.util.Constants;
@@ -135,5 +143,25 @@ public class AppUtils extends Utils {
         } catch (Exception e) {
             Timber.e(e);
         }
+    }
+
+    public static String validateSpinnerValue(String jsonString) {
+        try {
+            JSONObject jsonForm = JsonFormUtils.toJSONObject(jsonString);
+            JSONArray fields = JsonFormUtils.fields(jsonForm);
+            for (int fieldIndex = 0; fieldIndex < fields.length(); fieldIndex++) {
+                JSONObject field = fields.getJSONObject(fieldIndex);
+                if (field.getString(TYPE).equalsIgnoreCase(JsonFormConstants.SPINNER) && field.has(VALUE)
+                        && field.getString(HINT).equalsIgnoreCase(field.getString(VALUE))) {
+                    field.remove(VALUE);
+                    fields.put(fieldIndex, field);
+                }
+            }
+            jsonForm.getJSONObject(STEP1).put(FIELDS, fields);
+            return jsonForm.toString();
+        } catch (JSONException e) {
+            Timber.e(e);
+        }
+        return jsonString;
     }
 }

@@ -6,9 +6,8 @@ import android.util.Pair;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatDelegate;
 
-import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.core.CrashlyticsCore;
 import com.evernote.android.job.JobManager;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import org.jetbrains.annotations.NotNull;
 import org.smartregister.Context;
@@ -68,7 +67,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
 public class UnicefTunisiaApplication extends DrishtiApplication implements TimeChangedBroadcastReceiver.OnTimeChangedListener {
@@ -242,12 +240,13 @@ public class UnicefTunisiaApplication extends DrishtiApplication implements Time
         ReportingLibrary.init(context, getRepository(), null, BuildConfig.VERSION_CODE, BuildConfig.DATABASE_VERSION);
         ReportingLibrary.getInstance().addMultiResultProcessor(new ReportIndicatorsProcessor());
 
-        Fabric.with(this, new Crashlytics.Builder().core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build());
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG);
 
         initRepositories();
 
         SyncStatusBroadcastReceiver.init(this);
         LocationHelper.init(new ArrayList<>(Arrays.asList(BuildConfig.LOCATION_LEVELS)), BuildConfig.DEFAULT_LOCATION);
+
         jsonSpecHelper = new JsonSpecHelper(this);
 
         //init Job Manager

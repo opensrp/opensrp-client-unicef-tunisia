@@ -2,23 +2,26 @@ buildscript {
     repositories {
         google()
         jcenter()
-        maven { url 'https://maven.fabric.io/public' }
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.0.2"
         classpath 'gradle.plugin.org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.10.2'
-        classpath 'io.fabric.tools:gradle:1.31.2'
+        classpath 'com.google.gms:google-services:4.3.5'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.5.2'
+        classpath 'com.google.firebase:perf-plugin:1.3.5'  // Performance Monitoring plugin
     }
 }
 
 apply plugin: 'com.android.application'
 apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
-apply plugin: 'io.fabric'
 apply plugin: 'org.smartregister.gradle.jarjar'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'com.google.firebase.firebase-perf' // Apply the Performance Monitoring plugin
 
 jacoco {
     toolVersion = jacocoVersion
@@ -47,8 +50,8 @@ android {
         applicationId "org.smartregister.uniceftunisia"
         minSdkVersion androidMinSdkVersion
         targetSdkVersion androidTargetSdkVersion
-        versionCode 1
-        versionName "0.1.6"
+        versionCode 3
+        versionName "0.1.9"
         multiDexEnabled true
         buildConfigField "long", "MAX_SERVER_TIME_DIFFERENCE", "1800000l"
         buildConfigField "boolean", "TIME_CHECK", "false"
@@ -115,6 +118,7 @@ android {
             buildConfigField "String[]", "LOCATION_LEVELS", '{"Country", "Region", "District", "Delegation", "Health Facility"}'
             buildConfigField "String[]", "HEALTH_FACILITY_LEVELS", '{"Country", "Region", "District", "Delegation", "Health Facility"}'
             buildConfigField "String", 'DEFAULT_LOCATION', '"Health Facility"'
+            buildConfigField "String[]", "ALLOWED_LEVELS", '{"Health Facility"}'
             buildConfigField "String", "OAUTH_CLIENT_ID", getLocalProperty("oauth.client.id.release")
             buildConfigField "String", "OAUTH_CLIENT_SECRET", getLocalProperty("oauth.client.secret.release")
         }
@@ -140,6 +144,7 @@ android {
             buildConfigField "String[]", "LOCATION_LEVELS", '{"Country", "Region", "District", "Delegation", "Health Facility"}'
             buildConfigField "String[]", "HEALTH_FACILITY_LEVELS", '{"Country", "Region", "District", "Delegation", "Health Facility"}'
             buildConfigField "String", 'DEFAULT_LOCATION', '"Health Facility"'
+            buildConfigField "String[]", "ALLOWED_LEVELS", '{"Health Facility"}'
             testCoverageEnabled true
             buildConfigField "String", "OAUTH_CLIENT_ID", getLocalProperty("oauth.client.id.debug")
             buildConfigField "String", "OAUTH_CLIENT_SECRET", getLocalProperty("oauth.client.secret.debug")
@@ -171,6 +176,7 @@ android {
             buildConfigField "String[]", "LOCATION_LEVELS", '{"Country", "Region", "District", "Delegation", "Health Facility"}'
             buildConfigField "String[]", "HEALTH_FACILITY_LEVELS", '{"Country", "Region", "District", "Delegation", "Health Facility"}'
             buildConfigField "String", 'DEFAULT_LOCATION', '"Health Facility"'
+            buildConfigField "String[]", "ALLOWED_LEVELS", '{"Health Facility"}'
             buildConfigField "String", "OAUTH_CLIENT_ID", getLocalProperty("oauth.client.id.preview")
             buildConfigField "String", "OAUTH_CLIENT_SECRET", getLocalProperty("oauth.client.secret.preview")
         }
@@ -216,35 +222,50 @@ tasks.withType(Test) {
 
 dependencies {
     implementation fileTree(dir: "./build/libs", include: ['*.jar'])
-    jarJar 'com.ibm.fhir:fhir-model:4.2.3'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:27.1.0')
+    jarJar 'com.ibm.fhir:fhir-model:4.7.0'
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.1'
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1"
-    implementation "androidx.work:work-runtime-ktx:2.4.0"
+    implementation "androidx.work:work-runtime-ktx:2.5.0"
     implementation "androidx.core:core-ktx:1.3.2"
     implementation "androidx.sqlite:sqlite-ktx:2.1.0"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.2'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.2'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.3'
     implementation "androidx.cardview:cardview:1.0.0"
 
 //    implementation(project(':opensrp-child')) {
-    implementation('org.smartregister:opensrp-client-child:0.6.5-ALPHA2-SNAPSHOT@aar') {
+    implementation('org.smartregister:opensrp-client-child:0.7.0-ALPHA4-SNAPSHOT@aar') {
         transitive = true
         exclude group: 'id.zelory', module: 'compressor'
         exclude group: 'org.smartregister', module: 'opensrp-client-growth-monitoring'
+        exclude group: 'org.smartregister', module: 'opensrp-client-immunization'
         exclude group: 'org.smartregister', module: 'opensrp-client-core'
         exclude group: 'org.smartregister', module: 'opensrp-client-reporting'
         exclude group: 'com.android.support', module: 'appcompat-v7'
         exclude group: 'com.google.guava', module: 'guava'
         exclude group: 'io.ona.rdt-capture', module: 'lib'
+        exclude group: 'com.ibm.fhir', module: 'fhir-model'
+        exclude group: 'com.ibm.fhir', module: 'fhir-path'
     }
 
-    implementation('org.smartregister:opensrp-client-core:4.0.0-SNAPSHOT@aar') {
+    implementation('org.smartregister:opensrp-client-immunization:3.0.11-SNAPSHOT@aar') {
+        transitive = true
+        exclude group: 'org.smartregister', module: 'opensrp-client-core'
+        exclude group: 'com.android.support', module: 'design'
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.ibm.fhir', module: 'fhir-model'
+        exclude group: 'com.ibm.fhir', module: 'fhir-path'
+    }
+
+    implementation('org.smartregister:opensrp-client-core:4.3.9-SNAPSHOT@aar') {
         transitive = true
         exclude group: 'id.zelory', module: 'compressor'
         exclude group: 'com.android.support', module: 'appcompat-v7'
@@ -253,10 +274,11 @@ dependencies {
         exclude group: 'com.android.support', module: 'cardview-v7'
         exclude group: 'com.android.support', module: 'support-v4'
         exclude group: 'com.ibm.fhir', module: 'fhir-model'
+        exclude group: 'com.ibm.fhir', module: 'fhir-path'
         exclude group: 'org.smartregister', module: 'opensrp-client-reporting'
     }
 
-    implementation('org.smartregister:opensrp-client-growth-monitoring:2.0.1-SNAPSHOT@aar') {
+    implementation('org.smartregister:opensrp-client-growth-monitoring:2.0.5-SNAPSHOT@aar') {
         transitive = true
         exclude group: 'id.zelory', module: 'compressor'
         exclude group: 'org.smartregister', module: 'opensrp-client-core'
@@ -264,6 +286,8 @@ dependencies {
         exclude group: 'org.smartregister', module: 'opensrp-client-native-form'
         exclude group: 'com.android.support', module: 'appcompat-v7'
         exclude group: 'org.smartregister', module: 'opensrp-client-reporting'
+        exclude group: 'com.ibm.fhir', module: 'fhir-model'
+        exclude group: 'com.ibm.fhir', module: 'fhir-path'
     }
 
     implementation('org.smartregister:opensrp-client-reporting:0.0.22-SNAPSHOT@aar') {
@@ -273,6 +297,8 @@ dependencies {
         exclude group: 'com.android.support', module: 'design'
         exclude group: 'com.github.lecho', module: 'hellocharts-library'
         exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.ibm.fhir', module: 'fhir-model'
+        exclude group: 'com.ibm.fhir', module: 'fhir-path'
     }
 
     implementation('com.google.android.material:material:1.2.1') {
@@ -294,7 +320,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.19'
     implementation 'com.evernote:android-job:1.2.6'
     implementation 'com.github.lecho:hellocharts-android:v1.5.8'
-    implementation 'id.zelory:compressor:2.1.0'
+    implementation 'id.zelory:compressor:2.1.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
@@ -305,6 +331,11 @@ dependencies {
     implementation group: 'org.yaml', name: 'snakeyaml', version: '1.24'
     implementation group: 'io.fabric.sdk.android', name: 'fabric', version: '1.4.8'
     implementation 'com.github.florent37:expansionpanel:1.2.4'
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-perf'
+
+//    implementation 'org.smartregister:opensrp-plan-evaluator:1.5.1-SNAPSHOT'
+//    implementation group: 'org.codehaus.jackson', name: 'jackson-core-asl', version: '1.9.13'
 
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.2'
 
@@ -317,10 +348,11 @@ dependencies {
     testImplementation "org.robolectric:shadows-supportv4:$robolectricVersion"
     testImplementation 'org.apache.maven:maven-ant-tasks:2.1.3'
     testImplementation group: 'org.skyscreamer', name: 'jsonassert', version: '1.5.0'
-    testImplementation 'com.ibm.fhir:fhir-model:4.2.3'
+    testImplementation 'com.ibm.fhir:fhir-model:4.7.0'
+    testImplementation 'com.ibm.fhir:fhir-path:4.7.0'
     testImplementation 'junit:junit:4.13.1'
     testImplementation 'androidx.test:core:1.3.0'
-    testImplementation 'androidx.work:work-testing:2.4.0'
+    testImplementation 'androidx.work:work-testing:2.5.0'
     testImplementation 'org.mockito:mockito-core:3.1.0'
     testImplementation "io.mockk:mockk:1.10.2"
 }

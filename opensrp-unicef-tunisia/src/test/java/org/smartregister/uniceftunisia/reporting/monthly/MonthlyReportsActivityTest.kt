@@ -61,13 +61,13 @@ class MonthlyReportsActivityTest {
 
     @Test
     fun `Should contain two tabs with distinct titles`() {
-        assertEquals(2, tabLayout.tabCount)
+        assertEquals(3, tabLayout.tabCount)
         val tabOne = tabLayout.getTabAt(0)
         assertNotNull(tabOne)
-        assertEquals(tabOne?.text, monthlyReportsActivity.getString(R.string.monthly_draft_reports, 0))
+        assertEquals(tabOne?.text, monthlyReportsActivity.getString(R.string.hia2_daily_tallies))
         val tabTwo = tabLayout.getTabAt(1)
         assertNotNull(tabTwo)
-        assertEquals(tabTwo?.text, monthlyReportsActivity.getString(R.string.monthly_sent_reports))
+        assertEquals(tabTwo?.text, monthlyReportsActivity.getString(R.string.monthly_draft_reports, 0))
     }
 
     @Test
@@ -77,6 +77,6 @@ class MonthlyReportsActivityTest {
                 listOf(Pair("January 2020", dateFormatter("yyyy-MM-dd").parse("2020-01-01")))
         val tabOne = tabLayout.getTabAt(0)
         assertNotNull(tabOne)
-        assertEquals(tabOne?.text, monthlyReportsActivity.getString(R.string.monthly_draft_reports, 1))
+        assertEquals(tabOne?.text, monthlyReportsActivity.getString(R.string.hia2_daily_tallies))
     }
 }

@@ -5,8 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.smartregister.path.reporting.monthly.domain.DailyTally
+import org.smartregister.path.reporting.monthly.domain.MonthlyTally
 import org.smartregister.uniceftunisia.reporting.monthly.MonthlyReportsRepository
-import org.smartregister.uniceftunisia.reporting.monthly.domain.MonthlyTally
 
 class ReportIndicatorsViewModel : ViewModel() {
 
@@ -14,7 +15,11 @@ class ReportIndicatorsViewModel : ViewModel() {
 
     val monthlyTalliesMap = MutableLiveData<MutableMap<String, MonthlyTally>>()
 
+    val dailyTalliesMap = MutableLiveData<MutableMap<String, DailyTally>>()
+
     val yearMonth = MutableLiveData<String>()
+
+    val day = MutableLiveData<String>()
 
     /**
      * Save the draft locally. Set option [sync] to true to sync the saved record to the server. This

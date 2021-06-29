@@ -21,6 +21,8 @@ import org.json.JSONObject
 import org.smartregister.AllConstants
 import org.smartregister.domain.Event
 import org.smartregister.domain.Obs
+import org.smartregister.path.reporting.monthly.domain.MonthlyTally
+import org.smartregister.path.reporting.monthly.domain.Tally
 import org.smartregister.uniceftunisia.R
 import org.smartregister.uniceftunisia.reporting.ReportsDao
 import org.smartregister.uniceftunisia.reporting.annual.coverage.domain.AnnualVaccineReport
@@ -29,7 +31,6 @@ import org.smartregister.uniceftunisia.reporting.annual.coverage.domain.Coverage
 import org.smartregister.uniceftunisia.reporting.annual.coverage.repository.AnnualReportRepository
 import org.smartregister.uniceftunisia.reporting.annual.coverage.repository.VaccineCoverageTargetRepository
 import org.smartregister.uniceftunisia.reporting.monthly.MonthlyReportsRepository
-import org.smartregister.uniceftunisia.reporting.monthly.domain.MonthlyTally
 import org.smartregister.uniceftunisia.util.AppJsonFormUtils
 import timber.log.Timber
 import java.math.BigDecimal
@@ -41,6 +42,7 @@ import org.smartregister.uniceftunisia.reporting.annual.coverage.repository.Vacc
 /**
  * String constants
  */
+const val DAILY_TALLIES = "daily_tallies"
 const val MONTHLY_TALLIES = "monthly_tallies"
 const val MONTHLY_REPORT = "monthly_report"
 const val ANNUAL_VACCINE_REPORT = "annual_vaccine_report"
@@ -51,6 +53,7 @@ const val VACCINE_COVERAGE_TARGET = "vaccine_coverage_target"
 const val DATES = "dates"
 const val NAME = "name"
 const val VACCINE_COUNT = "vaccine_count"
+const val DAY = "day"
 
 /**
  * Utility method for creating ViewModel Factory
@@ -112,7 +115,7 @@ object ReportingUtils {
                         VaccineCoverageColumn.TARGET_TYPE,
                         VaccineCoverageColumn.YEAR
                 ))
-        if (eventObsMap.size == 3 && containsRequiredObs) {
+        if (eventObsMap.size >= 3 && containsRequiredObs) {
             with(eventObsMap) {
                 val targetType = CoverageTargetType.valueOf(getValue(VaccineCoverageColumn.TARGET_TYPE).value.toString())
                 val target = getValue(VaccineCoverageColumn.TARGET).value.toString().toInt()
@@ -149,7 +152,7 @@ fun String.convertToNamedMonth(hasHyphen: Boolean = false): String {
  * Return a formatted string identifier
  */
 fun String.getResourceId(context: Context): Int = try {
-    context.resources.getIdentifier(this.replace(" ", "_").replace("/", ""), "string", context.packageName)
+    context.resources.getIdentifier(this.toLowerCase(Locale.ENGLISH).replace(" ", "_").replace("/", ""), "string", context.packageName)
 } catch (exception: Resources.NotFoundException) {
     Timber.e("String Resource for $this is not found. Specify it on strings.xml file.$exception")
     0
@@ -182,8 +185,12 @@ fun Context.showToast(resourceId: Int, duration: Int = Toast.LENGTH_LONG) =
  * Show progress dialog
  */
 
-fun Context.showProgressDialog(show: Boolean = true, title: String =
-        this.getString(R.string.please_wait_title), message: String = this.getString(R.string.loading)):
+fun Context.showProgressDialog(
+        show: Boolean = true,
+        title: String =
+                this.getString(R.string.please_wait_title),
+        message: String = this.getString(R.string.loading),
+):
         AlertDialog {
 
     val parentLayout = LayoutInflater.from(this).inflate(R.layout.progress_dialog_layout, null, false).apply {
@@ -218,7 +225,7 @@ fun View.showSnackBar(resourceId: Int, duration: Int = Snackbar.LENGTH_LONG) =
  * This method creates pair of indicator against its position then sorts them. The indicator positions
  * are defined in "configs/reporting/indicator-positions.json" file
  */
-suspend fun List<MonthlyTally>.sortIndicators(): List<MonthlyTally> {
+suspend fun <T : Tally> List<T>.sortIndicators(): List<T> {
     return withContext(Dispatchers.IO) {
         this@sortIndicators.map { Pair(ReportsDao.getIndicatorPosition(it.indicator), it) }
                 .filter { talliesPair -> talliesPair.first != -1.0 }
