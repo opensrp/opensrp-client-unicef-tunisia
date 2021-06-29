@@ -107,19 +107,19 @@ class AnnualReportRepository : BaseRepository() {
                                     vaccineTarget: String, year: Int): MutableList<VaccineCoverage> {
         val vaccineCoverages = mutableListOf<VaccineCoverage>()
         vaccineSet.forEach {
-            val vaccine = VaccinatorUtils.getTranslatedVaccineName(context, it)
+            val vaccine = VaccinatorUtils.getTranslatedVaccineName(UnicefTunisiaApplication.getInstance().currentActivity, it)
             val translatedVaccineName =
                     if (vaccine == it) context.getString(it.getResourceId(context)) else vaccine
             val errorNoTarget = context.getString(R.string.error_no_target)
             val targetEmpty = vaccineTarget.isEmpty()
             var vaccinated = "0"
-            var coverage = if (targetEmpty) errorNoTarget else 0.toString().plus("%")
+            var coverage = if (targetEmpty) errorNoTarget else (context.getString(R.string.percentage_sign, 0.toString()))
 
             if (vaccineCountsMap.containsKey(it)) {
                 val vaccineCount = vaccineCountsMap.getValue(it)
                 vaccinated = vaccineCount.count.toString()
                 coverage = if (targetEmpty) errorNoTarget
-                else ((vaccineCount.count / vaccineTarget.toDouble()) * 100).toWholeNumber().toString().plus("%")
+                else context.getString(R.string.percentage_sign,  ((vaccineCount.count / vaccineTarget.toDouble()) * 100).toWholeNumber().toString())
             }
 
             val vaccineCoverage = VaccineCoverage(

@@ -1,8 +1,13 @@
 package org.smartregister.uniceftunisia.application;
 
+import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Pair;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -69,7 +74,7 @@ import java.util.concurrent.TimeUnit;
 
 import timber.log.Timber;
 
-public class UnicefTunisiaApplication extends DrishtiApplication implements TimeChangedBroadcastReceiver.OnTimeChangedListener {
+public class UnicefTunisiaApplication extends DrishtiApplication implements TimeChangedBroadcastReceiver.OnTimeChangedListener, Application.ActivityLifecycleCallbacks {
 
     private static List<VaccineGroup> vaccineGroups;
     private static CommonFtsObject commonFtsObject;
@@ -212,6 +217,7 @@ public class UnicefTunisiaApplication extends DrishtiApplication implements Time
         super.onCreate();
         mInstance = this;
         context = Context.getInstance();
+        registerActivityLifecycleCallbacks(this);
 
         context.updateApplicationContext(getApplicationContext());
         context.updateCommonFtsObject(createCommonFtsObject(context.applicationContext()));
@@ -438,6 +444,49 @@ public class UnicefTunisiaApplication extends DrishtiApplication implements Time
             this.childAlertUpdatedRepository = new ChildAlertUpdatedRepository();
         }
         return this.childAlertUpdatedRepository;
+    }
+
+    private Activity currentActivity;
+
+    @Override
+    public void onActivityCreated(@NonNull @NotNull Activity activity, @Nullable @org.jetbrains.annotations.Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onActivityStarted(@NonNull @NotNull Activity activity) {
+
+    }
+
+    @Override
+    public void onActivityResumed(Activity activity){
+        this.currentActivity = activity;
+    }
+
+    @Override
+    public void onActivityPaused(Activity activity){
+        if(this.currentActivity == activity)
+            this.currentActivity = null;
+    }
+
+    @Override
+    public void onActivityStopped(@NonNull @NotNull Activity activity) {
+
+    }
+
+    @Override
+    public void onActivitySaveInstanceState(@NonNull @NotNull Activity activity, @NonNull @NotNull Bundle bundle) {
+
+    }
+
+    @Override
+    public void onActivityDestroyed(@NonNull @NotNull Activity activity) {
+
+    }
+
+
+    public Activity getCurrentActivity(){
+        return this.currentActivity;
     }
 }
 
