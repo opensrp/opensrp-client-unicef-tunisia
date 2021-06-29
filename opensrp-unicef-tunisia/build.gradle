@@ -50,8 +50,6 @@ android {
         applicationId "org.smartregister.uniceftunisia"
         minSdkVersion androidMinSdkVersion
         targetSdkVersion androidTargetSdkVersion
-        versionCode 4
-        versionName "0.2.0"
         multiDexEnabled true
         buildConfigField "long", "MAX_SERVER_TIME_DIFFERENCE", "1800000l"
         buildConfigField "boolean", "TIME_CHECK", "false"
@@ -70,6 +68,25 @@ android {
             }
         }
         vectorDrawables.useSupportLibrary = true
+    }
+
+    applicationVariants.all { variant ->
+        if (variant.name == "debug") {
+            variant.outputs.each { output ->
+                output.versionCodeOverride = 4
+                output.versionNameOverride = "0.2.0-debug"
+            }
+        } else if (variant.name == "preview") {
+            variant.outputs.each { output ->
+                output.versionCodeOverride = 4
+                output.versionNameOverride = "0.2.0-preview"
+            }
+        } else if (variant.name == "release") {
+            variant.outputs.each { output ->
+                output.versionCodeOverride = 4
+                output.versionNameOverride = "0.2.0-release"
+            }
+        }
     }
 
     dexOptions {
