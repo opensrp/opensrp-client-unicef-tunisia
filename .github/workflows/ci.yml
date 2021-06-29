@@ -27,7 +27,7 @@ jobs:
       - name: Decode google-services.json
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
-        run: echo $FIREBASE_CONFIG > opensrp-path-zeir/google-services.json
+        run: echo $FIREBASE_CONFIG > opensrp-unicef-tunisia/google-services.json
       - name: Run unit tests with Gradle
         run: ./gradlew :opensrp-unicef-tunisia:jacocoTestReport --stacktrace
       - name: Generate Javadoc with Gradle
