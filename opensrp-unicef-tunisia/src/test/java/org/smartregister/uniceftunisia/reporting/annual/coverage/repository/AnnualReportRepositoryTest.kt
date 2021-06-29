@@ -1,9 +1,6 @@
 package org.smartregister.uniceftunisia.reporting.annual.coverage.repository
 
-import io.mockk.every
-import io.mockk.mockkObject
-import io.mockk.spyk
-import io.mockk.unmockkAll
+import io.mockk.*
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -13,6 +10,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.smartregister.uniceftunisia.TestUnicefTunisiaApplication
+import org.smartregister.uniceftunisia.application.UnicefTunisiaApplication
 import org.smartregister.uniceftunisia.reporting.ReportsDao
 import org.smartregister.uniceftunisia.reporting.annual.coverage.domain.CoverageTarget
 import org.smartregister.uniceftunisia.reporting.annual.coverage.domain.CoverageTargetType
@@ -36,6 +34,7 @@ class AnnualReportRepositoryTest {
 
     @Test
     fun `Should return the right vaccine coverages`() {
+        UnicefTunisiaApplication.getInstance().currentActivity = mockk(relaxed = true)
         every { ReportsDao.getCoverageTarget(2020) } returns
                 listOf(
                         CoverageTarget(CoverageTargetType.UNDER_ONE_TARGET, 2020, 20),
@@ -59,6 +58,7 @@ class AnnualReportRepositoryTest {
         assertEquals( "20%", opv2.coverage )
         assertEquals( "2020", opv2.year )
         assertEquals( "10", opv2.vaccinated )
+        UnicefTunisiaApplication.getInstance().currentActivity = null
     }
 
     @Test

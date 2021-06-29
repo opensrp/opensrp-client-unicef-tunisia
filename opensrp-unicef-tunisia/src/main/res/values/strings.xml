@@ -355,4 +355,5 @@
     <string name="generating_daily_tallies_completed">Generating daily tallies completed</string>
     <!-- Card support strings -->
     <string name="opensrp_id">IDV NUMBER</string>
+    <string name="percentage_sign">%1$s\%%</string>
 </resources>

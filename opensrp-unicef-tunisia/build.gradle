@@ -242,13 +242,14 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
 
 //    implementation(project(':opensrp-child')) {
-    implementation('org.smartregister:opensrp-client-child:0.7.0-ALPHA4-SNAPSHOT@aar') {
+    implementation('org.smartregister:opensrp-client-child:0.7.0-ALPHA5-SNAPSHOT@aar') {
         transitive = true
         exclude group: 'id.zelory', module: 'compressor'
         exclude group: 'org.smartregister', module: 'opensrp-client-growth-monitoring'
         exclude group: 'org.smartregister', module: 'opensrp-client-immunization'
         exclude group: 'org.smartregister', module: 'opensrp-client-core'
         exclude group: 'org.smartregister', module: 'opensrp-client-reporting'
+        exclude group: 'org.smartregister', module: 'opensrp-client-native-form'
         exclude group: 'com.android.support', module: 'appcompat-v7'
         exclude group: 'com.google.guava', module: 'guava'
         exclude group: 'io.ona.rdt-capture', module: 'lib'
@@ -261,6 +262,7 @@ dependencies {
         exclude group: 'org.smartregister', module: 'opensrp-client-core'
         exclude group: 'com.android.support', module: 'design'
         exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'org.smartregister', module: 'opensrp-client-native-form'
         exclude group: 'com.ibm.fhir', module: 'fhir-model'
         exclude group: 'com.ibm.fhir', module: 'fhir-path'
     }
@@ -271,6 +273,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'appcompat-v7'
         exclude group: 'com.android.support', module: 'recyclerview-v7'
         exclude group: 'com.android.support', module: 'support-media-compat'
+        exclude group: 'org.smartregister', module: 'opensrp-client-native-form'
         exclude group: 'com.android.support', module: 'cardview-v7'
         exclude group: 'com.android.support', module: 'support-v4'
         exclude group: 'com.ibm.fhir', module: 'fhir-model'
@@ -296,9 +299,24 @@ dependencies {
         exclude group: 'org.smartregister', module: 'opensrp-client-core'
         exclude group: 'com.android.support', module: 'design'
         exclude group: 'com.github.lecho', module: 'hellocharts-library'
+        exclude group: 'org.smartregister', module: 'opensrp-client-native-form'
         exclude group: 'com.android.support', module: 'appcompat-v7'
         exclude group: 'com.ibm.fhir', module: 'fhir-model'
         exclude group: 'com.ibm.fhir', module: 'fhir-path'
+    }
+
+    implementation('org.smartregister:opensrp-client-native-form:2.1.0-SNAPSHOT@aar') {
+        transitive = true
+        exclude group: 'com.android.support', module: 'recyclerview-v7'
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'org.smartregister', module: 'opensrp-client-core'
+        exclude group: 'com.android.support', module: 'design'
+        exclude group: 'com.android.support', module: 'cardview-v7'
+        exclude group: 'io.ona.rdt-capture', module: 'lib'
+        exclude group: 'com.google.android.gms', module: 'play-services-vision'
+        exclude group: 'com.google.code.gson', module: 'gson'
+        exclude group: 'com.simprints', module: 'libsimprints'
+        exclude group: 'com.ibm.fhir', module: 'fhir-model'
     }
 
     implementation('com.google.android.material:material:1.2.1') {
