@@ -74,12 +74,12 @@ android {
         if (variant.name == "debug") {
             variant.outputs.each { output ->
                 output.versionCodeOverride = 4
-                output.versionNameOverride = "0.2.0-debug"
+                output.versionNameOverride = "0.2.1-debug"
             }
         } else if (variant.name == "preview") {
             variant.outputs.each { output ->
                 output.versionCodeOverride = 4
-                output.versionNameOverride = "0.2.0-preview"
+                output.versionNameOverride = "0.2.1-preview"
             }
         } else if (variant.name == "release") {
             variant.outputs.each { output ->
