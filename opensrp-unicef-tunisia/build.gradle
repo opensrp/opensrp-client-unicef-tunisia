@@ -74,12 +74,12 @@ android {
         if (variant.name == "debug") {
             variant.outputs.each { output ->
                 output.versionCodeOverride = 4
-                output.versionNameOverride = "0.2.0-debug"
+                output.versionNameOverride = "0.2.1-debug"
             }
         } else if (variant.name == "preview") {
             variant.outputs.each { output ->
                 output.versionCodeOverride = 4
-                output.versionNameOverride = "0.2.0-preview"
+                output.versionNameOverride = "0.2.1-preview"
             }
         } else if (variant.name == "release") {
             variant.outputs.each { output ->
@@ -284,7 +284,7 @@ dependencies {
         exclude group: 'com.ibm.fhir', module: 'fhir-path'
     }
 
-    implementation('org.smartregister:opensrp-client-core:4.3.9-SNAPSHOT@aar') {
+    implementation('org.smartregister:opensrp-client-core:4.3.23-BETA-SNAPSHOT@aar') {
         transitive = true
         exclude group: 'id.zelory', module: 'compressor'
         exclude group: 'com.android.support', module: 'appcompat-v7'
@@ -322,7 +322,7 @@ dependencies {
         exclude group: 'com.ibm.fhir', module: 'fhir-path'
     }
 
-    implementation('org.smartregister:opensrp-client-native-form:2.1.0-SNAPSHOT@aar') {
+    implementation('org.smartregister:opensrp-client-native-form:2.1.11-SNAPSHOT@aar') {
         transitive = true
         exclude group: 'com.android.support', module: 'recyclerview-v7'
         exclude group: 'com.android.support', module: 'appcompat-v7'
@@ -354,7 +354,7 @@ dependencies {
     // explicitly depend on RxJava's latest version for bug fixes and new features.
     implementation 'io.reactivex.rxjava2:rxjava:2.2.19'
     implementation 'com.evernote:android-job:1.2.6'
-    implementation 'com.github.lecho:hellocharts-android:v1.5.8'
+    implementation 'com.github.lecho:hellocharts-android:1.5.8'
     implementation 'id.zelory:compressor:2.1.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
