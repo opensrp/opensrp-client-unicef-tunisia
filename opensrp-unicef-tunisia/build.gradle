@@ -170,7 +170,7 @@ android {
         preview {
             minifyEnabled false
             zipAlignEnabled true
-            debuggable true
+            debuggable false
             signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rule.pro'
 
