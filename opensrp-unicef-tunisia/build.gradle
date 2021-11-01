@@ -143,7 +143,7 @@ android {
         debug {
 
             versionNameSuffix "-debug"
-            resValue "string", 'opensrp_url', '"https://unicef-tunisia-stage.smartregister.org/opensrp/"'
+            resValue "string", 'opensrp_url',  '"https://unicef-tunisia-preview.smartregister.org/opensrp/"'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_INITIAL_BATCH_SIZE", '250'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_BATCH_SIZE", '100'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_SOURCE", '12'
@@ -163,8 +163,8 @@ android {
             buildConfigField "String", 'DEFAULT_LOCATION', '"Health Facility"'
             buildConfigField "String[]", "ALLOWED_LEVELS", '{"Health Facility"}'
             testCoverageEnabled true
-            buildConfigField "String", "OAUTH_CLIENT_ID", getLocalProperty("oauth.client.id.debug")
-            buildConfigField "String", "OAUTH_CLIENT_SECRET", getLocalProperty("oauth.client.secret.debug")
+            buildConfigField "String", "OAUTH_CLIENT_ID", getLocalProperty("oauth.client.id.preview")
+            buildConfigField "String", "OAUTH_CLIENT_SECRET", getLocalProperty("oauth.client.secret.preview")
         }
 
         preview {
@@ -259,7 +259,7 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
 
 //    implementation(project(':opensrp-child')) {
-    implementation('org.smartregister:opensrp-client-child:0.7.0-ALPHA5-SNAPSHOT@aar') {
+    implementation('org.smartregister:opensrp-client-child:0.7.1-SNAPSHOT@aar') {
         transitive = true
         exclude group: 'id.zelory', module: 'compressor'
         exclude group: 'org.smartregister', module: 'opensrp-client-growth-monitoring'
@@ -272,25 +272,31 @@ dependencies {
         exclude group: 'io.ona.rdt-capture', module: 'lib'
         exclude group: 'com.ibm.fhir', module: 'fhir-model'
         exclude group: 'com.ibm.fhir', module: 'fhir-path'
+        exclude group: 'com.android.support', module: 'design'
+        exclude group: 'com.github.lecho', module: 'hellocharts-library'
     }
 
-    implementation('org.smartregister:opensrp-client-immunization:3.0.11-SNAPSHOT@aar') {
+    implementation('org.smartregister:opensrp-client-immunization:4.0.0-SNAPSHOT@aar') {
         transitive = true
         exclude group: 'org.smartregister', module: 'opensrp-client-core'
         exclude group: 'com.android.support', module: 'design'
         exclude group: 'com.android.support', module: 'appcompat-v7'
         exclude group: 'org.smartregister', module: 'opensrp-client-native-form'
+        exclude group: 'com.android.support', module: 'design'
+        exclude group: 'com.github.lecho', module: 'hellocharts-library'
         exclude group: 'com.ibm.fhir', module: 'fhir-model'
         exclude group: 'com.ibm.fhir', module: 'fhir-path'
     }
 
-    implementation('org.smartregister:opensrp-client-core:4.3.23-BETA-SNAPSHOT@aar') {
+    implementation('org.smartregister:opensrp-client-core:4.3.24-BETA-1-SNAPSHOT@aar') {
         transitive = true
         exclude group: 'id.zelory', module: 'compressor'
         exclude group: 'com.android.support', module: 'appcompat-v7'
         exclude group: 'com.android.support', module: 'recyclerview-v7'
         exclude group: 'com.android.support', module: 'support-media-compat'
         exclude group: 'org.smartregister', module: 'opensrp-client-native-form'
+        exclude group: 'com.android.support', module: 'design'
+        exclude group: 'com.github.lecho', module: 'hellocharts-library'
         exclude group: 'com.android.support', module: 'cardview-v7'
         exclude group: 'com.android.support', module: 'support-v4'
         exclude group: 'com.ibm.fhir', module: 'fhir-model'
@@ -298,10 +304,12 @@ dependencies {
         exclude group: 'org.smartregister', module: 'opensrp-client-reporting'
     }
 
-    implementation('org.smartregister:opensrp-client-growth-monitoring:2.0.5-SNAPSHOT@aar') {
+    implementation('org.smartregister:opensrp-client-growth-monitoring:2.0.6-SNAPSHOT@aar') {
         transitive = true
         exclude group: 'id.zelory', module: 'compressor'
         exclude group: 'org.smartregister', module: 'opensrp-client-core'
+        exclude group: 'com.android.support', module: 'design'
+        exclude group: 'com.github.lecho', module: 'hellocharts-library'
         exclude group: 'com.android.support', module: 'design'
         exclude group: 'org.smartregister', module: 'opensrp-client-native-form'
         exclude group: 'com.android.support', module: 'appcompat-v7'
