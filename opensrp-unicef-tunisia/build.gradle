@@ -73,18 +73,18 @@ android {
     applicationVariants.all { variant ->
         if (variant.name == "debug") {
             variant.outputs.each { output ->
-                output.versionCodeOverride = 5
-                output.versionNameOverride = "0.2.1-debug"
+                output.versionCodeOverride = 6
+                output.versionNameOverride = "0.2.2-debug"
             }
         } else if (variant.name == "preview") {
             variant.outputs.each { output ->
-                output.versionCodeOverride = 5
-                output.versionNameOverride = "0.2.1-preview"
+                output.versionCodeOverride = 6
+                output.versionNameOverride = "0.2.2-preview"
             }
         } else if (variant.name == "release") {
             variant.outputs.each { output ->
-                output.versionCodeOverride = 5
-                output.versionNameOverride = "0.2.1-release"
+                output.versionCodeOverride = 6
+                output.versionNameOverride = "0.2.2-release"
             }
         }
     }
@@ -143,7 +143,7 @@ android {
         debug {
 
             versionNameSuffix "-debug"
-            resValue "string", 'opensrp_url',  '"https://unicef-tunisia-preview.smartregister.org/opensrp/"'
+            resValue "string", 'opensrp_url',  '"https://unicef-tunisia-satge.smartregister.org/opensrp/"'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_INITIAL_BATCH_SIZE", '250'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_BATCH_SIZE", '100'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_SOURCE", '12'
@@ -163,8 +163,8 @@ android {
             buildConfigField "String", 'DEFAULT_LOCATION', '"Health Facility"'
             buildConfigField "String[]", "ALLOWED_LEVELS", '{"Health Facility"}'
             testCoverageEnabled true
-            buildConfigField "String", "OAUTH_CLIENT_ID", getLocalProperty("oauth.client.id.preview")
-            buildConfigField "String", "OAUTH_CLIENT_SECRET", getLocalProperty("oauth.client.secret.preview")
+            buildConfigField "String", "OAUTH_CLIENT_ID", getLocalProperty("oauth.client.id.stage")
+            buildConfigField "String", "OAUTH_CLIENT_SECRET", getLocalProperty("oauth.client.secret.stage")
         }
 
         preview {
