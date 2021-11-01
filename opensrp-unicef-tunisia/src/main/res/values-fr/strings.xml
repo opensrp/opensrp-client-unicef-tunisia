@@ -46,7 +46,7 @@
     <string name="please_wait_message">S\'il vous plaît, attendez</string>
     <string name="reports">Rapports</string>
 
-    <string name="str_page_info">Page {0} de {1}</string>
+    <string name="str_page_info">Page %1$d de %2$d</string>
     <string name="dismiss_lookup">Confirmer</string>
     <string name="fill_form_error_msg">Veuillez entrer au moins un service avant d\'enregistrer</string>
     <string name="close">Fermer</string>

@@ -46,7 +46,7 @@
     <string name="please_wait_message">ارجوك انتظر</string>
     <string name="reports">التقارير</string>
 
-    <string name="str_page_info">الصفحة {0} من {1}</string>
+    <string name="str_page_info">الصفحة %1$d من %2$d</string>
     <string name="dismiss_lookup">تؤكد</string>
     <string name="fill_form_error_msg">يرجى تسجيل خدمة واحدة على الأقل قبل الحفظ</string>
     <string name="close">قريب</string>
