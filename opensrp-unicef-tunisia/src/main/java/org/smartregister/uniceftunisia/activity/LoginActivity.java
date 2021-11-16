@@ -57,6 +57,11 @@ public class LoginActivity extends BaseLoginActivity implements BaseLoginContrac
         finish();
     }
 
+    @Override
+    public boolean isAppVersionAllowed() {
+        return true;
+    }
+
     private void processWeightForHeightZScoreCSV() {
         AllSharedPreferences allSharedPreferences = UnicefTunisiaApplication.getInstance().getContext().allSharedPreferences();
         if (!allSharedPreferences.getPreference(WFH_CSV_PARSED).equals("true")) {

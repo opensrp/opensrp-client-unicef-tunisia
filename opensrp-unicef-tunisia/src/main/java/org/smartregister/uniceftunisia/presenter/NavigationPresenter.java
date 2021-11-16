@@ -69,9 +69,10 @@ public class NavigationPresenter implements NavigationContract.Presenter {
                 String initials = "";
                 if (initialsArray.length > 0) {
                     initials = initialsArray[0].substring(0, 1);
-                    if (initialsArray.length > 1) {
-                        initials = initials + initialsArray[1].substring(0, 1);
+                    if (initialsArray.length > 2) {
+                        initials = initials + initialsArray[2].charAt(0);
                     }
+
                 }
                 return initials.toUpperCase();
             }

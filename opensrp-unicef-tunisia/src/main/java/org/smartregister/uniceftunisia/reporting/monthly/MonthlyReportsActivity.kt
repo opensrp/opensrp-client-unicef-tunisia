@@ -101,7 +101,7 @@ class MonthlyReportsActivity : MultiLanguageActivity() {
     private fun getLoggedInUserInitials(): String {
         val allSharedPreferences = Context.getInstance().allSharedPreferences()
         return allSharedPreferences.getANMPreferredName(allSharedPreferences.fetchRegisteredANM())
-            .split(" ").take(2).map { it.first() }.joinToString("")
+            .split(" ").take(1).map { it.firstOrNull() }.joinToString("")
     }
 
     override fun onResume() {

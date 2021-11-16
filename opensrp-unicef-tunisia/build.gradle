@@ -73,18 +73,18 @@ android {
     applicationVariants.all { variant ->
         if (variant.name == "debug") {
             variant.outputs.each { output ->
-                output.versionCodeOverride = 6
-                output.versionNameOverride = "0.2.2-debug"
+                output.versionCodeOverride = 7
+                output.versionNameOverride = "0.2.3-debug"
             }
         } else if (variant.name == "preview") {
             variant.outputs.each { output ->
-                output.versionCodeOverride = 6
-                output.versionNameOverride = "0.2.2-preview"
+                output.versionCodeOverride = 7
+                output.versionNameOverride = "0.2.3-preview"
             }
         } else if (variant.name == "release") {
             variant.outputs.each { output ->
-                output.versionCodeOverride = 6
-                output.versionNameOverride = "0.2.2-release"
+                output.versionCodeOverride = 7
+                output.versionNameOverride = "0.2.3-release"
             }
         }
     }
@@ -193,7 +193,7 @@ android {
             buildConfigField "String[]", "LOCATION_LEVELS", '{"Country", "Region", "District", "Delegation", "Health Facility"}'
             buildConfigField "String[]", "HEALTH_FACILITY_LEVELS", '{"Country", "Region", "District", "Delegation", "Health Facility"}'
             buildConfigField "String", 'DEFAULT_LOCATION', '"Health Facility"'
-            buildConfigField "String[]", "ALLOWED_LEVELS", '{"Health Facility"}'
+            buildConfigField "String[]", "ALLOWED_LEVELS", '{"Country", "Region", "District", "Delegation", "Health Facility"}'
             buildConfigField "String", "OAUTH_CLIENT_ID", getLocalProperty("oauth.client.id.preview")
             buildConfigField "String", "OAUTH_CLIENT_SECRET", getLocalProperty("oauth.client.secret.preview")
         }
@@ -288,7 +288,7 @@ dependencies {
         exclude group: 'com.ibm.fhir', module: 'fhir-path'
     }
 
-    implementation('org.smartregister:opensrp-client-core:4.3.24-BETA-1-SNAPSHOT@aar') {
+    implementation('org.smartregister:opensrp-client-core:4.3.24-BETA-2-SNAPSHOT@aar') {
         transitive = true
         exclude group: 'id.zelory', module: 'compressor'
         exclude group: 'com.android.support', module: 'appcompat-v7'
