@@ -54,7 +54,8 @@ public class AdvancedSearchModel extends BaseChildAdvancedSearchModel {
                 AppConstants.KEY.MOTHER_FIRST_NAME,
                 AppConstants.KEY.MOTHER_LAST_NAME,
                 AppConstants.KEY.INACTIVE,
-                AppConstants.KEY.LOST_TO_FOLLOW_UP
+                AppConstants.KEY.LOST_TO_FOLLOW_UP,
+                AppConstants.KEY.SYSTEM_OF_REGISTRATION
         };
 
         AdvancedMatrixCursor matrixCursor = new AdvancedMatrixCursor(columns);
