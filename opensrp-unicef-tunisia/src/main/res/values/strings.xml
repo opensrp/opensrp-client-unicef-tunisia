@@ -356,4 +356,6 @@
     <!-- Card support strings -->
     <string name="opensrp_id">IDV NUMBER</string>
     <string name="percentage_sign">%1$s\%%</string>
+    <string name="vha">VHA</string>
+
 </resources>
