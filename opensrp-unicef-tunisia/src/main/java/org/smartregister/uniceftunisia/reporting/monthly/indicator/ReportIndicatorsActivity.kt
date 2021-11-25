@@ -5,11 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.core.os.ConfigurationCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.vijay.jsonwizard.activities.MultiLanguageActivity
 import kotlinx.android.synthetic.main.activity_report_indicators.*
+import kotlinx.android.synthetic.main.sent_reports_expansion_panel_item.*
 import kotlinx.coroutines.launch
 import org.smartregister.path.reporting.monthly.domain.DailyTally
 import org.smartregister.path.reporting.monthly.domain.MonthlyTally
@@ -80,7 +82,9 @@ class ReportIndicatorsActivity : MultiLanguageActivity() {
                 if (serializableExtra is Map<*, *>)
                     reportIndicatorsViewModel.dailyTalliesMap.value = (serializableExtra as Map<String, DailyTally>).toMutableMap()
 
-                yearMonthTextView.text = getString(R.string.daily_tallies_with_day, getStringExtra(DAY))
+                val day = ReportingUtils.dateFormatter("dd MMMM yy").parse(getStringExtra(DAY)!!)
+                yearMonthTextView.text = getString(R.string.daily_tallies_with_day, ReportingUtils.dateFormatter("dd MMMM yy",
+                    locale = ConfigurationCompat.getLocales(resources.configuration)[0]).format(day!!))
 
                 //Navigate to ReportIndicatorsSummaryFragment when show data is true
                 if (getBooleanExtra(SHOW_DATA, false)) {
