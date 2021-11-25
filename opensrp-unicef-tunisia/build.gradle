@@ -42,6 +42,16 @@ ext.getLocalProperty = { key ->
 }
 
 android {
+    bundle {
+        language {
+            // Specifies that the app bundle should not support
+            // configuration APKs for language resources. These
+            // resources are instead packaged with each base and
+            // dynamic feature APK.
+            enableSplit = false
+        }
+    }
+
     useLibrary 'org.apache.http.legacy'
     compileSdkVersion androidCompileSdkVersion
     buildToolsVersion androidBuildToolsVersion
@@ -73,18 +83,18 @@ android {
     applicationVariants.all { variant ->
         if (variant.name == "debug") {
             variant.outputs.each { output ->
-                output.versionCodeOverride = 7
-                output.versionNameOverride = "0.2.3-debug"
+                output.versionCodeOverride = 8
+                output.versionNameOverride = "0.2.4-debug"
             }
         } else if (variant.name == "preview") {
             variant.outputs.each { output ->
-                output.versionCodeOverride = 7
-                output.versionNameOverride = "0.2.3-preview"
+                output.versionCodeOverride = 8
+                output.versionNameOverride = "0.2.4-preview"
             }
         } else if (variant.name == "release") {
             variant.outputs.each { output ->
-                output.versionCodeOverride = 7
-                output.versionNameOverride = "0.2.3-release"
+                output.versionCodeOverride = 8
+                output.versionNameOverride = "0.2.4-release"
             }
         }
     }
