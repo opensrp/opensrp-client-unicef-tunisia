@@ -217,7 +217,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "lot_no",
         "openmrs_entity_parent": "",
-        "edit_type": "number",
+        "edit_type": "name",
         "hint": "{{adverse_event.step1.lot_no.hint}}",
         "relevance": {
           "rules-engine": {
@@ -297,7 +297,7 @@
         "openmrs_entity": "",
         "openmrs_entity_id": "thinner_lot",
         "openmrs_entity_parent": "",
-        "edit_type": "number",
+        "edit_type": "name",
         "hint": "{{adverse_event.step1.thinner_lot.hint}}",
         "relevance": {
           "rules-engine": {
