@@ -243,11 +243,14 @@ public class ChildDetailTabbedActivity extends BaseChildDetailTabbedActivity {
         JSONArray fields = JsonFormUtils.fields(formJson);
         for (int i = 0; i < fields.length(); i++) {
             JSONObject field = fields.getJSONObject(i);
-            if (field != null && field.getString(JsonFormConstants.TYPE).equalsIgnoreCase(JsonFormConstants.DATE_PICKER)
-                    && !childDetails.getDetails().isEmpty() && childDetails.getDetails().containsKey(AppConstants.KEY.DOB)) {
-                Date date = Utils.dobStringToDate(childDetails.getDetails().get(AppConstants.KEY.DOB));
-                field.put(JsonFormConstants.MIN_DATE, new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(date));
-                field.put(JsonFormConstants.MAX_DATE, AppConstants.KEY.TODAY);
+            if (field != null && !field.getString(JsonFormConstants.KEY).equalsIgnoreCase(AppConstants.KEY.EXPIRY)
+                    && !field.getString(JsonFormConstants.KEY).equalsIgnoreCase(AppConstants.KEY.THHINNER_EXPIRY)) {
+                if (field.getString(JsonFormConstants.TYPE).equalsIgnoreCase(JsonFormConstants.DATE_PICKER)
+                        && !childDetails.getDetails().isEmpty() && childDetails.getDetails().containsKey(AppConstants.KEY.DOB)) {
+                    Date date = Utils.dobStringToDate(childDetails.getDetails().get(AppConstants.KEY.DOB));
+                    field.put(JsonFormConstants.MIN_DATE, new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(date));
+                    field.put(JsonFormConstants.MAX_DATE, AppConstants.KEY.TODAY);
+                }
             }
         }
         return formJson.toString();
