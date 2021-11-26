@@ -35,7 +35,7 @@ class MonthlyReportsActivityTest {
         //Set current user
         mockkObject(ReportsDao)
         Context.getInstance().allSharedPreferences().updateANMUserName("demo")
-        Context.getInstance().allSharedPreferences().updateANMPreferredName("demo", "Health Worker")
+        Context.getInstance().allSharedPreferences().updateANMPreferredName("demo", "Demo Health Worker")
         monthlyReportsActivity = monthlyReportsActivityController.get()
         monthlyReportsActivityController.create()
         tabLayout = monthlyReportsActivity.findViewById(R.id.reportFragmentTabLayout)
@@ -50,7 +50,7 @@ class MonthlyReportsActivityTest {
     @Test
     fun `Should set user initials`() {
         val nameInitialTextView = monthlyReportsActivity.findViewById<TextView>(R.id.nameInitialsTextView)
-        assertEquals("HW", nameInitialTextView.text.toString())
+        assertEquals("DW", nameInitialTextView.text.toString())
     }
 
     @Test

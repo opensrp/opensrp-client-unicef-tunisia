@@ -41,7 +41,7 @@ public class NavigationPresenterTest extends BaseUnitTest {
     @Test
     public void testGetUserInitials() {
         String userInitials = navigationPresenter.getLoggedInUserInitials();
-        Assert.assertEquals("DH", userInitials);
+        Assert.assertEquals("DW", userInitials);
     }
 
     @Test
