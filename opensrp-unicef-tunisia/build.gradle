@@ -83,18 +83,18 @@ android {
     applicationVariants.all { variant ->
         if (variant.name == "debug") {
             variant.outputs.each { output ->
-                output.versionCodeOverride = 8
-                output.versionNameOverride = "0.2.4-debug"
+                output.versionCodeOverride = 9
+                output.versionNameOverride = "0.2.5-debug"
             }
         } else if (variant.name == "preview") {
             variant.outputs.each { output ->
-                output.versionCodeOverride = 8
-                output.versionNameOverride = "0.2.4-preview"
+                output.versionCodeOverride = 9
+                output.versionNameOverride = "0.2.5-preview"
             }
         } else if (variant.name == "release") {
             variant.outputs.each { output ->
-                output.versionCodeOverride = 8
-                output.versionNameOverride = "0.2.4-release"
+                output.versionCodeOverride = 9
+                output.versionNameOverride = "0.2.5-release"
             }
         }
     }
