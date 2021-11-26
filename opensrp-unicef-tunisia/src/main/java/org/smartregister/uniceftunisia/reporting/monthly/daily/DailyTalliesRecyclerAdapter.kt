@@ -3,6 +3,7 @@ package org.smartregister.path.reporting.monthly.daily
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.ConfigurationCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.github.florent37.expansionpanel.viewgroup.ExpansionLayoutCollection
 import kotlinx.android.extensions.LayoutContainer
@@ -47,17 +48,16 @@ class DailyTalliesRecyclerAdapter(val onClickListener: View.OnClickListener) :
             val (day, tallies) = dailyTallies
 
             //Set year header
-            yearHeaderTextView.text = day
+            val dayDate = dateFormatter("MMMM yyyy").parse(day)
+            yearHeaderTextView.text = dateFormatter("MMMM yyyy", locale = ConfigurationCompat.getLocales(sentReportContainer.resources.configuration)[0]).format(dayDate!!)
 
             //Set tallies
-
             sentReportContainer.removeAllViews()
             tallies.forEach {
                 val view = LayoutInflater.from(containerView.context).inflate(R.layout.sent_monthly_report_list_item,
                         sentReportContainer, false).apply {
                     tag = it
-                    dateReportSentTextView.text = dateFormatter("dd MMMM yy").format(it.day)
-                            .translateString(context)
+                    dateReportSentTextView.text = dateFormatter("dd MMMM yy", locale = ConfigurationCompat.getLocales(resources.configuration)[0]).format(it.day)
                     sentReportDetailsTextView.visibility = View.GONE
                     setOnClickListener(onClickListener)
                 }

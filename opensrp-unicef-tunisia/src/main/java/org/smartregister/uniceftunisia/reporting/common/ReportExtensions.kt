@@ -130,7 +130,7 @@ object ReportingUtils {
         }
     }
 
-    fun dateFormatter(pattern: String = "yyyy-MM") = SimpleDateFormat(pattern, Locale.ENGLISH)
+    fun dateFormatter(pattern: String = "yyyy-MM", locale : Locale =  Locale.ENGLISH ) = SimpleDateFormat(pattern, locale)
 }
 
 /**

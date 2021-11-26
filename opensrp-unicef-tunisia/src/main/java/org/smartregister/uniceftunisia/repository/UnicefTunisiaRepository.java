@@ -22,6 +22,7 @@ import org.smartregister.reporting.repository.DailyIndicatorCountRepository;
 import org.smartregister.reporting.repository.IndicatorQueryRepository;
 import org.smartregister.reporting.repository.IndicatorRepository;
 import org.smartregister.repository.AlertRepository;
+import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.repository.EventClientRepository;
 import org.smartregister.repository.Hia2ReportRepository;
 import org.smartregister.repository.LocationRepository;
@@ -131,6 +132,8 @@ public class UnicefTunisiaRepository extends Repository {
                     break;
                 case 14:
                     upgradeToVersion14(db);
+                case 15:
+                    upgradeToVersion15(db);
                 default:
                     break;
             }
@@ -345,5 +348,17 @@ public class UnicefTunisiaRepository extends Repository {
     private void upgradeToVersion14(SQLiteDatabase db) {
         db.execSQL(VaccineRepository.UPDATE_TABLE_ADD_IS_VOIDED_COL);
         db.execSQL(VaccineRepository.UPDATE_TABLE_ADD_IS_VOIDED_COL_INDEX);
+    }
+
+    private void upgradeToVersion15(SQLiteDatabase db) {
+        try{
+            AllSharedPreferences sharedPreferences = UnicefTunisiaApplication.getInstance().context().userService()
+                    .getAllSharedPreferences();
+            db.execSQL(VaccineRepository.UPDATE_TABLE_VACCINES_ADD_OUTREACH_COL);
+            db.execSQL(VaccineRepository.UPDATE_OUTREACH_QUERRY, new String[]{sharedPreferences.fetchDefaultLocalityId(sharedPreferences.fetchPioneerUser())});
+
+        } catch (Exception e) {
+            Timber.e(e, "upgradeToVersion15");
+        }
     }
 }
