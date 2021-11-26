@@ -338,6 +338,30 @@
             }
           ]
         }
+      },
+      {
+        "name": "VHA",
+        "type": "vha",
+        "openmrs_date": {
+          "parent_entity": "",
+          "entity": "concept",
+          "entity_id": "vha"
+        },
+        "openmrs_calculate": {
+          "parent_entity": "",
+          "entity": "concept",
+          "entity_id": "vha_calculation",
+          "calculation": 0
+        },
+        "schedule": {
+          "due": [
+            {
+              "reference": "dob",
+              "offset": "+360d",
+              "window": "+30d"
+            }
+          ]
+        }
       }
     ]
   },

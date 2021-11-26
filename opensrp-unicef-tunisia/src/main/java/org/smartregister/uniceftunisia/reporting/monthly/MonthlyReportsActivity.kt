@@ -49,7 +49,8 @@ class MonthlyReportsActivity : MultiLanguageActivity() {
         }
         containerViewPager.apply {
             adapter = reportsPagerAdapter
-            currentItem = intent.getIntExtra(Constants.SELECT_TAB, 1)
+            currentItem = intent.getIntExtra(Constants.SELECT_TAB, 0)
+            setReportSyncButtonVisibility(currentItem);
             addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
                 override fun onPageScrolled(
                     position: Int,
@@ -60,10 +61,7 @@ class MonthlyReportsActivity : MultiLanguageActivity() {
                 }
 
                 override fun onPageSelected(position: Int) {
-                    if (position == 0)
-                        reportSyncBtn.visibility = View.VISIBLE
-                    else
-                        reportSyncBtn.visibility = View.GONE
+                    setReportSyncButtonVisibility(position)
                 }
 
                 override fun onPageScrollStateChanged(state: Int) {
@@ -96,6 +94,13 @@ class MonthlyReportsActivity : MultiLanguageActivity() {
                 ).show()
             }
         }
+    }
+
+    private fun setReportSyncButtonVisibility(position: Int) {
+        if (position == 0)
+            reportSyncBtn.visibility = View.VISIBLE
+        else
+            reportSyncBtn.visibility = View.GONE
     }
 
     private fun getLoggedInUserInitials(): String {
