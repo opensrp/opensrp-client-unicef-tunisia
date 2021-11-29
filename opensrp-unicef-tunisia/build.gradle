@@ -93,8 +93,8 @@ android {
             }
         } else if (variant.name == "release") {
             variant.outputs.each { output ->
-                output.versionCodeOverride = 9
-                output.versionNameOverride = "0.2.5-release"
+                output.versionCodeOverride = 10
+                output.versionNameOverride = "1.0.0"
             }
         }
     }
