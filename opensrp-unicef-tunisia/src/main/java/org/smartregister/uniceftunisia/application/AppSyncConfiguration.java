@@ -80,6 +80,11 @@ public class AppSyncConfiguration extends SyncConfiguration {
     }
 
     @Override
+    public boolean validateUserAssignments() {
+        return false;
+    }
+
+    @Override
     public Class<? extends BaseLoginActivity> getAuthenticationActivity() {
         return LoginActivity.class;
     }

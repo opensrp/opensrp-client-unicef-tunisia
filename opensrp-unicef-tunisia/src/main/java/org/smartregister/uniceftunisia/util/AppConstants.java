@@ -83,6 +83,7 @@ public class AppConstants {
         public static final String REGISTRATION_LOCATION_ID = "registration_location_id";
         public static final String REGISTRATION_LOCATION_NAME = "registration_location_name";
         public static final String SMS_LANGUAGE = "sms_language";
+        public static final String SYSTEM_OF_REGISTRATION = "system_of_registration";
         public static final String EXPIRY = "expiry";
         public static final String THHINNER_EXPIRY = "thinner_exp";
     }

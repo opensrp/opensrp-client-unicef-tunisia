@@ -50,7 +50,7 @@ class MonthlyReportsActivityTest {
     @Test
     fun `Should set user initials`() {
         val nameInitialTextView = monthlyReportsActivity.findViewById<TextView>(R.id.nameInitialsTextView)
-        assertEquals("HW", nameInitialTextView.text.toString())
+        assertEquals("H", nameInitialTextView.text.toString())
     }
 
     @Test
