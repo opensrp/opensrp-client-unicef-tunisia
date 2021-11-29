@@ -342,7 +342,14 @@
     <string name="one_two_years_target_population">Population cible de 1 à 2 ans</string>
     <string name="specify_target_error">Veuillez spécifier la population cible</string>
     <string name="error_saving_target">Erreur lors de l\'enregistrement de la population cible</string>
-
+    <string name="loading_daily_reports_message">Génération de rapports quotidiens. S\'il vous plaît, attendez…</string>
+    <string name="daily_tallies_with_day">Décomptes quotidiens &gt; %1s</string>
+    <string name="generating_daily_tallies_started">La génération des décomptes quotidiens a commencé</string>
+    <string name="generating_daily_tallies_in_progress">Génération des décomptes quotidiens en cours</string>
+    <string name="generating_daily_tallies_completed">Génération des décomptes quotidiens terminés</string>
     <!-- Card support strings -->
     <string name="opensrp_id">Numéro IDV</string>
+    <string name="percentage_sign">%1$s\%%</string>
+    <string name="vha">Hépatite A (VHA)</string>
+
 </resources>

@@ -342,7 +342,14 @@
     <string name="one_two_years_target_population">السكان المستهدفون من عام إلى عامين</string>
     <string name="specify_target_error">يرجى تحديد السكان المستهدفين</string>
     <string name="error_saving_target">خطأ في حفظ السكان المستهدفين</string>
-
+    <string name="loading_daily_reports_message">جارٍ إنشاء التقارير اليومية. أرجو الإنتظار…</string>
+    <string name="daily_tallies_with_day">الاحصاءات اليومية %1s</string>
+    <string name="generating_daily_tallies_started">بدأ إنشاء  إحصاءات الأرقام اليومية</string>
+    <string name="generating_daily_tallies_in_progress">إنشاء الاحصاءات اليومية قيد التقدم</string>
+    <string name="generating_daily_tallies_completed">اكتمل إنشاء عمليات التعداد اليومية</string>
     <!-- Card support strings -->
     <string name="opensrp_id">رقم IDV</string>
+    <string name="percentage_sign">%1$s\%%</string>
+    <string name="vha">التهاب الكبد A</string>
+
 </resources>
