@@ -153,7 +153,7 @@ android {
         debug {
 
             versionNameSuffix "-debug"
-            resValue "string", 'opensrp_url',  '"https://unicef-tunisia-satge.smartregister.org/opensrp/"'
+            resValue "string", 'opensrp_url',  '"https://unicef-tunisia-stage.smartregister.org/opensrp/"'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_INITIAL_BATCH_SIZE", '250'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_BATCH_SIZE", '100'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_SOURCE", '12'
