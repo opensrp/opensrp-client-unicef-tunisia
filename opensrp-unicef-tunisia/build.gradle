@@ -127,7 +127,7 @@ android {
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rule.pro'
             versionNameSuffix "-release"
-            resValue "string", 'opensrp_url', '"https://unicef-tunisia.smartregister.org/opensrp/"'
+            resValue "string", 'opensrp_url', '"https://tunevacc.tn/opensrp/"'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_INITIAL_BATCH_SIZE", '250'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_BATCH_SIZE", '100'
             buildConfigField "int", "OPENMRS_UNIQUE_ID_SOURCE", '11'
