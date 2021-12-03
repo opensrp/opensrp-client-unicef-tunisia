@@ -352,4 +352,7 @@
     <string name="percentage_sign">%1$s\%%</string>
     <string name="vha">التهاب الكبد A</string>
 
+    <string name="weight_is_required">يجب أن يكون وزن الطفل بين 0 كغ و 25 كغ</string>
+    <string name="height_is_required">يجب ألا يقل ارتفاع الطفل عن 0 صم ولا يزيد عن 100 صم</string>
+
 </resources>
