@@ -329,8 +329,12 @@
         "type": "edit_text",
         "hint": "{{child_enrollment.step1.Birth_Weight.hint}}",
         "v_min": {
-          "value": "0.1",
+          "value": "1",
           "err": "{{child_enrollment.step1.Birth_Weight.v_min.err}}"
+        },
+        "v_max": {
+          "value": "25",
+          "err": "{{child_enrollment.step1.Birth_Weight.v_max.err}}"
         },
         "v_numeric": {
           "value": "true",
