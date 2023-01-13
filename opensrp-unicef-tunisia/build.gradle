@@ -298,7 +298,7 @@ dependencies {
         exclude group: 'com.ibm.fhir', module: 'fhir-path'
     }
 
-    implementation('org.smartregister:opensrp-client-core:4.3.24-BETA-2-SNAPSHOT@aar') {
+    implementation('org.smartregister:opensrp-client-core:5.0.13-LOCAL-SNAPSHOT@aar') {
         transitive = true
         exclude group: 'id.zelory', module: 'compressor'
         exclude group: 'com.android.support', module: 'appcompat-v7'
