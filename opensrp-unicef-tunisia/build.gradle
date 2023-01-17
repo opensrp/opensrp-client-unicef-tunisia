@@ -97,6 +97,12 @@ android {
                 output.versionNameOverride = "1.0.1"
             }
         }
+
+        // https://stackoverflow.com/a/27119543/152938
+        variant.outputs.all { output ->
+            outputFileName = new File(outputFileName.replace(".apk", "-${output.versionNameOverride}.apk"))
+            println "Name of the APK is using versionNameOverride $outputFileName"
+        }
     }
 
     dexOptions {
