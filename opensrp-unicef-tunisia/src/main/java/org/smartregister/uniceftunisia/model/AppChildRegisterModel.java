@@ -21,8 +21,8 @@ import java.util.List;
 public class AppChildRegisterModel extends BaseChildRegisterModel {
 
     @Override
-    public List<ChildEventClient> processRegistration(@NonNull String jsonString, FormTag formTag) {
-        List<ChildEventClient> childEventClients = super.processRegistration(jsonString, formTag);
+    public List<ChildEventClient> processRegistration(@NonNull String jsonString, FormTag formTag, boolean isEditMode) {
+        List<ChildEventClient> childEventClients = super.processRegistration(jsonString, formTag, isEditMode);
         //Add location name as part of child attributes to avoid fetching name from events
         for (ChildEventClient childEventClient : childEventClients) {
             Client client = childEventClient.getClient();

@@ -5,6 +5,7 @@ import org.smartregister.growthmonitoring.job.HeightIntentServiceJob;
 import org.smartregister.growthmonitoring.job.WeightIntentServiceJob;
 import org.smartregister.growthmonitoring.job.ZScoreRefreshIntentServiceJob;
 import org.smartregister.immunization.job.VaccineServiceJob;
+import org.smartregister.job.DuplicateZeirIdsCleanerWorker;
 import org.smartregister.job.ImageUploadServiceJob;
 import org.smartregister.job.PullUniqueIdsServiceJob;
 import org.smartregister.job.SyncAllLocationsServiceJob;
@@ -69,5 +70,12 @@ public class LoginInteractor extends BaseLoginInteractor implements BaseLoginCon
         ZScoreRefreshIntentServiceJob.scheduleJobImmediately(ZScoreRefreshIntentServiceJob.TAG);
         ImageUploadServiceJob.scheduleJobImmediately(ImageUploadServiceJob.TAG);
         ArchiveClientsJob.scheduleJobImmediately(ArchiveClientsJob.TAG);
+        /*
+         This job will not be duplicated but is added here since scheduleJobsPeriodically is only called
+         after a remote login and therefore might be run too late. scheduleJobsImmediately is called
+         after both remote login and local login
+         */
+        String[] eventTypes = new String[]{"Father Registration"};
+        DuplicateZeirIdsCleanerWorker.schedulePeriodically(getApplicationContext(), 15, eventTypes);
     }
 }

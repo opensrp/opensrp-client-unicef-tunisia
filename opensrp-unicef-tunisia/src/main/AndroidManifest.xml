@@ -50,6 +50,7 @@
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Login"
+            android:exported="true"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -110,19 +111,19 @@
                 android:resource="@xml/captured_images_path" />
         </provider>
 
-        <service android:name="org.smartregister.immunization.service.intent.VaccineIntentService" />
+        <service android:name="org.smartregister.immunization.service.intent.VaccineIntentService"  />
         <service android:name="org.smartregister.growthmonitoring.service.intent.ZScoreRefreshIntentService" />
-        <service android:name="org.smartregister.growthmonitoring.service.intent.WeightIntentService" />
-        <service android:name="org.smartregister.growthmonitoring.service.intent.HeightIntentService" />
-        <service android:name="org.smartregister.growthmonitoring.service.intent.WeightForHeightIntentService" />
+        <service android:name="org.smartregister.growthmonitoring.service.intent.WeightIntentService"/>
+        <service android:name="org.smartregister.growthmonitoring.service.intent.HeightIntentService"/>
+        <service android:name="org.smartregister.growthmonitoring.service.intent.WeightForHeightIntentService"/>
         <service android:name="org.smartregister.sync.intent.SyncAllLocationsIntentService"/>
-        <service android:name="org.smartregister.sync.intent.PullUniqueIdsIntentService" />
-        <service android:name="org.smartregister.sync.intent.ValidateIntentService" />
-        <service android:name="org.smartregister.sync.intent.ExtendedSyncIntentService" />
-        <service android:name="org.smartregister.sync.intent.SettingsSyncIntentService" />
+        <service android:name="org.smartregister.sync.intent.PullUniqueIdsIntentService"/>
+        <service android:name="org.smartregister.sync.intent.ValidateIntentService"/>
+        <service android:name="org.smartregister.sync.intent.ExtendedSyncIntentService"/>
+        <service android:name="org.smartregister.sync.intent.SettingsSyncIntentService"/>
         <service android:name=".service.intent.AppSyncIntentService"/>
-        <service android:name=".service.intent.ArchiveChildrenAgedAboveFiveIntentService" />
-        <service android:name=".service.intent.AppVaccineScheduleUpdateIntentService" />
+        <service android:name=".service.intent.ArchiveChildrenAgedAboveFiveIntentService"/>
+        <service android:name=".service.intent.AppVaccineScheduleUpdateIntentService"/>
 
         <uses-library
             android:name="org.apache.http.legacy"

@@ -26,6 +26,10 @@ local.properties
 opensrp-unicef-tunisia/fabric.properties
 opensrp-unicef-tunisia/jacoco.exec
 opensrp-unicef-tunisia/reports/
+opensrp-unicef-tunisia/debug/
+opensrp-unicef-tunisia/debug/output-metadata.json
+opensrp-unicef-tunisia/preview/
+opensrp-unicef-tunisia/release/
 out/
 project.properties
 target/
